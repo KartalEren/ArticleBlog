@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.Entitiy.DTOs.Articles
 {
-    internal class ArticleDTO
+    public class ArticleDTO
     {
     }
 }
