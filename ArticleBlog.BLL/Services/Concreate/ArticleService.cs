@@ -1,6 +1,8 @@
 ﻿using ArticleBlog.BLL.Services.Abstract;
 using ArticleBlog.DAL.UnitOfWorks;
+using ArticleBlog.Entitiy.DTOs.Articles;
 using ArticleBlog.Entitiy.Entities;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +14,23 @@ namespace ArticleBlog.BLL.Services.Concreate
     public class ArticleService : IArticleService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ArticleService(IUnitOfWork unitOfWork)
+        private readonly IMapper mapper;
+
+        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-             _unitOfWork = unitOfWork;
+            this._unitOfWork = unitOfWork;
+            this.mapper = mapper;
         }
-        public async Task<List<Article>> GetAllArticlesAsync() //Liste türünde Article döndürecek.
+        public async Task<List<ArticleDTO>> GetAllArticlesAsync() //Liste türünde Article döndürecek.
         {
-            return await _unitOfWork.GetRepository<Article>().GetAllAsync();//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak Article sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. İşin kolaylığı burada....
+            
+            var articles= await _unitOfWork.GetRepository<Article>().GetAllAsync();//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. İşin kolaylığı burada....
+
+            var map = mapper.Map<List<ArticleDTO>>(articles); //Burada DTO oluşturduğumuz ArticleDTO classının maplemek için yaparız ve deriz ki; buradaki dto da oluşturulan proplara göre listeleri getir demek isteriz. Yani göstermek istediğimiz propları index te veya herhangi cshtml de biz seçeriz böylece tüm propları kişilere güvenlik açısından açmamış oluruz. List türünde olmalıdır çünkü metot bir liste döndürür. Article Listesi döner.
+
+            return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
         }
 
-        
+
     }
 }

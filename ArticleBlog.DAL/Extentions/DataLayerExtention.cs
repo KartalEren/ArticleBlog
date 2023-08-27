@@ -26,15 +26,15 @@ namespace ArticleBlog.DAL.Extentions
             });
 
            services.AddDbContext<BlogDBContext>()
-                    .AddScoped(typeof(IRepository<>), typeof(Repository<>)) //Buradaki sınıflar (IRepository ve Repository) jenerik yapıldığı için bu sınıfların başında typeof kullanmak gereklidir.
-                    .AddScoped<IUnitOfWork,UnitOfWork>(); //Buradaki IUnitOfWork ve UnitOfWork class larını da mapleme işlemini yapmamız gerekir.
+                   .AddScoped(typeof(IRepository<>), typeof(Repository<>)) //Buradaki sınıflar (IRepository ve Repository) jenerik yapıldığı için bu sınıfların başında typeof kullanmak gereklidir.
+                   .AddScoped<IUnitOfWork,UnitOfWork>(); //Buradaki IUnitOfWork ve UnitOfWork class larını da mapleme işlemini yapmamız gerekir.
                                                           //NOT: Hangi class larda hem abstract hem de concreate classını açarsak onu da burada belirtmemiz gereklidir.
 
 
 
 
 
-            services.AddDbContext<BlogDBContext>(options =>     //2. Database (IdentityDB) için SQL bağlantı yolu
+            services.AddDbContext<IdentityDBContext>(options =>     //2. Database (IdentityDB) için SQL bağlantı yolu
             {
                 string connectionIdentityDB = @"Server=DESKTOP-6EM38CB\SQL2022; Database=IdentityDBContext; Trusted_Connection=True;";
                 options.UseSqlServer(connectionIdentityDB);

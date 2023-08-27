@@ -1,4 +1,5 @@
-﻿using ArticleBlog.Entitiy.Entities;
+﻿using ArticleBlog.Entitiy.DTOs.Articles;
+using ArticleBlog.Entitiy.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace ArticleBlog.BLL.Services.Abstract
 {
     public interface IArticleService
     {
-        Task<List<Article>> GetAllArticlesAsync();//Sadece article a ait olduğu içinjenerik yapmaya gerek yoktur.
+        Task<List<ArticleDTO>> GetAllArticlesAsync();//Sadece article a ait olduğu içinjenerik yapmaya gerek yoktur.
     }
 }
