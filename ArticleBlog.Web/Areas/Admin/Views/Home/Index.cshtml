@@ -1,0 +1,18 @@
+﻿@* @model List<Article> //article Entity min içerisindeki yapıları foreach le liste şeklinde döneceğim
+
+
+    <h1>Admin Area içerisindesiniz!</h1>
+
+@foreach (var article in Model) //List<Article> yerine Model yazmak aynı şeydir. List<Article> içeriğini gösterir.
+{
+    <h1>@article.Title</h1>
+    <br />
+    <h3>@article.Content </h3>
+    <br />
+    <h3>@article.CreatedBy </h3>
+    <br />
+    <br />
+}
+
+@* Burada normal area dışında tanımladığmız Home-Index te gelen makale ve başlıktan hariç, Admin areasındaki Home-Index sayfasında CreatedBy da görülecektir. *@
+ 
