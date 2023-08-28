@@ -31,8 +31,8 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>//cookie yapýsýný oluþturuy
 
 builder.Services.ConfigureApplicationCookie(config =>
 {
-    config.LoginPath = new PathString("/Admin/Auth/Login"); //admin panele girmek isterse yukarýdaki path yoluna admin yolunu yazsa bile giriþ yaptýrmak için sürekli login ekranýna yönþendirecektir.
-    config.LogoutPath = new PathString("/Admin/Auth/Logout");
+    config.LoginPath = new PathString("/Admin/Authorize/Login"); //admin panele girmek isterse yukarýdaki path yoluna admin yolunu yazsa bile giriþ yaptýrmak için sürekli login ekranýna yönþendirecektir.
+    config.LogoutPath = new PathString("/Admin/Authorize/Logout");
     config.Cookie = new CookieBuilder//artýk Cookilerimizi oluþturuyoruz.
     {
         Name = "ArticleBlog",
@@ -42,7 +42,7 @@ builder.Services.ConfigureApplicationCookie(config =>
     };
     config.SlidingExpiration = true;
     config.ExpireTimeSpan= TimeSpan.FromDays(1);//Cookienin ne kadar aktif süre olacaðýný gireriz. Yani oturumun açýk kalma süresidir tekrar login yapmaya gerek yoktur çýkýþ yapmadan kapattýðýmýz sürece 1 gün belirledik.
-    config.AccessDeniedPath = new PathString("/Admin/Auth/AccessDenied");//yetkisiz kiþilerin oturumunu engellemek için kullanýlýr. Super adminden baþka kiþinin birþey silmesini istemiyorsak (adminin mesela) o iþlemi yaptýðýnda superadminden yetki istemesi için uyarý vermesini saðlamýþ oluruz.
+    config.AccessDeniedPath = new PathString("/Admin/Authorize/AccessDenied");//yetkisiz kiþilerin oturumunu engellemek için kullanýlýr. Super adminden baþka kiþinin birþey silmesini istemiyorsak (adminin mesela) o iþlemi yaptýðýnda superadminden yetki istemesi için uyarý vermesini saðlamýþ oluruz.
 });
 
 

@@ -56,6 +56,7 @@ namespace ArticleBlog.DAL.Configuration
             {
                 Id = 1,
                 UserName = "superadmin@gmail.com",
+                NormalizedUserName= "SUPERADMIN@GMAIL.COM",
                 Email = "superadmin@gmail.com",
                 NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                 PhoneNumber = "+905536904067",
@@ -63,7 +64,8 @@ namespace ArticleBlog.DAL.Configuration
                 LastName = "Kartal",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
-                ImageId=1
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ImageId =1
                 
 
             };
@@ -76,6 +78,7 @@ namespace ArticleBlog.DAL.Configuration
             {
                 Id = 2,
                 UserName = "admin1@gmail.com",
+                NormalizedUserName = "ADMIN1@GMAIL.COM",
                 Email = "admin1@gmail.com",
                 NormalizedEmail = "ADMIN1@GMAIL.COM",
                 PhoneNumber = "+905536904068",
@@ -83,6 +86,7 @@ namespace ArticleBlog.DAL.Configuration
                 LastName = "Oncel",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
                 ImageId = 2
 
             };
@@ -95,6 +99,7 @@ namespace ArticleBlog.DAL.Configuration
             {
                 Id = 3,
                 UserName = "admin2@gmail.com",
+                NormalizedUserName = "ADMIN2@GMAIL.COM",
                 Email = "admin2@gmail.com",
                 NormalizedEmail = "ADMIN2@GMAIL.COM",
                 PhoneNumber = "+905536904069",
@@ -102,6 +107,7 @@ namespace ArticleBlog.DAL.Configuration
                 LastName = "Kahveci",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
                 ImageId = 3
 
             };

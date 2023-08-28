@@ -38,9 +38,18 @@ namespace ArticleBlog.DAL.Configuration
                 CreatedDate = DateTime.Now,
                 IsDeleted = false
 
+            },
+            new Category
+            {
+                ID = 3,
+                CategoryName = "Category 3",
+                CreatedBy = "Admin",
+                CreatedDate = DateTime.Now,
+                IsDeleted = false
+
             });
 
         }
     }
-    
+
 }
