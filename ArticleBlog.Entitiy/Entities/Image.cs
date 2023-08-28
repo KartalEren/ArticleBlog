@@ -12,11 +12,11 @@ namespace ArticleBlog.Entitiy.Entities
         public string FileName { get; set; }
         public string FileType { get; set; }
         public ICollection<Article> Articles { get; set; }//1 resim 1 den fazla article içerebilir
-        public ICollection<Image> Images { get; set; }//1 resim 1 den fazla article içerebilir
+   
         public Image()
         {
             Articles = new HashSet<Article>();
-            Images = new HashSet<Image>();
+           
         }
 
     }

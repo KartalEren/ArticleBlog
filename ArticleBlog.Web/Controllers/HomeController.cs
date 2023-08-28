@@ -18,7 +18,7 @@ namespace ArticleBlog.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var articles=await _articleService.GetAllArticlesAsync(); //IArticleService içinde oluşturulan GetAllArticlesAsync ve Unit Of Work yapısı ile Repositorydeki GetAllAsync (tüm listeyi çağırmak için) metodunu bağladığımız için GetAllArticlesAsync metodu yeterlidir.
+            var articles=await _articleService.GetAllArticlesWithCategoryNoneDeletedAsync(); //IArticleService içinde oluşturulan GetAllArticlesAsync ve Unit Of Work yapısı ile Repositorydeki GetAllAsync (tüm listeyi çağırmak için) metodunu bağladığımız için GetAllArticlesAsync metodu yeterlidir.
             return View(articles);
         }
 

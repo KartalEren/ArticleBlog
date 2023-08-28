@@ -20,7 +20,7 @@ namespace ArticleBlog.DAL.Configuration
 
             builder.Property(x => x.Title)
                 .HasMaxLength(75);
-     
+
 
             builder.HasOne(x => x.Category)
                .WithMany(x => x.Articles)
@@ -31,6 +31,11 @@ namespace ArticleBlog.DAL.Configuration
                         .WithMany(x => x.Articles)
                         .HasForeignKey(x => x.ImageId)
                         .OnDelete(DeleteBehavior.NoAction);
+
+            //builder.HasOne(x => x.User)
+            //       .WithMany(x => x.Articles)
+            //       .HasForeignKey(x => x.UserId)
+            //       .OnDelete(DeleteBehavior.NoAction);
 
 
             builder.HasData(new Article
@@ -45,7 +50,7 @@ namespace ArticleBlog.DAL.Configuration
                 CreatedDate = DateTime.Now,
                 IsDeleted = false,
                 //UserId= 1
-                
+
             }, new Article
             {
                 ID = 2,
@@ -57,7 +62,7 @@ namespace ArticleBlog.DAL.Configuration
                 CreatedBy = "Umut Oncel",
                 CreatedDate = DateTime.Now,
                 IsDeleted = false,
-               // UserId = 2
+                //UserId = 2
 
             }, new Article
             {
@@ -75,7 +80,7 @@ namespace ArticleBlog.DAL.Configuration
             });
 
 
-        
-    }
+
+        }
     }
 }

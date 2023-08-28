@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ArticleBlog.Entitiy.DTOs.Categories;
+using ArticleBlog.Entitiy.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +12,10 @@ namespace ArticleBlog.Entitiy.DTOs.Articles
     {
         public virtual int ID { get; set; }
         public virtual string CreatedBy { get; set; }//article kim tarafından yaratıldı?
-        public virtual DateTime? CreatedDate { get; set; } = DateTime.Now; //article yaratma tarihi. Null geçilebilir (?) yaptık.
+        public virtual DateTime CreatedDate { get; set; }  //article yaratma tarihi. Null geçilebilir (?) yaptık.
         public string Title { get; set; }
-        public string Content { get; set; }
+        public CategoryDTO Category { get; set; } //kategori adına ulaşmak için bu DTO türünde prop açtık.
         public int ViewCount { get; set; } 
+        public bool IsDeleted { get; set; } 
     }
 }

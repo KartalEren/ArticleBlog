@@ -1,0 +1,60 @@
+﻿@model List<ArticleDTO>
+<div class="container-xxl flex-grow-1 container-p-y">
+
+
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Article Management/</span> Articles
+    </h4>
+
+
+    <div class="card">
+        <h5 class="card-header">Articles Table</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-bordered" id="articlesTable" width="100%" cellspacing="0">
+                @*  id="articleTables" wwwroot içindeki articleIndex dosyasındaki id ile aynı olmalıdır. JS dosyası ile tablonun içini doldurduk. *@
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </tfoot>
+                <tbody class="table-border-bottom-0">
+
+                    @foreach (var article in Model)
+                    {
+                        <tr name="@article.ID">
+                            <td>@article.Title</td>
+                            <td>@article.Category.CategoryName</td> @* kategorinin sadece adı lazım olduğu için ArticleDTO da açtığımız CategoryDTO probundan CategoryDTO daki Name probuna gideriz. *@
+                            <td>@article.CreatedDate.ToShortDateString()</td>
+                            <td>@article.CreatedBy</td>
+                            <td>@(article.IsDeleted ? "None Active" : "Active")</td> @* true ise silinmiş false ise aktif demektir. *@
+                            <td></td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+
+</div>
+@section Scripts{
+    <script src="~/js/articleIndex.js" type="application/ecmascript"></script>
+}  @* ***Bu ifade wwwroot içindeki JS de eklenilen articleIndex dosyasının görmesini sağlar.  *@

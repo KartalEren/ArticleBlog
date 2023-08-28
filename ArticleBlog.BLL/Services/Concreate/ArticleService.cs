@@ -21,10 +21,10 @@ namespace ArticleBlog.BLL.Services.Concreate
             this._unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
-        public async Task<List<ArticleDTO>> GetAllArticlesAsync() //Liste türünde Article döndürecek.
+        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync() //Liste türünde Article ları kategorileriyle birlikte silinmemiş olanları döndürecek.
         {
             
-            var articles= await _unitOfWork.GetRepository<Article>().GetAllAsync();//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. İşin kolaylığı burada....
+            var articles= await _unitOfWork.GetRepository<Article>().GetAllAsync(x=>x.IsDeleted==false, x=>x.Category);//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. Ayrıca kategor,ye göre silinmemiş olanları GetAllAsync(x=>x.IsDeleted==false,x=>x.Category) metoduyla getirir articleları İşin kolaylığı burada....
 
             var map = mapper.Map<List<ArticleDTO>>(articles); //Burada DTO oluşturduğumuz ArticleDTO classının maplemek için yaparız ve deriz ki; buradaki dto da oluşturulan proplara göre listeleri getir demek isteriz. Yani göstermek istediğimiz propları index te veya herhangi cshtml de biz seçeriz böylece tüm propları kişilere güvenlik açısından açmamış oluruz. List türünde olmalıdır çünkü metot bir liste döndürür. Article Listesi döner.
 

@@ -10,6 +10,6 @@ namespace ArticleBlog.BLL.Services.Abstract
 {
     public interface IArticleService
     {
-        Task<List<ArticleDTO>> GetAllArticlesAsync();//Sadece article a ait olduğu içinjenerik yapmaya gerek yoktur.
+        Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync();//Sadece article a ait olduğu içinjenerik yapmaya gerek yoktur.
     }
 }

@@ -17,7 +17,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var articles= await articleService.GetAllArticlesAsync();
+            var articles= await articleService.GetAllArticlesWithCategoryNoneDeletedAsync();
             return View(articles);
         }
     }
