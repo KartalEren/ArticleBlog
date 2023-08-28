@@ -60,9 +60,10 @@ namespace ArticleBlog.DAL.Configuration
                 NormalizedEmail = "SUPERADMIN@GMAIL.COM",
                 PhoneNumber = "+905536904067",
                 FirstName = "Eren",
-                LasttName = "Kartal",
+                LastName = "Kartal",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
+                ImageId=1
                 
 
             };
@@ -79,10 +80,10 @@ namespace ArticleBlog.DAL.Configuration
                 NormalizedEmail = "ADMIN1@GMAIL.COM",
                 PhoneNumber = "+905536904068",
                 FirstName = "Umut",
-                LasttName = "Oncel",
+                LastName = "Oncel",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
-
+                ImageId = 2
 
             };
             admin1.PasswordHash = CreatePasswordHash(admin1, "1234");
@@ -98,10 +99,10 @@ namespace ArticleBlog.DAL.Configuration
                 NormalizedEmail = "ADMIN2@GMAIL.COM",
                 PhoneNumber = "+905536904069",
                 FirstName = "Furkan",
-                LasttName = "Kahveci",
+                LastName = "Kahveci",
                 PhoneNumberConfirmed = true,
                 EmailConfirmed = true,
-
+                ImageId = 3
 
             };
             admin2.PasswordHash = CreatePasswordHash(admin2, "1234");

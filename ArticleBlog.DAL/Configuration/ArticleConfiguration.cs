@@ -38,24 +38,40 @@ namespace ArticleBlog.DAL.Configuration
                 ID = 1,
                 Title = "Article",
                 Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                ViewCount = 15,
+                ViewCount = 67,
                 CategoryId = 1,
                 ImageId = 1,
-                CreatedBy = "Umut Oncel",
+                CreatedBy = "Eren Kartal",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                UserId= 1
+                
             }, new Article
             {
                 ID = 2,
                 Title = "Article",
                 Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                ViewCount = 50,
+                ViewCount = 34,
                 CategoryId = 2,
                 ImageId = 2,
-                CreatedBy = "Furkan Tolga Kahveci",
+                CreatedBy = "Umut Oncel",
                 CreatedDate = DateTime.Now,
-                IsDeleted = false
-              
+                IsDeleted = false,
+                UserId = 2
+
+            }, new Article
+            {
+                ID = 3,
+                Title = "Article",
+                Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                ViewCount = 26,
+                CategoryId = 3,
+                ImageId = 3,
+                CreatedBy = "Furkan Kahveci",
+                CreatedDate = DateTime.Now,
+                IsDeleted = false,
+                UserId = 3
+
             });
 
 

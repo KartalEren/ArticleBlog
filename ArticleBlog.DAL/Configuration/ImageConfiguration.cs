@@ -38,7 +38,16 @@ namespace ArticleBlog.DAL.Configuration
                CreatedBy = "Admin",
                CreatedDate = DateTime.Now,
                IsDeleted = false
-           });
+           },
+            new Image
+            {
+                ID = 3,
+                FileName = "image3",
+                FileType = "png",
+                CreatedBy = "Admin",
+                CreatedDate = DateTime.Now,
+                IsDeleted = false
+            });
 
 
         }
