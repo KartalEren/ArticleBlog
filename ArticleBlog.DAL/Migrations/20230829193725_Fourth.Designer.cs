@@ -4,16 +4,18 @@ using ArticleBlog.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ArticleBlog.DAL.IdentityMigrations
+namespace ArticleBlog.DAL.Migrations
 {
-    [DbContext(typeof(IdentityDBContext))]
-    partial class IdentityDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(BlogDBContext))]
+    [Migration("20230829193725_Fourth")]
+    partial class Fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,59 +23,6 @@ namespace ArticleBlog.DAL.IdentityMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ArticleBlog.Entitiy.Entities.AppRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ConcurrencyStamp = "5510fb60-5d46-4cb1-82e7-4cb55375178e",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SUPERADMIN"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ConcurrencyStamp = "ee1649c1-221a-4e24-86d1-e6388cd616eb",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ConcurrencyStamp = "14858018-8956-44c1-8f3f-84b6b0671a34",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
-                });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.AppUser", b =>
                 {
@@ -87,12 +36,10 @@ namespace ArticleBlog.DAL.IdentityMigrations
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -115,12 +62,10 @@ namespace ArticleBlog.DAL.IdentityMigrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -138,84 +83,13 @@ namespace ArticleBlog.DAL.IdentityMigrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9c8d48dc-d036-48e3-9ddc-16b119423650",
-                            Email = "superadmin@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Eren",
-                            ImageId = 1,
-                            LastName = "Kartal",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SUPERADMIN@GMAIL.COM",
-                            NormalizedUserName = "SUPERADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMjPXIq9T1/tOc9ZkRxImU6BmVewOu2ced0L0wTuFNUqVQ5yEQmEgqkV9OiknUhKLg==",
-                            PhoneNumber = "+905536904067",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "8dec4083-ce6e-446b-9886-7a60686783c0",
-                            TwoFactorEnabled = false,
-                            UserName = "superadmin@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "53a5679d-a312-4fe1-a4f5-4cd59a9d60f4",
-                            Email = "admin1@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Umut",
-                            ImageId = 2,
-                            LastName = "Oncel",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN1@GMAIL.COM",
-                            NormalizedUserName = "ADMIN1@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPCH4QEsoclbupEB/1V+HVvOutI941F3sqaL5KFfdoIjfApnA9WLHnlBF2bVT8rQAA==",
-                            PhoneNumber = "+905536904068",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "18a01889-0c7a-410f-83b3-510162a1e533",
-                            TwoFactorEnabled = false,
-                            UserName = "admin1@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "84af97af-aafb-4188-98be-37c966edf83a",
-                            Email = "admin2@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Furkan",
-                            ImageId = 3,
-                            LastName = "Kahveci",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN2@GMAIL.COM",
-                            NormalizedUserName = "ADMIN2@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMEVB8NWRi9vUoKgA5BmpsxaXD1MWxtuK7ghSUcr6ZgDz41P8wPQx13FYShHsPLS8Q==",
-                            PhoneNumber = "+905536904069",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "5a6a6648-784c-4a55-af14-5cf7ba2e0739",
-                            TwoFactorEnabled = false,
-                            UserName = "admin2@gmail.com"
-                        });
+                    b.ToTable("AppUser");
                 });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.Article", b =>
@@ -280,7 +154,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("Article");
+                    b.ToTable("Articles");
 
                     b.HasData(
                         new
@@ -289,7 +163,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Eren Kartal",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 869, DateTimeKind.Local).AddTicks(8816),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4029),
                             ImageId = 1,
                             IsDeleted = false,
                             Title = "Article",
@@ -302,7 +176,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Umut Oncel",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 869, DateTimeKind.Local).AddTicks(8819),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4032),
                             ImageId = 2,
                             IsDeleted = false,
                             Title = "Article",
@@ -315,7 +189,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Furkan Kahveci",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 869, DateTimeKind.Local).AddTicks(8822),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4035),
                             ImageId = 3,
                             IsDeleted = false,
                             Title = "Article",
@@ -361,7 +235,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -369,7 +243,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                             ID = 1,
                             CategoryName = "Category 1",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 869, DateTimeKind.Local).AddTicks(9811),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4857),
                             IsDeleted = false
                         },
                         new
@@ -377,7 +251,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                             ID = 2,
                             CategoryName = "Category 2",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 869, DateTimeKind.Local).AddTicks(9974),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4860),
                             IsDeleted = false
                         },
                         new
@@ -385,7 +259,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                             ID = 3,
                             CategoryName = "Category 3",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 869, DateTimeKind.Local).AddTicks(9977),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4862),
                             IsDeleted = false
                         });
                 });
@@ -431,14 +305,14 @@ namespace ArticleBlog.DAL.IdentityMigrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Image");
+                    b.ToTable("Images");
 
                     b.HasData(
                         new
                         {
                             ID = 1,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 870, DateTimeKind.Local).AddTicks(828),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5359),
                             FileName = "image1",
                             FileType = "jpg",
                             IsDeleted = false
@@ -447,7 +321,7 @@ namespace ArticleBlog.DAL.IdentityMigrations
                         {
                             ID = 2,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 870, DateTimeKind.Local).AddTicks(831),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5363),
                             FileName = "image2",
                             FileType = "png",
                             IsDeleted = false
@@ -456,114 +330,11 @@ namespace ArticleBlog.DAL.IdentityMigrations
                         {
                             ID = 3,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 38, 42, 870, DateTimeKind.Local).AddTicks(984),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5372),
                             FileName = "image3",
                             FileType = "png",
                             IsDeleted = false
                         });
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.AppUser", b =>
@@ -593,57 +364,6 @@ namespace ArticleBlog.DAL.IdentityMigrations
                     b.Navigation("Category");
 
                     b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.HasOne("ArticleBlog.Entitiy.Entities.AppRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.HasOne("ArticleBlog.Entitiy.Entities.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.HasOne("ArticleBlog.Entitiy.Entities.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("ArticleBlog.Entitiy.Entities.AppRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ArticleBlog.Entitiy.Entities.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.HasOne("ArticleBlog.Entitiy.Entities.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.AppUser", b =>

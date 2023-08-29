@@ -7,6 +7,7 @@ using ArticleBlog.Entitiy.Entities;
 using ArticleBlog.Entitiy.Enums;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,16 +33,16 @@ namespace ArticleBlog.BLL.Services.Concreate
             this._unitOfWork = unitOfWork;
             this.mapper = mapper;
             this._imageHelper = imageHelper;
-            _user = httpContextAccessor.HttpContext.User;
+            _user = httpContextAccessor.HttpContext.User;//burada eşleme işlemi aşağılarda uzun uzun olmaması adına _user a işlem yapan yapıyı eşitledik.
         }
 
         public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
         {
-            var userId = _user.GetLoggedInUserId();//artık loginlerde user ıdi yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            var userId = _user.GetLoggedInUserId();//artık loginlerde user ıd yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
             var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin yarattığını Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir CreatedBy kısmına. BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
             //önce resim ekleme işlemi yapılır db ye 
             //sonra article eklenir.
-            var imageUpload = await _imageHelper.Upload(articleAddDTO.Title,articleAddDTO.Photo,ImageType.Post);
+            var imageUpload = await _imageHelper.Upload(articleAddDTO.Title, articleAddDTO.Photo, ImageType.Post);
             Image image = new(imageUpload.FullName, articleAddDTO.Photo.ContentType, userEmail); //imagenn ctor unda istenilenleri ekledik.
             await _unitOfWork.GetRepository<Image>().AddAsync(image);//Burada da unitofWork sayesinde REPOSITPRY E EKLEMİŞ OLURUZ.
             await _unitOfWork.SaveAsync(); // Burada da SaveChanges() mantığı gibi kayıt işlemi yapmış olduk.
@@ -86,7 +87,7 @@ namespace ArticleBlog.BLL.Services.Concreate
         public async Task<ArticleDTO> GetArticleWithCategoryNonDeletedAsync(int Id) //Tek bir değer Article kategorileriyle birlikte silinmemiş olanları ve id lere göre eşleyerek getirecek döndürecek.
         {
 
-            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == Id, x => x.Category);
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == Id, x => x.Category, i => i.Image);
             //***Kategoriye göre hem silinmemiş hemde buradaki id si ile kendindeki ID yi bul eşleştir getir dedik.
             //Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. Ayrıca kategor,ye göre silinmemiş olanları GetAllAsync(x=>x.IsDeleted==false,x=>x.Category) metoduyla getirir articleları İşin kolaylığı burada....
 
@@ -96,16 +97,36 @@ namespace ArticleBlog.BLL.Services.Concreate
         }
 
 
-        public async Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
+        public async Task<string> UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
         {
             var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin güncellediiğni Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir ModifiedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == articleUpdateDTO.ID, x => x.Category, i => i.Image); //Yukarıdaki metoda benzerdir.
+
+            //önce eskiyi resim varsa silme işlemi yapar kaydederiz
+           
+
+            if (articleUpdateDTO.Photo != null)
+            {
+                _imageHelper.DeleteImage(article.Image.FileName);// Article sınıfının içinde Image türünde Image probuyla Image entitisinden bağlantı alırız ve oradaki FileName i çekebiliriz Article içinden. Burada eğer resim varsa önce sil dedik
+
+                var imageUpload = await _imageHelper.Upload(articleUpdateDTO.Title, articleUpdateDTO.Photo, ImageType.Post);
+                Image image = new(imageUpload.FullName, articleUpdateDTO.Photo.ContentType, userEmail);
+
+                articleUpdateDTO.ImageFileName = image.FileName; //***********İNCELE ***UPDATEVIEW DA RESİM KAYDETME YERİNDE SRC YE YAZDIK
+
+                await _unitOfWork.GetRepository<Image>().AddAsync(image); //burada da update yapılır.
+                await _unitOfWork.SaveAsync();
+
+                article.ImageId = image.ID; //burada da yeni seçilen resmi eşitlemiş olduk 
+
+            }
 
 
-            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == articleUpdateDTO.ID, x => x.Category); //Yukarıdaki metoda benzerdir.
+            //---------------------------------------------------------------------------------------
 
+            //aşağıda da yeni değerli kaydederiz.
 
-
- //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.  
+            //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.  
             article.Title = articleUpdateDTO.Title;
             article.Content = articleUpdateDTO.Content;
             article.CategoryId = articleUpdateDTO.CategoryId;
@@ -115,6 +136,8 @@ namespace ArticleBlog.BLL.Services.Concreate
             await _unitOfWork.GetRepository<Article>().UpdateAsync(article); //burada da update yapılır.
 
             await _unitOfWork.SaveAsync();
+            return article.Title;
+
         }
 
 

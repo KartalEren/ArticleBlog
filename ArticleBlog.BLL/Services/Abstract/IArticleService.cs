@@ -14,7 +14,7 @@ namespace ArticleBlog.BLL.Services.Abstract
         Task CreateArticleAsync(ArticleAddDTO articleAddDTO); //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
         Task<ArticleDTO> GetArticleWithCategoryNonDeletedAsync(int Id); //Tek bir değer Article kategorileriyle birlikte silinmemiş olanları ve id lere göre eşleyerek getirecek döndürecek.
 
-        Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO); //Article ın Update metodudur.
+        Task<string> UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO); //Article ın Update metodudur.
 
 
         Task SafeDeleteArticleAsync(int Id); //Tamamen silmeden Silmiş gibi işlem yaptırırız.

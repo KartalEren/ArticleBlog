@@ -161,7 +161,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Eren Kartal",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(4278),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4029),
                             ImageId = 1,
                             IsDeleted = false,
                             Title = "Article",
@@ -174,7 +174,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Umut Oncel",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(4287),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4032),
                             ImageId = 2,
                             IsDeleted = false,
                             Title = "Article",
@@ -187,7 +187,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Furkan Kahveci",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(4293),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4035),
                             ImageId = 3,
                             IsDeleted = false,
                             Title = "Article",
@@ -241,7 +241,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 1,
                             CategoryName = "Category 1",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(7524),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4857),
                             IsDeleted = false
                         },
                         new
@@ -249,7 +249,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 2,
                             CategoryName = "Category 2",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(7530),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4860),
                             IsDeleted = false
                         },
                         new
@@ -257,7 +257,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 3,
                             CategoryName = "Category 3",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(7534),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4862),
                             IsDeleted = false
                         });
                 });
@@ -310,7 +310,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 1,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(8588),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5359),
                             FileName = "image1",
                             FileType = "jpg",
                             IsDeleted = false
@@ -319,7 +319,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 2,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(8594),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5363),
                             FileName = "image2",
                             FileType = "png",
                             IsDeleted = false
@@ -328,7 +328,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 3,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 20, 44, 28, 479, DateTimeKind.Local).AddTicks(8597),
+                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5372),
                             FileName = "image3",
                             FileType = "png",
                             IsDeleted = false

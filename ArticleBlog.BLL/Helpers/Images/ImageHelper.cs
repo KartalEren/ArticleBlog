@@ -21,7 +21,7 @@ namespace ArticleBlog.BLL.Helpers.Images
         public ImageHelper(IWebHostEnvironment whe) //IWebHostEnvironment ile dosya yolunumu buluruz.
         {
             this._whe = whe;
-            wwwroot = _whe.WebRootPath;//bu şekilde yazınca wwwroot u çağırınca içine oluşturduğumuz image klasörünü bulur.
+            wwwroot = whe.WebRootPath;//bu şekilde yazınca wwwroot u çağırınca içine oluşturduğumuz image klasörünü bulur.
         }
 
 
@@ -94,17 +94,17 @@ namespace ArticleBlog.BLL.Helpers.Images
 
 
             string oldFileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
-            string fileExtension= Path.GetExtension(imageFile.FileName);
+            string fileExtension = Path.GetExtension(imageFile.FileName);
 
             name = ReplaceInvalidChars(name); //dosya adın bu metottan çıkan addır diyoruz.
 
             DateTime dateTime = DateTime.Now;
 
-            string newFileName=$"{name}_{dateTime.Millisecond}{fileExtension}";
+            string newFileName = $"{name}_{dateTime.Millisecond}{fileExtension}";//***AYNI İSİMLİ RESİM EKLENİRSE DOSYA SONUNA EKLENDİĞİ MILISECOND SÜRESİDE EKLENECEKTİR VE DOSYA ADLARININ BU ŞEKİLDE AYNI OLMASI ZOR OLACAKTIR.
 
             var path = Path.Combine($"{wwwroot}/{imgFolder}/{folderName}", newFileName); // wwwroot git imgFolder ı bul folderName i yukarıda kıyasla newFileName olarak ekle
 
-           await using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false); //burada yukarılarda oluşturulan dosyaları kopyalayarak oluştururuz.
+            await using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false); //burada yukarılarda oluşturulan dosyaları kopyalayarak oluştururuz.
             await imageFile.CopyToAsync(stream);
             await stream.FlushAsync();
 

@@ -16,7 +16,9 @@ namespace ArticleBlog.Entitiy.DTOs.Articles
         public virtual DateTime CreatedDate { get; set; }  //article yaratma tarihi. Null geçilebilir (?) yaptık.
         public string Title { get; set; }
         public CategoryDTO Category { get; set; } //kategori adına ulaşmak için bu DTO türünde prop açtık.       
-        public int ViewCount { get; set; } 
+        public int ViewCount { get; set; }
+        public Image Image { get; set; }
+        public AppUser User { get; set; }
         public bool IsDeleted { get; set; }  
       
     }
