@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.Services.Concreate
-{
+{//Burada aslında Interface ve Normal abstract sınıfında bu metotları yapınca Dependency Injection yapmış oluyoruz birnevi.
     public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork; //Repolara ulaşmak için burada new leriz.

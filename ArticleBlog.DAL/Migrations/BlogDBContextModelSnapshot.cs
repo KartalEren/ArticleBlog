@@ -30,7 +30,7 @@ namespace ArticleBlog.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -67,6 +67,9 @@ namespace ArticleBlog.DAL.Migrations
                         .HasMaxLength(75)
                         .HasColumnType("nvarchar(75)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
 
@@ -85,10 +88,11 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Eren Kartal",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(7558),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(6309),
                             ImageId = 1,
                             IsDeleted = false,
                             Title = "Article",
+                            UserId = 1,
                             ViewCount = 67
                         },
                         new
@@ -97,10 +101,11 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Umut Oncel",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(7562),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(6313),
                             ImageId = 2,
                             IsDeleted = false,
                             Title = "Article",
+                            UserId = 2,
                             ViewCount = 34
                         },
                         new
@@ -109,10 +114,11 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Furkan Kahveci",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(7564),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(6315),
                             ImageId = 3,
                             IsDeleted = false,
                             Title = "Article",
+                            UserId = 3,
                             ViewCount = 26
                         });
                 });
@@ -162,7 +168,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 1,
                             CategoryName = "Category 1",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(8592),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(7265),
                             IsDeleted = false
                         },
                         new
@@ -170,7 +176,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 2,
                             CategoryName = "Category 2",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(8595),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(7268),
                             IsDeleted = false
                         },
                         new
@@ -178,7 +184,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 3,
                             CategoryName = "Category 3",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(8597),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(7271),
                             IsDeleted = false
                         });
                 });
@@ -231,7 +237,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 1,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(9387),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(7767),
                             FileName = "image1",
                             FileType = "jpg",
                             IsDeleted = false
@@ -240,7 +246,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 2,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(9406),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(7929),
                             FileName = "image2",
                             FileType = "png",
                             IsDeleted = false
@@ -249,7 +255,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 3,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 28, 21, 32, 32, 684, DateTimeKind.Local).AddTicks(9409),
+                            CreatedDate = new DateTime(2023, 8, 29, 11, 27, 54, 39, DateTimeKind.Local).AddTicks(7933),
                             FileName = "image3",
                             FileType = "png",
                             IsDeleted = false
@@ -261,7 +267,8 @@ namespace ArticleBlog.DAL.Migrations
                     b.HasOne("ArticleBlog.Entitiy.Entities.Category", "Category")
                         .WithMany("Articles")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ArticleBlog.Entitiy.Entities.Image", "Image")
                         .WithMany("Articles")

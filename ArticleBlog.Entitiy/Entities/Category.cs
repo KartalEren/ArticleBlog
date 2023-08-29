@@ -8,13 +8,20 @@ using System.Threading.Tasks;
 namespace ArticleBlog.Entitiy.Entities
 {
     public class Category : EntityBase
-    {
+    {        
+
+
         public string CategoryName { get; set; }
         public ICollection<Article> Articles { get; set; }//1 kategori 1 den fazla article içerebilir
 
         public Category()
         {
             Articles = new HashSet<Article>();
+        }
+
+        public Category(string categoryName)//kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
+        {
+            CategoryName = categoryName;
         }
     }
 }

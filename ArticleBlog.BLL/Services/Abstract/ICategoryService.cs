@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.Services.Abstract
-{
+{//Burada aslında Interface ve Normal abstract sınıfında bu metotları yapınca Dependency Injection yapmış oluyoruz birnevi.
     public interface ICategoryService
     {
         Task<List<CategoryDTO>> GetAllCategoriesNonDeleted();

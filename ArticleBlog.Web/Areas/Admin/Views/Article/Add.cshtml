@@ -8,16 +8,17 @@
         <div class="card mb-4">
             <h5 class="card-header"></h5>
             <form asp-controller="Article" asp-action="Add" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly"></div>
+                <div asp-validation-summary="ModelOnly"></div> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
                 <div class="card-body">
                     <div class="form-group">
                         <label asp-for="CategoryId">Category</label>
 
                         <a class="btn text-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                            Ekle <i class="bx bx-plus"></i>
+                           Add New Article <i class="bx bx-plus"></i>
                         </a>
 
-                        <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"ID","CategoryName"))"></select> @* kategori ıd ye ait isimdir. *@
+                        <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"ID","CategoryName"))"></select> 
+                        @* ArticleUpdateDTO da Category türünde kategori olduğu için biz bunun adına ArticleUpdateDTO dan ulaşmak için böyle yaparız.  ıd ye ait isimdir. *@ 
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
 
                     </div>

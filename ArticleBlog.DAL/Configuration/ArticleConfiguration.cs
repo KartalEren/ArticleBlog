@@ -49,7 +49,7 @@ namespace ArticleBlog.DAL.Configuration
                 CreatedBy = "Eren Kartal",
                 CreatedDate = DateTime.Now,
                 IsDeleted = false,
-                //UserId= 1
+                UserId= 1
 
             }, new Article
             {
@@ -62,7 +62,7 @@ namespace ArticleBlog.DAL.Configuration
                 CreatedBy = "Umut Oncel",
                 CreatedDate = DateTime.Now,
                 IsDeleted = false,
-                //UserId = 2
+                UserId = 2
 
             }, new Article
             {
@@ -75,7 +75,7 @@ namespace ArticleBlog.DAL.Configuration
                 CreatedBy = "Furkan Kahveci",
                 CreatedDate = DateTime.Now,
                 IsDeleted = false,
-                //UserId = 3
+                UserId = 3
 
             });
 

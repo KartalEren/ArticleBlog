@@ -9,6 +9,9 @@ namespace ArticleBlog.Entitiy.Entities
 {
     public class Image: EntityBase
     {
+     
+
+
         public string FileName { get; set; }
         public string FileType { get; set; }
         public ICollection<Article> Articles { get; set; }//1 resim 1 den fazla article içerebilir
@@ -17,6 +20,13 @@ namespace ArticleBlog.Entitiy.Entities
         {
             Articles = new HashSet<Article>();
            
+        }
+
+
+        public Image(string fileName, string fileType)//kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
+        {
+            FileName = fileName;
+            FileType = fileType;
         }
 
     }
