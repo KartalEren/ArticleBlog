@@ -16,6 +16,7 @@ using ArticleBlog.BLL.FluentValidations;
 using FluentValidation.AspNetCore;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using ArticleBlog.BLL.Helpers.Images;
 
 namespace ArticleBlog.BLL.Extensions
 {
@@ -29,6 +30,7 @@ namespace ArticleBlog.BLL.Extensions
 
             services.AddScopedDAL().AddScoped<IArticleService, ArticleService>(); //IArticleService çağırıldığında ArticleService döneceğini bildirir.
             services.AddScopedDAL().AddScoped<ICategoryService, CategoryService>(); //ICategoryService çağırıldığında CategoryService döneceğini bildirir.
+            services.AddScoped<IImageHelper, ImageHelper>(); //IImageHelper çağırıldığında ImageHelper döneceğini bildirir.
 
             services.AddAutoMapper(assembly);//BLL katmanıdaki tüm automapper kurulan yapıları bulup (Profile dan kalıtım alan dosyaları)
                                             

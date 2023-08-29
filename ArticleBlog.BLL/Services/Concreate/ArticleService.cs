@@ -1,8 +1,10 @@
 ﻿using ArticleBlog.BLL.Extensions;
+using ArticleBlog.BLL.Helpers.Images;
 using ArticleBlog.BLL.Services.Abstract;
 using ArticleBlog.DAL.UnitOfWorks;
 using ArticleBlog.Entitiy.DTOs.Articles;
 using ArticleBlog.Entitiy.Entities;
+using ArticleBlog.Entitiy.Enums;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -21,27 +23,38 @@ namespace ArticleBlog.BLL.Services.Concreate
     {
         private readonly IUnitOfWork _unitOfWork; //Repolara ulaşmak için burada new leriz.
         private readonly IMapper mapper; //Liste türünde metotlarda Mapleme yapmak için burada new leriz.
-
-
+        private readonly IImageHelper _imageHelper; //resim ekleme için article a buradan imageHelper içindeki metotlara ulaşırız hem eklemek hem silmek için
         private readonly IHttpContextAccessor _httpContextAccessor; //BLL-Extension-LoggedInUserExtensions deki ifadeleri görmesi için buraya servis ekledik. HttpContextAccessor ile kullanıcıyı bulmamızı sağlayan yapıdır.
         private readonly ClaimsPrincipal _user;//Bir üstteki _httpContextAccessor tanımlamak yerine kısa metotlarda olması adına _user şeklinde yapar ctor içine atarız ve _user ı kullanırız artık
 
-        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor,IImageHelper imageHelper)
         {
             this._unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this._imageHelper = imageHelper;
             _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
         {
-
             var userId = _user.GetLoggedInUserId();//artık loginlerde user ıdi yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
             var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin yarattığını Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir CreatedBy kısmına. BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            //önce resim ekleme işlemi yapılır db ye 
+            //sonra article eklenir.
+            var imageUpload = await _imageHelper.Upload(articleAddDTO.Title,articleAddDTO.Photo,ImageType.Post);
+            Image image = new(imageUpload.FullName, articleAddDTO.Photo.ContentType, userEmail); //imagenn ctor unda istenilenleri ekledik.
+            await _unitOfWork.GetRepository<Image>().AddAsync(image);//Burada da unitofWork sayesinde REPOSITPRY E EKLEMİŞ OLURUZ.
+            await _unitOfWork.SaveAsync(); // Burada da SaveChanges() mantığı gibi kayıt işlemi yapmış olduk.
 
 
-            var imageId = 1;
-            var article = new Article(articleAddDTO.Title, articleAddDTO.Content, userId, userEmail, articleAddDTO.CategoryId, imageId); //Aşağıdaki gibi tek tek yazacağımı, Entity calsslarında oluşturduğum parametreli ctor ilede eşleme işlemi yapabilirim.
+
+            //---------------------------------------------------------
+
+
+
+
+            //var imageId = 1;
+            var article = new Article(articleAddDTO.Title, articleAddDTO.Content, userId, userEmail, articleAddDTO.CategoryId, image.ID); //Aşağıdaki gibi tek tek yazacağımı, Entity calsslarında oluşturduğum parametreli ctor ilede eşleme işlemi yapabilirim. Yukarıdaki imagenin ID sini çeceriz.
 
 
             //var article = new Article

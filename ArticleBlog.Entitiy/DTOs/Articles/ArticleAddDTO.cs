@@ -1,4 +1,5 @@
 ﻿using ArticleBlog.Entitiy.DTOs.Categories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ArticleBlog.Entitiy.DTOs.Articles
         public string Content { get; set; }
         public int CategoryId { get; set; }
         public ICollection<CategoryDTO> Categories { get; set; }
+        public IFormFile Photo { get; set; }
 
         public ArticleAddDTO()
         {

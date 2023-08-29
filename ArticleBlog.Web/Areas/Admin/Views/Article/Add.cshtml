@@ -19,24 +19,24 @@
 
                         <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"ID","CategoryName"))"></select> 
                         @* ArticleUpdateDTO da Category türünde kategori olduğu için biz bunun adına ArticleUpdateDTO dan ulaşmak için böyle yaparız.  ıd ye ait isimdir. *@ 
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
 
                     </div>
                     <div class="form-group">
                         <label asp-for="Title" id="defaultFormControlInput" class="form-label">Title</label>
                         <input asp-for="Title" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="Please Input Article Title" aria-describedby="defaultFormControlHelp">
-                        <span asp-validation-for="Title" class="text-danger"></span>
+                        <span asp-validation-for="Title" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
                     </div>
                     <div class="form-group">
                         <label asp-for="Content" for="defaultFormControlInput" class="form-label">Content</label>
                         <textarea asp-for="Content" type="text" class="form-control mb-3" id="defaultFormControlInput" style="min-height:300px;" placeholder="Content" aria-describedby="defaultFormControlHelp"></textarea>
-                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <span asp-validation-for="Content" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
                     </div>
-                  @*   <div class="form-group">
-                        <label asp-for="Photo" for="defaultFormControlInput" class="form-label">Resim seçiniz</label>
+                    <div class="form-group">
+                        <label asp-for="Photo" for="defaultFormControlInput" class="form-label">Upload Picture</label>
                         <input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
-                        <span asp-validation-for="Photo" class="text-danger"></span>
-                    </div> *@
+                        <span asp-validation-for="Photo" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                    </div>
 
 
                     <div class="form-group">
