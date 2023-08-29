@@ -22,7 +22,8 @@ namespace ArticleBlog.BLL.Extensions
         {
             var assembly = Assembly.GetExecutingAssembly(); //BLL deki tüm assembly edilecek dosyaları tek tek yazmak yerine bu değişkeni oluştururuz. ve eğer ki auto mapper ekleyeceksek aşağıdaki gibi services.AddAutoMapper(assembly); tanımlarsak assembly değişkenindeki GetExecutingAssembly metodu sayesinde tüm işleri kendi yapar bu katmandaki Auto mapperları kendisi kurar(Profile dan verdiğimiz kalıtımlar sayaesinde kendi bulur burada automapper var der ve kendiliğinden ekler tüm sınıflar için.)
 
-            services.AddScopedDAL().AddScoped<IArticleService, ArticleService>();
+            services.AddScopedDAL().AddScoped<IArticleService, ArticleService>(); //IArticleService çağırıldığında ArticleService döneceğini bildirir.
+            services.AddScopedDAL().AddScoped<ICategoryService, CategoryService>(); //ICategoryService çağırıldığında CategoryService döneceğini bildirir.
 
             services.AddAutoMapper(assembly);//BLL katmanıdaki tüm automapper kurulan yapıları bulup (Profile dan kalıtım alan dosyaları) 
             return services;

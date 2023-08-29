@@ -9,7 +9,7 @@ namespace ArticleBlog.Core.Entities
     public abstract class EntityBase : IEntityBase
     {
         public virtual int ID { get; set; }
-        public virtual string CreatedBy { get; set; }//article kim tarafından yaratıldı?
+        public virtual string CreatedBy { get; set; } = "Undefined";//article kim tarafından yaratıldı?
         public virtual string? ModifiedBy { get; set; }//article kim tarafından düzenlendi?. Null geçilebilir (?) yaptık.
         public virtual string? DeletedBy { get; set; }//article kim tarafından silindi?. Null geçilebilir (?) yaptık.
         public virtual DateTime? CreatedDate { get; set; } = DateTime.Now; //article yaratma tarihi. Null geçilebilir (?) yaptık.

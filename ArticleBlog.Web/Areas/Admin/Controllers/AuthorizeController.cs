@@ -27,7 +27,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
         [AllowAnonymous] //Home da [Authorize] attributunu koyduğumuz için Home a hiç erişemiyorduk ama login sayfasına ulaşabilmek adına [AllowAnonymous] attribute ile ulaşmak için izin vermiş oluyoruz burada.
         [HttpPost] //Login ekranı açıldığında önümüze gelen ilk ekran Get ekranıdır.
-        public async Task<IActionResult> Login(UserLoginDTO userLoginDTO)
+        public async Task<IActionResult> Login(UserLoginDTO userLoginDTO) //Post da ekleme yapacağımız yer kullanıcıya gösteriğimiz DTO olduğu için o parametreleri veririz.
         {
             if (ModelState.IsValid)
             {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.Entitiy.DTOs.Categories
 {
-    public class CategoryDTO
+    public class CategoryDTO //Burada isimleri gösterip idleri kullanırız.
     {
+        public int ID { get; set; }
         public string CategoryName { get; set; }
     }
 }

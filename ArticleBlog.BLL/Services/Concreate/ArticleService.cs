@@ -13,14 +13,30 @@ namespace ArticleBlog.BLL.Services.Concreate
 {//Not: Repository lere direkt ulaşmamak için Unit Of Work yapısı oluşturmuştuk, o yapı üzerinde jeneri olarak  IRepository<T> IUnitOfWork.GetRepository<T>() metoduyla repository lere ulaşabilecektirk. Burada da aynı şekilde direkt Repositorylere ulaşmamak için Unit Of Work den ctor da eşleme yaparız.
     public class ArticleService : IArticleService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfWork; //Repolara ulaşmak için burada new leriz.
+        private readonly IMapper mapper; //Liste türünde metotlarda Mapleme yapmak için burada new leriz.
 
         public ArticleService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
+
+        public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
+        {
+            //var userId = 1;
+            var article = new Article
+            {
+                Title = articleAddDTO.Title,
+                Content = articleAddDTO.Content,
+                CategoryId = articleAddDTO.CategoryId,
+                //UserId= userId
+                
+            }; //****Burada DTO dan alınan verileri asıl tablomuz olan burada yeni oluşturduğumuz Article ın içine ekleriz ve kaydetmiş oluruz.****
+            await _unitOfWork.GetRepository<Article>().AddAsync(article);//Burada da unitofWork sayesinde REPOSITPRY E EKLEMİŞ OLURUZ.
+            await _unitOfWork.SaveAsync(); // Burada da SaveChanges() mantığı gibi kayıt işlemi yapmış olduk.
+        }
+
         public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync() //Liste türünde Article ları kategorileriyle birlikte silinmemiş olanları döndürecek.
         {
             
