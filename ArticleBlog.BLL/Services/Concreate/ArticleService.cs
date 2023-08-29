@@ -1,11 +1,14 @@
-﻿using ArticleBlog.BLL.Services.Abstract;
+﻿using ArticleBlog.BLL.Extensions;
+using ArticleBlog.BLL.Services.Abstract;
 using ArticleBlog.DAL.UnitOfWorks;
 using ArticleBlog.Entitiy.DTOs.Articles;
 using ArticleBlog.Entitiy.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,17 +22,26 @@ namespace ArticleBlog.BLL.Services.Concreate
         private readonly IUnitOfWork _unitOfWork; //Repolara ulaşmak için burada new leriz.
         private readonly IMapper mapper; //Liste türünde metotlarda Mapleme yapmak için burada new leriz.
 
-        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper)
+
+        private readonly IHttpContextAccessor _httpContextAccessor; //BLL-Extension-LoggedInUserExtensions deki ifadeleri görmesi için buraya servis ekledik. HttpContextAccessor ile kullanıcıyı bulmamızı sağlayan yapıdır.
+        private readonly ClaimsPrincipal _user;//Bir üstteki _httpContextAccessor tanımlamak yerine kısa metotlarda olması adına _user şeklinde yapar ctor içine atarız ve _user ı kullanırız artık
+
+        public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this._unitOfWork = unitOfWork;
             this.mapper = mapper;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
         {
-            var userId = 1;
+
+            var userId = _user.GetLoggedInUserId();//artık loginlerde user ıdi yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin yarattığını Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir CreatedBy kısmına. BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+
+
             var imageId = 1;
-            var article = new Article(articleAddDTO.Title, articleAddDTO.Content, userId,articleAddDTO.CategoryId ,imageId); //Aşağıdaki gibi tek tek yazacağımı, Entity calsslarında oluşturduğum parametreli ctor ilede eşleme işlemi yapabilirim.
+            var article = new Article(articleAddDTO.Title, articleAddDTO.Content, userId, userEmail, articleAddDTO.CategoryId, imageId); //Aşağıdaki gibi tek tek yazacağımı, Entity calsslarında oluşturduğum parametreli ctor ilede eşleme işlemi yapabilirim.
 
 
             //var article = new Article
@@ -73,11 +85,19 @@ namespace ArticleBlog.BLL.Services.Concreate
 
         public async Task UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
         {
+            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin güncellediiğni Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir ModifiedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+
+
             var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == articleUpdateDTO.ID, x => x.Category); //Yukarıdaki metoda benzerdir.
 
+
+
+ //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.  
             article.Title = articleUpdateDTO.Title;
             article.Content = articleUpdateDTO.Content;
-            article.CategoryId = articleUpdateDTO.CategoryId; //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.           
+            article.CategoryId = articleUpdateDTO.CategoryId;
+            article.ModifiedDate = DateTime.Now;
+            article.ModifiedBy = userEmail; //ModifiedBy kısmında giriş yapanın Emil adresi yazacaktır.       
 
             await _unitOfWork.GetRepository<Article>().UpdateAsync(article); //burada da update yapılır.
 
@@ -88,10 +108,17 @@ namespace ArticleBlog.BLL.Services.Concreate
 
         public async Task SafeDeleteArticleAsync(int Id) //Tamamen silmeden Silmiş gibi işlem yaptırırız.
         {
+            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin sildiğini Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir DeletedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+
+
+
             var article = await _unitOfWork.GetRepository<Article>().GetByIdAsync(Id); //sadece repositorydeki GetByIdAsync metoduyla silme işlemi yapabiliriz.
 
             article.IsDeleted = true; //IsDeleted true olduğu için biz article çağırdığımızda yukarılarda yaptığımız metotlarda !isDeleted ları almıştık dolayısıyla onlar gelmeyecek. BaseEntity de isDeletd=false tanımlıdır normalde.
             article.DeletedDate = DateTime.Now;
+            article.DeletedBy=userEmail; //DeletedBy kısmında giriş yapanın Emil adresi yazacaktır. 
+
+
             await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
             await _unitOfWork.SaveAsync();
         }

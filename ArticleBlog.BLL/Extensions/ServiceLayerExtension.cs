@@ -15,11 +15,12 @@ using FluentValidation;
 using ArticleBlog.BLL.FluentValidations;
 using FluentValidation.AspNetCore;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 
 namespace ArticleBlog.BLL.Extensions
 {
     //Burada da MVC.Web kısmında programı çalıştırırken Referansı BLL den aldığı için program hata vermemesi adına burada da DAL kısmında yaptığımız mapper tarzı işlemi yapmalıyız hangi sınıfta işlemler yapacaksak.
-    public static class ServiceLayerExtension
+    public static class ServiceLayerExtension //Her seferinde new lenmeyeceği için static calss yapılır.
     {
 
         public static IServiceCollection AddScopedBLL(this IServiceCollection services)
@@ -30,10 +31,10 @@ namespace ArticleBlog.BLL.Extensions
             services.AddScopedDAL().AddScoped<ICategoryService, CategoryService>(); //ICategoryService çağırıldığında CategoryService döneceğini bildirir.
 
             services.AddAutoMapper(assembly);//BLL katmanıdaki tüm automapper kurulan yapıları bulup (Profile dan kalıtım alan dosyaları)
-                                             //
+                                            
 
 
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();//BLL-Extension-LoggedInUserExtensions deki ifadeleri görmesi için buraya servis ekledik. HttpContextAccessor ile kullanıcıyı bulmamızı sağlayan yapıdır.
 
 
             //***Bu yapı için bu katmana Nugget indirdik FluentValidation.NETCORE olanını ve FluentValidationDependecyInjection diye yazanı indirmek gerekiyor.....

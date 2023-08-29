@@ -17,13 +17,14 @@ namespace ArticleBlog.Entitiy.Entities
         }
 
 
-        public Article(string title, string content,int userId,int categoryId,int imageId) //kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
+        public Article(string title, string content,int userId, string createdBy,int categoryId,int imageId) //kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
         {
             Title=title;
             Content=content;
             UserId=userId;
             CategoryId=categoryId;
             ImageId=imageId;
+            CreatedBy = createdBy;
         }
 
 

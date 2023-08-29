@@ -9,7 +9,7 @@ using FluentValidation.Results; //foreach deki result.Error  daki Error altı ç
 
 namespace ArticleBlog.BLL.Extensions
 {
-    public static class FluentValidationExtensions
+    public static class FluentValidationExtensions //Her seferinde new lenmeyeceği için static calss yapılır.
     {
 
         //Başarısız işlemde verilecek mesajı içerir.
