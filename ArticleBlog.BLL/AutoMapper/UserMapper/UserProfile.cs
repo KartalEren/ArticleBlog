@@ -1,4 +1,4 @@
-﻿using ArticleBlog.Entitiy.DTOs.Categories;
+﻿using ArticleBlog.Entitiy.DTOs.Users;
 using ArticleBlog.Entitiy.Entities;
 using AutoMapper;
 using System;
@@ -14,6 +14,7 @@ namespace ArticleBlog.BLL.AutoMapper.UserMapper
         public UserProfile()
         {
             CreateMap<AppUser, UserDTO>().ReverseMap(); //Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
+            CreateMap<AppUser, UserAddDTO>().ReverseMap(); //Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
         }
     }
 }
