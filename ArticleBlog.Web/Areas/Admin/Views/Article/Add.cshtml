@@ -11,14 +11,14 @@
                 <div asp-validation-summary="ModelOnly"></div> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
                 <div class="card-body">
                     <div class="form-group">
-                        <label asp-for="CategoryId">Category</label>
 
+                        <label asp-for="CategoryId">Category</label>
                         <a class="btn text-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                           Add New Article <i class="bx bx-plus"></i>
+                            Add New Category <i class="bx bx-plus"></i>
                         </a>
 
-                        <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"ID","CategoryName"))"></select> 
-                        @* ArticleUpdateDTO da Category türünde kategori olduğu için biz bunun adına ArticleUpdateDTO dan ulaşmak için böyle yaparız.  ıd ye ait isimdir. *@ 
+                        <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"ID","CategoryName"))"></select>
+                        @* ArticleUpdateDTO da Category türünde kategori olduğu için biz bunun adına ArticleUpdateDTO dan ulaşmak için böyle yaparız.  ıd ye ait isimdir. *@
                         <span asp-validation-for="CategoryId" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
 
                     </div>
@@ -48,3 +48,42 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Kategori Ekleme</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="d-block form-label">Category Name</label>
+                        <input class="form-control" type="text" id="categoryName" /> @*  categoryName JS DOSYASINDAKİ REFERANS ID dir *@
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Save</button> @*  btnSave JS DOSYASINDAKİ REFERANS ID dir *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/js/categoryAdd.js"></script> @* JS Dosyasındaki KODLAR *@
+
+    <script>
+        var app = app || {};
+        app.Urls = app.Urls || {};
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))"; //controllerdan hangi action ve hangi controller ise yazarız.
+        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))"; /* tekrar article ekleme sayfasına döndürür */
+    </script>
+   }  <!--Kategori eklerken kullanacağımız JS kodunun referans yeridir.-->

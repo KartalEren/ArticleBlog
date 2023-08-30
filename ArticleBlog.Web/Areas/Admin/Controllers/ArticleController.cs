@@ -96,14 +96,17 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
             {
                 result.AddToModelState(this.ModelState);
-            }           
+            }
 
 
             var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Article a ait silinmemiş olan tüm kategorileri güncellemek için yapıldı.
 
             articleUpdateDTO.Categories = categories;
 
-            return RedirectToAction("Index", "Article", new { Area = "Admin" });
+            return View(articleUpdateDTO);
+
+
+
         }
 
 

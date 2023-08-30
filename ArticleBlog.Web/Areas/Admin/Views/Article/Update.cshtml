@@ -14,7 +14,7 @@
                 <form asp-controller="Article" asp-action="Update" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
                     <div class="card-body">
-                        <input type="hidden" asp-for="ID" />@* model oluşturulurken makalenin ıd değerini de döneririrki o id üztünden işlem yapılıyor fakat hidden la id yi göstermeyiz. *@
+                        <input type="hidden" asp-for="ID" /> @* model oluşturulurken makalenin ıd değerini de döneririrki o id üztünden işlem yapılıyor fakat hidden la id yi göstermeyiz. *@
                         <input type="hidden" asp-for="@Model.ImageFileName" />
                         <div class="form-group">
                             <label asp-for="CategoryId">Category</label>

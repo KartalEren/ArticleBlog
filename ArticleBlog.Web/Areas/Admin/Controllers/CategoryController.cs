@@ -55,9 +55,32 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             {
                 result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur.
 
-                return View();
+                return View(categoryAddDTO);
             }
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddWithAjax([FromBody] CategoryAddDTO categoryAddDTO)
+        {
+            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple
+
+            var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
+
+            if (result.IsValid) //olumluysa işlemi yap
+            {
+                await _categoryService.CreateCategoryAsync(categoryAddDTO);
+
+                string categoryName = categoryAddDTO.CategoryName;
+                return Json(categoryName);
+
+            }
+            else
+            {
+                return Json(result.Errors.First().ErrorMessage); //olumsuzsa
+            }
+        }
+
 
 
 
