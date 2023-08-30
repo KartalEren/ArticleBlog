@@ -46,7 +46,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO) //Post da ekleme yapacağımız yer kullanıcıya gösteriğimiz DTO olduğu için o parametreleri veririz.
         {
             //ArticleAddDTO dan Article a çevirelemeyeceği için mapper işlemi yaparız
-            var map = _mapper.Map<Article>(articleAddDTO); //önce tabloları maple
+            var map = _mapper.Map<Article>(articleAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
             var result = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
 
 
@@ -85,7 +85,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Update(ArticleUpdateDTO articleUpdateDTO)
         {
 
-            var map = _mapper.Map<Article>(articleUpdateDTO);//önce tabloları maple
+            var map = _mapper.Map<Article>(articleUpdateDTO);//önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
             var result=await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
 
 

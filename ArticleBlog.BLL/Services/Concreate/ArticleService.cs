@@ -145,10 +145,11 @@ namespace ArticleBlog.BLL.Services.Concreate
 
             //aşağıda da yeni değerli kaydederiz.
 
-            //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.  
-            article.Title = articleUpdateDTO.Title;
-            article.Content = articleUpdateDTO.Content;
-            article.CategoryId = articleUpdateDTO.CategoryId;
+            //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.
+            mapper.Map(articleUpdateDTO, article); //mapper ile girilen bilgileri eşitledik.
+            //article.Title = articleUpdateDTO.Title;
+            //article.Content = articleUpdateDTO.Content;
+            //article.CategoryId = articleUpdateDTO.CategoryId;
             article.ModifiedDate = DateTime.Now;
             article.ModifiedBy = userEmail; //ModifiedBy kısmında giriş yapanın Emil adresi yazacaktır.       
 

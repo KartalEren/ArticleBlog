@@ -42,7 +42,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CategoryAddDTO categoryAddDTO) //makale ekleme get kısmı
         {
-            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple
+            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
 
             var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
 
@@ -63,7 +63,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddWithAjax([FromBody] CategoryAddDTO categoryAddDTO)
         {
-            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple
+            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
 
             var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
 
@@ -92,7 +92,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         {
             var category=await _categoryService.GetCategoryById(Id);
 
-            var map=_mapper.Map<Category,CategoryUpdateDTO>(category); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı. 
+            var map=_mapper.Map<Category,CategoryUpdateDTO>(category); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı.***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
 
             return View(map); //kullanıcının girdiği değerleri eşler ve güncellenecek bilgileri update ekranına getirir
         }
@@ -106,7 +106,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         {
             
 
-            var map = _mapper.Map<Category>(categoryUpdateDTO); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı. 
+            var map = _mapper.Map<Category>(categoryUpdateDTO); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı.***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
 
             var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
 

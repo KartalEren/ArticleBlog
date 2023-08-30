@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.AutoMapper.ArticleMapper
 {
+
+    //NOT:******Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
     public class ArticleProfile: Profile //Auto Mapper yapısı için bu katmanda AutoMapper ve AutoMapper DependencyInjection Nugetlarını indirip kurduk. Ve Profile den kalıtım verdik.
     {
         public ArticleProfile()

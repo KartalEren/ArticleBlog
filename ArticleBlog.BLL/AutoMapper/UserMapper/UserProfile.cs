@@ -1,0 +1,19 @@
+﻿using ArticleBlog.Entitiy.DTOs.Categories;
+using ArticleBlog.Entitiy.Entities;
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ArticleBlog.BLL.AutoMapper.UserMapper
+{
+    public class UserProfile : Profile
+    {
+        public UserProfile()
+        {
+            CreateMap<AppUser, UserDTO>().ReverseMap(); //Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
+        }
+    }
+}
