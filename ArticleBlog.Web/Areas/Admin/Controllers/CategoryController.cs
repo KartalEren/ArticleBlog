@@ -31,6 +31,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
         }
 
+
+
         [HttpGet]
         public IActionResult Add() //makale ekleme get kısmı
         {
@@ -56,6 +58,61 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
                 return View();
             }
         }
+
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int Id) //makale ekleme get kısmı
+        {
+            var category=await _categoryService.GetCategoryById(Id);
+
+            var map=_mapper.Map<Category,CategoryUpdateDTO>(category); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı. 
+
+            return View(map); //kullanıcının girdiği değerleri eşler ve güncellenecek bilgileri update ekranına getirir
+        }
+
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO) //makale ekleme get kısmı
+        {
+            
+
+            var map = _mapper.Map<Category>(categoryUpdateDTO); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı. 
+
+            var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
+
+
+            if (result.IsValid) //olumluysa işlemi yap
+            {
+                await _categoryService.UpdateCategoryAsync(categoryUpdateDTO);
+                return RedirectToAction("Index", "Category", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir.  
+
+            }
+            else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
+            {
+                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur.
+
+                return View();
+            }
+            
+        }
+
+
+
+
+        public async Task<IActionResult> Delete(int Id)
+        {
+            await _categoryService.SafeDeleteCategoryAsync(Id);
+            return RedirectToAction("Index", "Category", new { Area = "Admin" });
+        }
+
+
     }
 }
 

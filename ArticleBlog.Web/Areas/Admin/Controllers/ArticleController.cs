@@ -103,7 +103,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
             articleUpdateDTO.Categories = categories;
 
-            return View(articleUpdateDTO);
+            return RedirectToAction("Index", "Article", new { Area = "Admin" });
         }
 
 
