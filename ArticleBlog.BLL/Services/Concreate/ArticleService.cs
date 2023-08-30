@@ -33,6 +33,8 @@ namespace ArticleBlog.BLL.Services.Concreate
             this._unitOfWork = unitOfWork;
             this.mapper = mapper;
             this._imageHelper = imageHelper;
+
+            this._httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;//burada eşleme işlemi aşağılarda uzun uzun olmaması adına _user a işlem yapan yapıyı eşitledik.
         }
 
@@ -40,6 +42,8 @@ namespace ArticleBlog.BLL.Services.Concreate
         {
             var userId = _user.GetLoggedInUserId();//artık loginlerde user ıd yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
             var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin yarattığını Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir CreatedBy kısmına. BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+
+
             //önce resim ekleme işlemi yapılır db ye 
             //sonra article eklenir.
             var imageUpload = await _imageHelper.Upload(articleAddDTO.Title, articleAddDTO.Photo, ImageType.Post);
@@ -72,6 +76,12 @@ namespace ArticleBlog.BLL.Services.Concreate
             await _unitOfWork.SaveAsync(); // Burada da SaveChanges() mantığı gibi kayıt işlemi yapmış olduk.
         }
 
+
+
+
+
+
+
         public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync() //Liste türünde Article ları kategorileriyle birlikte silinmemiş olanları döndürecek.
         {
 
@@ -81,6 +91,10 @@ namespace ArticleBlog.BLL.Services.Concreate
 
             return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
         }
+
+
+
+
 
 
 
@@ -95,6 +109,11 @@ namespace ArticleBlog.BLL.Services.Concreate
 
             return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
         }
+
+
+
+
+
 
 
         public async Task<string> UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
@@ -139,6 +158,10 @@ namespace ArticleBlog.BLL.Services.Concreate
             return article.Title;
 
         }
+
+
+
+
 
 
 

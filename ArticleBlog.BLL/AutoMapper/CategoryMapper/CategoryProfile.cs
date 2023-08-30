@@ -14,6 +14,7 @@ namespace ArticleBlog.BLL.AutoMapper.CategoryMapper
         public CategoryProfile()
         {
             CreateMap<CategoryDTO,Category>().ReverseMap(); //***Hem CategoryDTO dan Category a, hem de Category dan CategoryDTO ya map leme işlemi yapıldı. (ReverseMap() ters yönden map leme sağlar. Yani içerikleri birbirleri arasında aktarır. Data Transfer Object (DTO)).
+            CreateMap<CategoryAddDTO,Category>().ReverseMap(); //***Hem CategoryDTO dan Category a, hem de Category dan CategoryDTO ya map leme işlemi yapıldı. (ReverseMap() ters yönden map leme sağlar. Yani içerikleri birbirleri arasında aktarır. Data Transfer Object (DTO)).
         }
     }
 }

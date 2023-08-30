@@ -19,9 +19,10 @@ namespace ArticleBlog.Entitiy.Entities
             Articles = new HashSet<Article>();
         }
 
-        public Category(string categoryName)//kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
+        public Category(string categoryName, string createdBy)//kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
         {
             CategoryName = categoryName;
+            CreatedBy = createdBy; //kimin işlem yaptığını controllerlarda belirtirken bu parameter gereklidir.
         }
     }
 }
