@@ -57,8 +57,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             }
             else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
             {
-                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur.
-               
+                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. Bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+
             }
             var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Kategorisi silinmemiş olan tüm article ları getir dedik.
             return View(new ArticleAddDTO { Categories = categories });
@@ -95,7 +95,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             }
             else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
             {
-                result.AddToModelState(this.ModelState);
+                result.AddToModelState(this.ModelState); //bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
             }
 
 

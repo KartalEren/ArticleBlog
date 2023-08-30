@@ -15,6 +15,7 @@ namespace ArticleBlog.BLL.AutoMapper.UserMapper
         {
             CreateMap<AppUser, UserDTO>().ReverseMap(); //Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
             CreateMap<AppUser, UserAddDTO>().ReverseMap(); //Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
+            CreateMap<AppUser, UserUpdateDTO>().ReverseMap(); //Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
         }
     }
 }

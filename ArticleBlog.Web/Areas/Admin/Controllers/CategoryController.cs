@@ -53,7 +53,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             }
             else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
             {
-                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur.
+                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
 
                 return View(categoryAddDTO);
             }
@@ -119,7 +119,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             }
             else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
             {
-                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur.
+                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
 
                 return View();
             }

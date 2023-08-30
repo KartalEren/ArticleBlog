@@ -9,7 +9,7 @@ using FluentValidation.Results; //foreach deki result.Error  daki Error altı ç
 
 namespace ArticleBlog.BLL.Extensions
 {
-    public static class FluentValidationExtensions //Her seferinde new lenmeyeceği için static calss yapılır.
+    public static class ValidationExtensions //Her seferinde new lenmeyeceği için static calss yapılır.
     {
 
         //Başarısız işlemde verilecek mesajı içerir.
@@ -21,12 +21,12 @@ namespace ArticleBlog.BLL.Extensions
             }
         }
 
-        //public static void AddToIdentityModelState(this IdentityResult result, ModelStateDictionary modelState)
-        //{
-        //    foreach (var error in result.Errors)
-        //    {
-        //        modelState.AddModelError("", error.Description);
-        //    }
-        //}
+        public static void AddToIdentityModelState(this IdentityResult result, ModelStateDictionary modelState)
+        {
+            foreach (var error in result.Errors)
+            {
+                modelState.AddModelError("", error.Description);
+            }
+        }
     }
 }

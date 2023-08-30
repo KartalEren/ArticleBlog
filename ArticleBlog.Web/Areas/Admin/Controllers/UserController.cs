@@ -1,10 +1,14 @@
-﻿using ArticleBlog.Entitiy.DTOs.Users;
+﻿using ArticleBlog.BLL.Extensions;
+using ArticleBlog.Entitiy.DTOs.Users;
 using ArticleBlog.Entitiy.Entities;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+
 
 namespace ArticleBlog.Web.Areas.Admin.Controllers
 {
@@ -14,12 +18,14 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly RoleManager<AppRole> _roleManager; //Rollere ulaşmak için kendiliğinden gelen RoleManager<AppRole> AppRole sınıfını ekledik.
+        private readonly IValidator<AppUser> _validator; //fluent validation ları kullanabilmek için çağırdık.
 
-        public UserController(UserManager<AppUser> userManager, IMapper mapper, RoleManager<AppRole> roleManager)
+        public UserController(UserManager<AppUser> userManager, IMapper mapper, RoleManager<AppRole> roleManager, IValidator<AppUser> validator)
         {
             this._userManager = userManager;
             this._mapper = mapper;
             this._roleManager = roleManager;
+            this._validator = validator;
         }
 
 
@@ -52,6 +58,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Add(UserAddDTO userAddDTO)
         {
             var map = _mapper.Map<AppUser>(userAddDTO); //mapleyerek userAddDTO yu AppUser a döndürdü
+
+            var validation = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
             var roles = await _roleManager.Roles.ToListAsync();
             if (ModelState.IsValid)
             {
@@ -65,19 +73,121 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
                     await _userManager.AddToRoleAsync(map, findRole.ToString());//sonra bu rolü  oluşturduğumuz user a eklemiş olduk.
                     return RedirectToAction("Index", "User", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir. 
                 }
-                else
+                else//başarısız olursa
                 {
-                    foreach (var errors in result.Errors)//başarısız olursa
-                    {
-                        ModelState.AddModelError("", errors.Description);
-
+                    
+                    
+                        result.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+                        validation.AddToModelState(this.ModelState); //bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
                         return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın
-                    }
+                    
                 }
 
             }
             return View(new UserAddDTO { Roles = roles });//tüm işlem başarısız olursa gene ekleme sayfasında kalsın
         }
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)  //Kullanıcının bilgilerini ekrana GETirir
+        {
+            var user=await _userManager.FindByIdAsync(id.ToString());
+
+            var roles=await _roleManager.Roles.ToListAsync();
+
+            var map=_mapper.Map<UserUpdateDTO>(user); //mapleyerek UserUpdateDTO yu AppUser a döndürdü
+            map.Roles= roles;
+
+            return View(map);
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateDTO userUpdateDTO)  //Kullanıcının bilgilerini ekrana GETirir
+        {
+            var user = await _userManager.FindByIdAsync(userUpdateDTO.Id.ToString());
+           
+
+            if (user != null) //user boş değilse
+            {
+                var userRole= string.Join("", await _userManager.GetRolesAsync(user)); //üstte tanımlanan user ın rolünü getirir
+                var roles = await _roleManager.Roles.ToListAsync();
+
+                if (ModelState.IsValid)//eğer işlem başarılı olursa _userManager ile getirdiğim User tabloma girilen yeni değerleri eşle dedik
+                {
+                    var map=_mapper.Map(userUpdateDTO, user); //burada aşağıda yorum satırındaki işlerin aynısını mapper ile yapmış oluruz.
+                    //user.FirstName = userUpdateDTO.FirstName;
+                    //user.LastName = userUpdateDTO.LastName;
+                    //user.Email = userUpdateDTO.Email;
+
+                     var validation = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
+
+                    if (validation.IsValid)
+                    {
+                        user.UserName = userUpdateDTO.Email;
+                        user.SecurityStamp = Guid.NewGuid().ToString(); //aynı anda girişlerde sıkıntı olmasın diye farklı id vermesi için
+                        var result = await _userManager.UpdateAsync(user);
+
+                        if (result.Succeeded)
+                        {
+                            await _userManager.RemoveFromRoleAsync(user, userRole);
+                            var findRole = await _roleManager.FindByIdAsync(userUpdateDTO.RoleId.ToString());
+                            await _userManager.AddToRoleAsync(user, findRole.Name);
+                            return RedirectToAction("Index", "User", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir. 
+                        }
+                        else//başarısız olursa
+                        {    
+                                result.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner
+
+
+                                return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın                            
+                        }
+                    }
+                    else
+                    {
+                        validation.AddToModelState(this.ModelState); //bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+
+                        return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın
+                    }
+
+
+                   
+                }
+
+            }
+            return NotFound();       
+        }
+
+
+
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());//user ı bulduk
+
+            var result=await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "User", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir. 
+            }
+            else//başarısız olursa
+            {
+                result.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner
+            }
+            return NotFound();
+
+
+        }
+
+
+
+
 
 
 
