@@ -3,6 +3,7 @@ using ArticleBlog.Entitiy.DTOs.Users;
 using ArticleBlog.Entitiy.Entities;
 using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         }
 
 
+        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Index()//kullanıcıları rollerine göre gösteririz.
         {
 
@@ -47,6 +49,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Add() //kullanıcıekleriz.
         {
             var roles = await _roleManager.Roles.ToListAsync();
@@ -54,7 +57,10 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             return View(new UserAddDTO { Roles = roles });//kullanıcıdan gelen rolü dto daki Roles e atamış olduk. oluşturmuş olduk.
         }
 
+
+
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Add(UserAddDTO userAddDTO)
         {
             var map = _mapper.Map<AppUser>(userAddDTO); //mapleyerek userAddDTO yu AppUser a döndürdü
@@ -91,6 +97,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Update(int id)  //Kullanıcının bilgilerini ekrana GETirir
         {
             var user=await _userManager.FindByIdAsync(id.ToString());
@@ -107,6 +114,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Update(UserUpdateDTO userUpdateDTO)  //Kullanıcının bilgilerini ekrana GETirir
         {
             var user = await _userManager.FindByIdAsync(userUpdateDTO.Id.ToString());
@@ -152,12 +160,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
                         validation.AddToModelState(this.ModelState); //bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
 
                         return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın
-                    }
-
-
-                   
+                    }                   
                 }
-
             }
             return NotFound();       
         }
@@ -165,7 +169,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-
+        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Delete(int id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());//user ı bulduk

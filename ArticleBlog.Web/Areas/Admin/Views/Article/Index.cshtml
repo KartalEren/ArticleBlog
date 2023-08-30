@@ -9,8 +9,17 @@
 
     <div class="card">
         <div class="table-responsive text-nowrap m-3">
-           
-            <a a class="btn btn-success mb-3" asp-area="Admin" asp-controller="Article" asp-action="Add">Add New Article<i class="bx bx-plus"></i></a> @* Sayfaya GET işlemi yapacaktır *@
+
+            @{
+
+                if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                {
+                    <a a class="btn btn-success mb-3" asp-area="Admin" asp-controller="Article" asp-action="Add">Add New Article<i class="bx bx-plus"></i></a> @* Sayfaya GET işlemi yapacaktır *@
+                }
+
+            }
+
+
 
             <table class="table table-bordered" id="articlesTable" width="100%" cellspacing="0">
                 @*  id="articleTables" wwwroot içindeki articleIndex dosyasındaki id ile aynı olmalıdır. JS dosyası ile tablonun içini doldurduk. *@
@@ -21,7 +30,13 @@
                         <th>Created Date</th>
                         <th>Created By</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        @{
+                            if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                           
+                            {
+                                <th>Actions</th>
+                            }
+                        }
                     </tr>
                 </thead>
                 <tfoot>
@@ -30,8 +45,15 @@
                         <th>Category</th>
                         <th>Created Date</th>
                         <th>Created By</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>Status</th>                     
+
+                        @{
+                            if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                            {
+                                <th>Actions</th>
+                            }
+                        }
+
                     </tr>
                 </tfoot>
                 <tbody class="table-border-bottom-0">
@@ -45,10 +67,21 @@
                             <td>@article.CreatedBy</td>
                             <td>@(article.IsDeleted ? "None Active" : "Active")</td> @* true ise silinmiş false ise aktif demektir. *@
                             <td>
-                                <a class="btn btn-primary btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-Id="@article.ID">@* buradaki yönlendirme ye(asp-route-Id) update controllerdaki parametre adını yazmak gerekir. *@ <i class="bx bxs-edit"></i></a> @* Burası biz güncelleme butonuna basınca Article Controllerdaki Update actionresult ının cshtml (view) sayfasına atması gerekirki orada düzenleme yapalım *@
-                                <a class="btn btn-danger btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@article.ID">@* buradaki yönlendirme ye(asp-route-Id) Delete controllerdaki parametre adını yazmak gerekir. *@ <i class="bx bx-minus-circle"></i></a> @* Burası biz sil butonuna basınca Article Controllerdaki Delete actionresult ının cshtml (view) sayfasına atması gerekirki orada silme yapalım *@
-                            </td>
+
+                                @{
+                                    if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                                    {
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-Id="@article.ID">@* buradaki yönlendirme ye(asp-route-Id) update controllerdaki parametre adını yazmak gerekir. *@ <i class="bx bxs-edit"></i></a> @* Burası biz güncelleme butonuna basınca Article Controllerdaki Update actionresult ının cshtml (view) sayfasına atması gerekirki orada düzenleme yapalım *@
+                                        <a class="btn btn-danger btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@article.ID">@* buradaki yönlendirme ye(asp-route-Id) Delete controllerdaki parametre adını yazmak gerekir. *@ <i class="bx bx-minus-circle"></i></a> @* Burası biz sil butonuna basınca Article Controllerdaki Delete actionresult ının cshtml (view) sayfasına atması gerekirki orada silme yapalım *@
+                                    </td>
+                                    }
+                                }
+
+
                         </tr>
+
+
                     }
 
 

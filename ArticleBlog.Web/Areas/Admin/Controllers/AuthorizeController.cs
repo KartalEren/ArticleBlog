@@ -67,5 +67,14 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             return RedirectToAction("Index", "Home", new { Area = "" }); //******Area nın boş yapmamızın nedeni bizin Identity içindeki Home değil de En genel makalelerin bulunduğu AREA DIŞINDAKİ Home-Index e gitmesini isteriz.
         }
 
+
+
+        [Authorize] //Logout olmak için önce Login olmak gerekli onun için bu attribute u kullanırız.
+        [HttpGet]
+        public async Task<IActionResult> AccessDenied() //Giriş kısıtlamak için kullanırız
+        {
+
+            return View(); //yetkisiz kullanıcıları view a döndürürüz.
+        }
     }
 }
