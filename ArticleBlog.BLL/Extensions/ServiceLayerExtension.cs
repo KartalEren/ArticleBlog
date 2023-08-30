@@ -44,7 +44,7 @@ namespace ArticleBlog.BLL.Extensions
             services.AddControllersWithViews()
                 .AddFluentValidation(opt =>
                 {
-                    opt.RegisterValidatorsFromAssemblyContaining<ArticleValidator>();
+                    opt.RegisterValidatorsFromAssemblyContaining<ArticleValidator>(); //****ArticleValidatordan kaloıtım alan tüm Validatorler için yapılmış maplemedir tek tek tüm validatorleri girmeye gerek yoktur.
                     opt.DisableDataAnnotationsValidation = true; //dataAnnotation kullanmamak için bunu true yaptık. çünkü FluentValidationla yapacağız BLL-Extension klasöründeki
                     opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("en");
                 }); //dil ayarlaması yapılır.

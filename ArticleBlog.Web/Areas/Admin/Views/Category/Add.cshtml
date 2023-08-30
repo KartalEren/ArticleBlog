@@ -1,0 +1,29 @@
+﻿@model CategoryAddDTO
+<h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">CATEGORY MANAGEMENT /</span> Add New Category
+</h4>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <h5 class="card-header"></h5>
+            <form asp-controller="Article" asp-action="Add" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly"></div> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                <div class="card-body">
+                   
+                    <div class="form-group">
+                        <label asp-for="@Model.CategoryName" id="defaultFormControlInput" class="form-label">Category</label>
+                        <input asp-for="@Model.CategoryName" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="Please Input Category Title" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="@Model.CategoryName" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                    </div>                  
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block bg-success">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
