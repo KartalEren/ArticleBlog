@@ -11,6 +11,7 @@ namespace ArticleBlog.BLL.Services.Abstract
     public interface IArticleService
     {
         Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync();//Sadece article a ait olduğu içinjenerik yapmaya gerek yoktur.
+        Task<List<ArticleDTO>> GetAllArticlesWithCategoryDeleted();//Silinmiş makaleleri listeler.
         Task CreateArticleAsync(ArticleAddDTO articleAddDTO); //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
         Task<ArticleDTO> GetArticleWithCategoryNonDeletedAsync(int Id); //Tek bir değer Article kategorileriyle birlikte silinmemiş olanları ve id lere göre eşleyerek getirecek döndürecek.
 
@@ -18,5 +19,6 @@ namespace ArticleBlog.BLL.Services.Abstract
 
 
         Task SafeDeleteArticleAsync(int Id); //Tamamen silmeden Silmiş gibi işlem yaptırırız.
+        Task UndoDeleteArticleAsync(int Id); //Silinmiş makaleleri geri getirir.
     }
 }

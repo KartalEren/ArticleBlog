@@ -33,6 +33,17 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
+
+        public async Task<IActionResult> DeletedCategory() //Silinmiş kategorileri listeler
+        {
+            var categories = await _categoryService.GetAllCategoriesDeleted(); //tüm listeleri geri getirir.
+            return View(categories);
+
+        }
+
+
+
+
         [HttpGet]
         public IActionResult Add() //makale ekleme get kısmı
         {
@@ -132,6 +143,15 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int Id)
         {
             await _categoryService.SafeDeleteCategoryAsync(Id);
+            return RedirectToAction("Index", "Category", new { Area = "Admin" });
+        }
+
+
+
+
+        public async Task<IActionResult> UndoDelete(int Id)//Silinmiş kategorileri geri yükler
+        {
+            await _categoryService.UndoDeleteCategoryAsync(Id);
             return RedirectToAction("Index", "Category", new { Area = "Admin" });
         }
 

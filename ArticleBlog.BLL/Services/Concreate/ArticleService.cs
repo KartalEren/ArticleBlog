@@ -53,7 +53,7 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-            //---------------------------------------------------------
+            /*---------------------------------------------------------*/
 
 
 
@@ -79,6 +79,9 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
 
 
 
@@ -94,6 +97,9 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
 
 
 
@@ -112,6 +118,9 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
 
 
 
@@ -141,7 +150,7 @@ namespace ArticleBlog.BLL.Services.Concreate
             }
 
 
-            //---------------------------------------------------------------------------------------
+           /*---------------------------------------------------------------------------------------*/
 
             //aşağıda da yeni değerli kaydederiz.
 
@@ -162,6 +171,9 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
 
 
 
@@ -184,5 +196,43 @@ namespace ArticleBlog.BLL.Services.Concreate
         }
 
 
+
+
+
+
+        
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
+
+
+
+        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryDeleted() //Silinmiş makaleleri listeler.
+        {
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.IsDeleted, x => x.Category);//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. Ayrıca kategor,ye göre silinmemiş olanları GetAllAsync(x=>x.IsDeleted,x=>x.Category) metoduyla getirir articleları İşin kolaylığı burada....
+
+            var map = mapper.Map<List<ArticleDTO>>(articles); //Burada DTO oluşturduğumuz ArticleDTO classının maplemek için yaparız ve deriz ki; buradaki dto da oluşturulan proplara göre listeleri getir demek isteriz. Yani göstermek istediğimiz propları index te veya herhangi cshtml de biz seçeriz böylece tüm propları kişilere güvenlik açısından açmamış oluruz. List türünde olmalıdır çünkü metot bir liste döndürür. Article Listesi döner.
+
+            return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
+        }
+
+        public async Task UndoDeleteArticleAsync(int Id)//Silinmiş makaleleri geri getirir.
+        {
+            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin sildiğini Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir DeletedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+
+
+
+            var article = await _unitOfWork.GetRepository<Article>().GetByIdAsync(Id); //sadece repositorydeki GetByIdAsync metoduyla silme işlemi yapabiliriz.
+
+            article.IsDeleted = false; //IsDeleted false olduğu için biz article çağırdığımızda yukarılarda yaptığımız metotlarda isDeleted=true ları almıştık dolayısıyla onlar gelmeyecek. BaseEntity de isDeletd=true tanımlıdır normalde.
+            article.DeletedDate = null;
+            article.DeletedBy = null;
+
+
+            await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
+            await _unitOfWork.SaveAsync();
+        }
+
+        //--------------------------------------------------------------------------------------
     }
 }

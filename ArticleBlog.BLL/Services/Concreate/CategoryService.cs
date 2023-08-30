@@ -39,6 +39,12 @@ namespace ArticleBlog.BLL.Services.Concreate
         }
 
 
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
+
+
         public async Task CreateCategoryAsync(CategoryAddDTO categoryAddDTO)
         {
             
@@ -53,6 +59,11 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
+
         public async Task<Category> GetCategoryById(int id) //id ye göre kategori güncelleme işlemi yapılır.
         {
             var category=await _unitOfWork.GetRepository<Category>().GetByIdAsync(id);
@@ -61,6 +72,9 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
 
 
         public async Task<string> UpdateCategoryAsync(CategoryUpdateDTO categoryUpdateDTO) //güncellemem işleminin yapıldığı metottur. String olarak yazarız çünkü makale başlığını göreceğiz.
@@ -87,6 +101,9 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
 
         public async Task<string> SafeDeleteCategoryAsync(int id)  //string vir başlık döneriz ve Tamamen silmeden Silmiş gibi işlem yaptırırız..
         {
@@ -106,6 +123,48 @@ namespace ArticleBlog.BLL.Services.Concreate
 
             return category.CategoryName;
         }
+
+
+
+
+
+
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
+
+
+
+        public async Task<List<CategoryDTO>> GetAllCategoriesDeleted() //tüm silinen category leri listeler
+        {
+            var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync(x => x.IsDeleted);
+            var map = mapper.Map<List<CategoryDTO>>(categories); //Burada map işlemini hemen DTO su ile yapmış oluruz.
+            return map; //Kategorileri dönen servistir.
+        }
+
+        public async Task<string> UndoDeleteCategoryAsync(int id) //silinmiş categoryleri geri döndürür.
+        {
+            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin sildiğini Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir DeletedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+
+
+
+            var category = await _unitOfWork.GetRepository<Category>().GetByIdAsync(id); //sadece repositorydeki GetByIdAsync metoduyla silme işlemi yapabiliriz.
+
+            category.IsDeleted = false; //IsDeleted false olduğu için biz article çağırdığımızda yukarılarda yaptığımız metotlarda isDeleted=true ları almıştık dolayısıyla onlar gelmeyecek. BaseEntity de isDeletd=true tanımlıdır normalde.
+            category.DeletedDate = null;
+            category.DeletedBy = null; //DeletedBy kısmında giriş yapanın Emil adresi yazacaktır. 
+
+
+            await _unitOfWork.GetRepository<Category>().UpdateAsync(category);
+            await _unitOfWork.SaveAsync();
+
+            return category.CategoryName;
+        }
+
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
 
     }
 

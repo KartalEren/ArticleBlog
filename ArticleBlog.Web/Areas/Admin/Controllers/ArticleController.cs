@@ -26,12 +26,22 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             this._validator = validator;
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var article = await _articleService.GetAllArticlesWithCategoryNoneDeletedAsync();
             return View(article);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> DeletedArticle() //Silinmiş article ları geri listeler
+        {
+            var article = await _articleService.GetAllArticlesWithCategoryDeleted();
+            return View(article);
+        }
+
+
 
 
         [HttpGet] //ilk ekran get ekranı olacak yani formu görp içine neler girebiliriz onu göreceğiz.
@@ -113,9 +123,16 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-        public async Task<IActionResult> Delete(int Id)
+        public async Task<IActionResult> Delete(int Id)//Makaleleri tamamen silmeden silinmiş gösterir.
         {
-            await _articleService.SafeDeleteArticleAsync(Id);
+             await _articleService.SafeDeleteArticleAsync(Id);
+            return RedirectToAction("Index", "Article", new { Area = "Admin" });
+        }
+
+
+        public async Task<IActionResult> UndoDelete(int Id) //Silinen makaleleri geri yükler.
+        {
+            await _articleService.UndoDeleteArticleAsync(Id);
             return RedirectToAction("Index", "Article", new { Area = "Admin" });
         }
     }
