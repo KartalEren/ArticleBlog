@@ -35,7 +35,7 @@ namespace ArticleBlog.BLL.Services.Concreate
             this._imageHelper = imageHelper;
 
             this._httpContextAccessor = httpContextAccessor;
-            _user = httpContextAccessor.HttpContext.User;//burada eşleme işlemi aşağılarda uzun uzun olmaması adına _user a işlem yapan yapıyı eşitledik.
+            _user = httpContextAccessor.HttpContext.User;//burada eşleme işlemi aşağılarda uzun uzun olmaması adına _user a işlem yapan yapıyı eşitledik. //artık BLL-Extension-LoggedInUserExtensiondan login logout olan kullanıcıyı bulabiliriz.
         }
 
         public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.

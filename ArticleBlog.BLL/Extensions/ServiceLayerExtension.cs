@@ -30,6 +30,7 @@ namespace ArticleBlog.BLL.Extensions
 
             services.AddScopedDAL().AddScoped<IArticleService, ArticleService>(); //IArticleService çağırıldığında ArticleService döneceğini bildirir.
             services.AddScopedDAL().AddScoped<ICategoryService, CategoryService>(); //ICategoryService çağırıldığında CategoryService döneceğini bildirir.
+            services.AddScopedDAL().AddScoped<IUserService, UserService>(); //IUserService çağırıldığında UserService döneceğini bildirir.
             services.AddScoped<IImageHelper, ImageHelper>(); //IImageHelper çağırıldığında ImageHelper döneceğini bildirir.
 
             services.AddAutoMapper(assembly);//BLL katmanıdaki tüm automapper kurulan yapıları bulup (Profile dan kalıtım alan dosyaları)
