@@ -3,6 +3,7 @@ using ArticleBlog.BLL.Services.Abstract;
 using ArticleBlog.BLL.Services.Concreate;
 using ArticleBlog.Entitiy.DTOs.Articles;
 using ArticleBlog.Entitiy.Entities;
+using ArticleBlog.Web.Consts;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +29,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin,User")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}, {RoleConsts.User}")]//***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Index()
         {
             var article = await _articleService.GetAllArticlesWithCategoryNoneDeletedAsync();
@@ -37,7 +38,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> DeletedArticle() //Silinmiş article ları geri listeler
         {
             var article = await _articleService.GetAllArticlesWithCategoryDeleted();
@@ -48,7 +49,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet] //ilk ekran get ekranı olacak yani formu görp içine neler girebiliriz onu göreceğiz.
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Kategorisi silinmemiş olan tüm article ları getir dedik.
@@ -57,7 +58,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost] //ilk ekran get ekranı olacak yani formu görp içine neler girebiliriz onu göreceğiz.
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Add(ArticleAddDTO articleAddDTO) //Post da ekleme yapacağımız yer kullanıcıya gösteriğimiz DTO olduğu için o parametreleri veririz.
         {
             //ArticleAddDTO dan Article a çevirelemeyeceği için mapper işlemi yaparız
@@ -82,7 +83,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Update(int Id)
         {
             var article = await _articleService.GetArticleWithCategoryNonDeletedAsync(Id); //1 adet article güncellemek için yapıldı.
@@ -98,7 +99,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         //var result = await _validator.ValidateAsync(map);
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Update(ArticleUpdateDTO articleUpdateDTO)
         {
 
@@ -129,7 +130,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> Delete(int Id)//Makaleleri tamamen silmeden silinmiş gösterir.
         {
              await _articleService.SafeDeleteArticleAsync(Id);
@@ -138,7 +139,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
         public async Task<IActionResult> UndoDelete(int Id) //Silinen makaleleri geri yükler.
         {
             await _articleService.UndoDeleteArticleAsync(Id);

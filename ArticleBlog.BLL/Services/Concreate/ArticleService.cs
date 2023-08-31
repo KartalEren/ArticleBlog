@@ -26,7 +26,7 @@ namespace ArticleBlog.BLL.Services.Concreate
         private readonly IMapper mapper; //Liste türünde metotlarda Mapleme yapmak için burada new leriz.
         private readonly IImageHelper _imageHelper; //resim ekleme için article a buradan imageHelper içindeki metotlara ulaşırız hem eklemek hem silmek için
         private readonly IHttpContextAccessor _httpContextAccessor; //BLL-Extension-LoggedInUserExtensions deki ifadeleri görmesi için buraya servis ekledik. HttpContextAccessor ile kullanıcıyı bulmamızı sağlayan yapıdır.
-        private readonly ClaimsPrincipal _user;//Bir üstteki _httpContextAccessor tanımlamak yerine kısa metotlarda olması adına _user şeklinde yapar ctor içine atarız ve _user ı kullanırız artık
+        private readonly ClaimsPrincipal _user;//Login olan kullanıcııları bulan bir yapıdır.Bir üstteki _httpContextAccessor tanımlamak yerine kısa metotlarda olması adına _user şeklinde yapar ctor içine atarız ve _user ı kullanırız artık
 
         public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor,IImageHelper imageHelper)
         {
