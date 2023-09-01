@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.AutoMapper.CategoryMapper
 {
+
+    //****BURADA SONRADAN OLUŞTURDUĞUM DTO LAR İLE NORMAL ENTITIY CLASSLARINI MAPLİYORUM DEPENDENCY INJECTION İÇİN.
+
+
     public class CategoryProfile:Profile
 
 

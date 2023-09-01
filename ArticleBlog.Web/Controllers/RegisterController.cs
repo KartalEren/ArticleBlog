@@ -46,7 +46,7 @@ namespace ArticleBlog.Web.Controllers
                     UserName = userRegisterDTO.Email,
                     Email = userRegisterDTO.Email,
                     PhoneNumber = userRegisterDTO.PhoneNumber,
-                    //ConfirmCode = code
+                    ConfirmCode = code
                 };
 
                 if (userRegisterDTO.ConfirmPassword == null || userRegisterDTO.ConfirmPassword != userRegisterDTO.Password) //Burayı şifreyi onaylamayınca kaydettiği için kaydetmemesi adına bir kontrol amacıyla yaptık.
@@ -81,10 +81,12 @@ namespace ArticleBlog.Web.Controllers
                     smtpClient.Send(mimeMessage); //mimeMessageden gelen maili gönder.
                     smtpClient.Disconnect(true); //mail gönderildekten sonra mailden çıkış yap.
 
-                  
 
 
-                    return RedirectToAction("Index", "ConfirmMail");
+                    TempData["Mail"] = userRegisterDTO.Email; //NOT:***ÖNEMLİ: BURADAKİ İD Yİ BAŞKA BİR COTROLLER ACTİONUNDA TAŞIMAK İÇİN(CONFIRMCONTROLLER-INDEX) TEMPDATA KULLANDIK. userRegisterDTO dan gelen Email "Mail" başlığında sakla dedik.
+
+
+                    return RedirectToAction("Index", "Confirm");
                 }
                 else
                 {

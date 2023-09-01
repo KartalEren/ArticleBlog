@@ -20,6 +20,9 @@ using ArticleBlog.BLL.Helpers.Images;
 
 namespace ArticleBlog.BLL.Extensions
 {
+    //****BURADA SEVİSTEKİ METOTLARIMI ÇAĞIRMAK İÇİN OLUŞTURDUĞUM INTERFACE CLASSLARLA CLASSLARIN NORMAL SINIFINI MAPLİYORUM. DEPENDENCY EXTENSION YAPILDI.
+
+
     //Burada da MVC.Web kısmında programı çalıştırırken Referansı BLL den aldığı için program hata vermemesi adına burada da DAL kısmında yaptığımız mapper tarzı işlemi yapmalıyız hangi sınıfta işlemler yapacaksak.
     public static class ServiceLayerExtension //Her seferinde new lenmeyeceği için static calss yapılır.
     {

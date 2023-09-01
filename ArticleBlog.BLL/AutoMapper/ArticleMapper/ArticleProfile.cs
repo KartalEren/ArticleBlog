@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 namespace ArticleBlog.BLL.AutoMapper.ArticleMapper
 {
 
+
+    //****BURADA SONRADAN OLUŞTURDUĞUM DTO LAR İLE NORMAL ENTITIY CLASSLARINI MAPLİYORUM DEPENDENCY INJECTION İÇİN.
+
+
     //NOT:******Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
     public class ArticleProfile: Profile //Auto Mapper yapısı için bu katmanda AutoMapper ve AutoMapper DependencyInjection Nugetlarını indirip kurduk. Ve Profile den kalıtım verdik.
     {

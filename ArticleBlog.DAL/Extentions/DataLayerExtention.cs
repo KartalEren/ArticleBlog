@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.DAL.Extentions
 {
+    //****BURADA DAL KAYMANINDAKİ METOTLARIMI ÇAĞIRMAK İÇİN OLUŞTURDUĞUM INTERFACE CLASSLARLA CLASSLARIN NORMAL SINIFINI MAPLİYORUM. DEPENDENCY EXTENSION YAPILDI.
+
+
     //***Dependency Injection için bu sınıfı kullanırız.
     public static class DataLayerExtention
     {

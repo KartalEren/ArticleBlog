@@ -1,4 +1,4 @@
-﻿@model UserRegisterDTO
+﻿@model UserConfirmMailDTO
 
 @{
     Layout = null;
@@ -11,7 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Register Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Code Confirm Basic - Pages | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!" />
     <meta name="keywords" content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
@@ -73,9 +73,9 @@
 
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
-            <div class="authentication-inner">
+            <div class="authentication-inner py-4">
 
-                <!-- Register Card -->
+                <!-- Forgot Password -->
                 <div class="card">
                     <div class="card-body">
                         <!-- Logo -->
@@ -117,62 +117,34 @@
                                     </svg>
 
                                 </span>
-                                <span>Article Blog</span>
+                                <span class="app-brand-text demo text-body fw-bolder">Confirm Code</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        
+                        <h4 class="mb-2">Confirm Code 🔒</h4>
+                        <p class="mb-4">Please input the confirmation code sent to your e-mail address </p>
+                        <form id="formAuthentication" class="mb-3" asp-controller="Confirm" asp-action="Index" method="post">
 
-                        <form asp-controller="Register" asp-action="Index" id="formAuthentication" class="mb-3" method="post">
-                            
-                            <div asp-validation-summary="All" style="color:red"></div>
-
-                            <div class="mb-3">
-                                <label asp-for="FirstName" for="firstname" class="form-label"> FirstName </label>
-                                <input asp-for="FirstName" type="text" class="form-control" id="firstname" name="firstname" placeholder="İsim" autofocus>
-
-                            </div>
+                            <input asp-for="@Model.Email" value="@ViewBag.UserEmail" type="text" class="form-control" id="email" name="email" hidden autofocus>
+                           @*  ViewBag.UserEmail ile Confirm Controller-Index e Register Controlerdaki TempData["Mail"] = userRegisterDTO.Email kayıt yapan kullancı mailini taşıdık. *@
 
                             <div class="mb-3">
-                                <label asp-for="LastName" for="lastname" class="form-label"> LastName </label>
-                                <input asp-for="LastName" type="text" class="form-control" id="lastname" name="lastname" placeholder="Soyisim" autofocus>
+                                <label for="confirmCode" class="form-label">Code</label>
+                                <input asp-for="ConfirmCode" type="text" class="form-control" id="confirmCode" name="confirmCode" autofocus>
                             </div>
 
-                            <div class="mb-3">
-                                <label asp-for="PhoneNumber" for="phoneNumber" class="form-label"> Phone Number </label>
-                                <input asp-for="PhoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Telefon Numarası" autofocus>
-                            </div>
-
-                            <div class="mb-3">
-                                <label asp-for="Email" for="email" class="form-label"> Email </label>
-                                <input asp-for="Email" type="text" class="form-control" id="email" name="email" placeholder="Email">
-                            </div>
-
-                            <div class="mb-3 form-password-toggle">
-                                <label asp-for="Password" class="form-label" for="password"> Password 🔒</label>
-                                <div class="input-group input-group-merge">
-                                    <input asp-for="Password" type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 form-password-toggle">
-                                <label asp-for="ConfirmPassword" class="form-label" for="confirmPassword"> Confirm Password 🔒</label>
-                                <div class="input-group input-group-merge">
-                                    <input asp-for="ConfirmPassword" type="password" id="password" class="form-control" name="confirmPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="confirmPassword" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary d-grid w-100">
-                                SUBMIT
-                            </button>
+                            <button class="btn btn-success d-grid w-100">Confirm</button>
 
                         </form>
-
+                        @* <div class="text-center">
+                        <a href="auth-login-basic.html" class="d-flex align-items-center justify-content-center">
+                        <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                        Back to login
+                        </a>
+                        </div> *@
                     </div>
                 </div>
-                <!-- Register Card -->
+                <!-- /Forgot Password -->
             </div>
         </div>
     </div>
@@ -181,10 +153,8 @@
 
 
 
-@* 
-    <div class="buy-now">
-        <a href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/" target="_blank" class="btn btn-danger btn-buy-now">Upgrade to Pro</a>
-    </div> *@
+
+   
 
 
     <!-- Core JS -->
