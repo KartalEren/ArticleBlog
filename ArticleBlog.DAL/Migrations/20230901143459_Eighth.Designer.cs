@@ -4,6 +4,7 @@ using ArticleBlog.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArticleBlog.DAL.Migrations
 {
     [DbContext(typeof(BlogDBContext))]
-    partial class BlogDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230901143459_Eighth")]
+    partial class Eighth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,6 +124,7 @@ namespace ArticleBlog.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ImageId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -161,7 +164,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Eren Kartal",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(3029),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(335),
                             ImageId = 1,
                             IsDeleted = false,
                             Title = "Article",
@@ -174,7 +177,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Umut Oncel",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(3033),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(340),
                             ImageId = 2,
                             IsDeleted = false,
                             Title = "Article",
@@ -187,7 +190,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Furkan Kahveci",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(3036),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(344),
                             ImageId = 3,
                             IsDeleted = false,
                             Title = "Article",
@@ -256,7 +259,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 1,
                             CategoryName = "Category 1",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(3928),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(1912),
                             IsDeleted = false
                         },
                         new
@@ -264,7 +267,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 2,
                             CategoryName = "Category 2",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(3930),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(1916),
                             IsDeleted = false
                         },
                         new
@@ -272,7 +275,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 3,
                             CategoryName = "Category 3",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(3933),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(1919),
                             IsDeleted = false
                         });
                 });
@@ -325,7 +328,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 1,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(4548),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(2952),
                             FileName = "image1",
                             FileType = "jpg",
                             IsDeleted = false
@@ -334,7 +337,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 2,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(4552),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(2956),
                             FileName = "image2",
                             FileType = "png",
                             IsDeleted = false
@@ -343,7 +346,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 3,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 9, 1, 17, 49, 19, 443, DateTimeKind.Local).AddTicks(4561),
+                            CreatedDate = new DateTime(2023, 9, 1, 17, 34, 58, 924, DateTimeKind.Local).AddTicks(2958),
                             FileName = "image3",
                             FileType = "png",
                             IsDeleted = false
@@ -396,7 +399,8 @@ namespace ArticleBlog.DAL.Migrations
                     b.HasOne("ArticleBlog.Entitiy.Entities.Image", "Image")
                         .WithMany("Articles")
                         .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Category");
 

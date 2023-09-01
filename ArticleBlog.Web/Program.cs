@@ -15,15 +15,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews(opt =>
 {
     opt.Filters.Add<ArticleVisitorFilter>();
-})//Buraya WEB-FILTER-ARTICLEVISITORS-ArticleVisitorFilter FilterAction u ekledik (KULLANICI BÝLGÝLERÝNÝ KAYIT ALTINA ALABÝLMEK ÝÇÝN BU FÝLTER I YAPTIK.)****
+})//Buraya TIKLANMA SAYISINI BULABÝLMEK ÝÇÝN WEB-FILTER-ARTICLEVISITORS-ArticleVisitorFilter FilterAction u ekledik (KULLANICI BÝLGÝLERÝNÝ KAYIT ALTINA ALABÝLMEK ÝÇÝN BU FÝLTER I YAPTIK.)****
                 .AddRazorRuntimeCompilation(); //Projeyi kapatýp açmadan sadece sayfayý yenileyerek index içerisindeki deðiþiklikleri yansýtan uygulamadýr. Ama önce Web katmanýna RazorRuntimeCompilation nuget ýný yüklemek gerekmektedir.
+
 
 builder.Services.AddScopedDAL(); // DAL içerisindeki Extensions klasöründe DataLayerExtention da Dependency Injection iþlemini AddScopeDAL metodu ile yapmýþ olduk.
 // Add services to the container.
 builder.Services.AddScopedBLL();// BLL içerisindeki Extensions klasöründe ServiceLayerExtention da Dependency Injection iþlemini AddScopeBLL metodu ile yapmýþ olduk.
 builder.Services.AddSession();// Session eklemek için bu metodu buraya tanýmlamalýyýz ve aþaðýda da app.UseSession(); metodunu eklemeliyiz ki bu metodu kullanalým.Cookie eklemek için yaptýk.
 
-builder.Services.AddIdentity<AppUser, AppRole>(opt =>//cookie yapýsýný oluþturuyoruz.
+builder.Services.AddIdentity<AppUser, AppRole>(opt =>//cookie yapýsýný oluþturuyoruz. Ayrýca sadece bu ifadeyi (builder.Services.AddIdentity<AppUser, AppRole>) REGÝSTER ÝÇÝNDE EKLEMEK GEREKLÝDÝR.
 {
     opt.Password.RequireNonAlphanumeric = false; // sadece büyük küçük harf vs duyarýlýðýný kaldýrmak için burayý false yaparýz ve sadece 1234 þifresiyle giriþ yapabiliriz. Bunlarý gerçek projede kaldýrýrsak oluþturulacak þifre daha güvenli olur.
     opt.Password.RequireLowercase = false; //küçük harf zorunluluðunu kaldýrýrýz. Bunlarý gerçek projede kaldýrýrsak oluþturulacak þifre daha güvenli olur.

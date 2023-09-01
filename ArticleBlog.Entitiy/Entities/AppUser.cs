@@ -6,7 +6,8 @@ namespace ArticleBlog.Entitiy.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //public Image Image { get; set; }
+        public int? ConfirmCode { get; set; }
+        public Image? Image { get; set; }
         public int? ImageId { get; set; }
         public ICollection<Article> Articles { get; set; }
 
