@@ -16,13 +16,13 @@ namespace ArticleBlog.BLL.FluentValidations
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(3)
-                .MaximumLength(150);
+                .MaximumLength(1000);
 
             RuleFor(x => x.Content)
                .NotEmpty()
                .NotNull()
                .MinimumLength(3)
-               .MaximumLength(150);
+               .MaximumLength(1000);
 
 
 

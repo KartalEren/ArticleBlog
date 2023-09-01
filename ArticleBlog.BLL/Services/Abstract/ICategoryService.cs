@@ -11,6 +11,7 @@ namespace ArticleBlog.BLL.Services.Abstract
     public interface ICategoryService
     {
         Task<List<CategoryDTO>> GetAllCategoriesNonDeleted(); // tüm category leri listeler
+        Task<List<CategoryDTO>> GetAllCategoriesNonDeletedTake24(); // Silinmemiş 24 adet kategoriyi getirir.
         Task<List<CategoryDTO>> GetAllCategoriesDeleted(); // tüm silinen category leri listeler
 
         Task CreateCategoryAsync(CategoryAddDTO categoryAddDTO);  //Yeni bir category eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre category ekler.

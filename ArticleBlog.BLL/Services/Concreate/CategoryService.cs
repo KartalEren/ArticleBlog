@@ -166,6 +166,21 @@ namespace ArticleBlog.BLL.Services.Concreate
         //--------------------------------------------------------------------------------------//
         //--------------------------------------------------------------------------------------//
 
+
+
+        public async Task<List<CategoryDTO>> GetAllCategoriesNonDeletedTake24()
+        {
+            var categories = await _unitOfWork.GetRepository<Category>().GetAllAsync(x => !x.IsDeleted);
+            var map = mapper.Map<List<CategoryDTO>>(categories); //Burada map işlemini hemen DTO su ile yapmış oluruz.
+
+            var takeCategories = map.Take(24).ToList();
+            return takeCategories; //24 tane kategori çekeriz
+        }
+
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
     }
 
 

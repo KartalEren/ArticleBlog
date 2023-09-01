@@ -1,0 +1,17 @@
+﻿@model List<CategoryDTO>
+
+@* ındexten alındı view component yapmak için *@
+
+
+<div class="content">
+    <ul>
+
+        @foreach (var category in Model)
+        {
+           
+            <li><a asp-controller="Home" asp-action="Index" asp-route-categoryId="@category.ID">- @category.CategoryName</a></li>
+        }
+       
+        
+    </ul>
+</div>

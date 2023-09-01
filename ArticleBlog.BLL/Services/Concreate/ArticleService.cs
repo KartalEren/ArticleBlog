@@ -38,6 +38,71 @@ namespace ArticleBlog.BLL.Services.Concreate
             _user = httpContextAccessor.HttpContext.User;//burada eşleme işlemi aşağılarda uzun uzun olmaması adına _user a işlem yapan yapıyı eşitledik. //artık BLL-Extension-LoggedInUserExtensiondan login logout olan kullanıcıyı bulabiliriz.
         }
 
+        public async Task<ArticleListDTO> GetAllByPagingAsync(int? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false) //burada açılan home-indexte kaç makale ekranda görünsün ve fazla makale varsa alttaki sayfa numaralarından atlatma işlemi için yaparız.
+        {
+            pageSize = pageSize > 20 ? 20 : pageSize; //sayfa boyunu buluruz
+            var articles = categoryId == 0
+                ? await _unitOfWork.GetRepository<Article>().GetAllAsync(a => !a.IsDeleted, a => a.Category, i => i.Image)// kategori null ise article ları bu şekilde getir
+                : await _unitOfWork.GetRepository<Article>().GetAllAsync(a => a.CategoryId == categoryId && !a.IsDeleted,
+                    a => a.Category, i => i.Image); // kategori null değilse article ları bu şekilde getir
+
+            var sortedArticles = isAscending
+                ? articles.OrderBy(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
+                : articles.OrderByDescending(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            return new ArticleListDTO //burada da manuel mapleme yaptık
+            {
+                Articles = sortedArticles,
+                CategoryId = categoryId == null ? null : categoryId.Value,
+                CurrentPage = currentPage,
+                PageSize = pageSize,
+                TotalCount = articles.Count,
+                IsAscending = isAscending
+            };
+        }
+
+
+
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
+
+
+        public async Task<ArticleListDTO> SearchAsync(string keyword, int currentPage = 1, int pageSize = 3, bool isAscending = false) //Ana sayfada makaleler listelenirken keyword e göreSerach ile arama işlemi için bu metot yapıldı.
+        {
+
+            pageSize = pageSize > 20 ? 20 : pageSize; //sayfa boyunu buluruz
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(
+                a => !a.IsDeleted && (a.Title.Contains(keyword) || a.Content.Contains(keyword) || a.Category.CategoryName.Contains(keyword)),
+            a => a.Category, i => i.Image); // isdeleted false ise Title veya Content veya Category.CategoryName keywordüne göre içeriyorsa article ları bu şekilde getir
+
+
+
+
+            var sortedArticles = isAscending
+                ? articles.OrderBy(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
+                : articles.OrderByDescending(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            return new ArticleListDTO //burada da manuel mapleme yaptık
+            {
+                Articles = sortedArticles,
+                CurrentPage = currentPage,
+                PageSize = pageSize,
+                TotalCount = articles.Count,
+                IsAscending = isAscending
+            };
+        }
+
+
+
+
+
+
+        //--------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
+
+
+
+
         public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
         {
             var userId = _user.GetLoggedInUserId();//artık loginlerde user ıd yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
@@ -232,6 +297,8 @@ namespace ArticleBlog.BLL.Services.Concreate
             await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
             await _unitOfWork.SaveAsync();
         }
+
+       
 
         //--------------------------------------------------------------------------------------
     }

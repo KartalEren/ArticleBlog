@@ -5,13 +5,17 @@ using ArticleBlog.BLL.Extensions;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using ArticleBlog.Entitiy.Entities;
 using Microsoft.AspNetCore.Identity;
+using ArticleBlog.Web.Filters.ArticleVisitors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(opt =>
+{
+    opt.Filters.Add<ArticleVisitorFilter>();
+})//Buraya WEB-FILTER-ARTICLEVISITORS-ArticleVisitorFilter FilterAction u ekledik (KULLANICI BÝLGÝLERÝNÝ KAYIT ALTINA ALABÝLMEK ÝÇÝN BU FÝLTER I YAPTIK.)****
                 .AddRazorRuntimeCompilation(); //Projeyi kapatýp açmadan sadece sayfayý yenileyerek index içerisindeki deðiþiklikleri yansýtan uygulamadýr. Ama önce Web katmanýna RazorRuntimeCompilation nuget ýný yüklemek gerekmektedir.
 
 builder.Services.AddScopedDAL(); // DAL içerisindeki Extensions klasöründe DataLayerExtention da Dependency Injection iþlemini AddScopeDAL metodu ile yapmýþ olduk.

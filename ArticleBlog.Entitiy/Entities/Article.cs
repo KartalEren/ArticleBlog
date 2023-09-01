@@ -13,7 +13,7 @@ namespace ArticleBlog.Entitiy.Entities
 
         public Article()//illa parametreli ctor olmaması adına bu şekilde parametreside ctor oluşturduk.
         {
-                
+            ArticleVisitors=new HashSet<ArticleVisitor>();
         }
 
 
@@ -43,6 +43,11 @@ namespace ArticleBlog.Entitiy.Entities
 
       
         public int UserId { get; set; }
+        //public AppUser User { get; set; }
+
+
+
+        public ICollection<ArticleVisitor> ArticleVisitors { get; set; } //Bir makalenin 1 den fazla ziyaretçisi olabilir.
 
     }
 }

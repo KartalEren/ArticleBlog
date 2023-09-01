@@ -112,7 +112,7 @@ namespace ArticleBlog.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedBy")
@@ -161,7 +161,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 1,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Eren Kartal",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4029),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(2666),
                             ImageId = 1,
                             IsDeleted = false,
                             Title = "Article",
@@ -174,7 +174,7 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 2,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Umut Oncel",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4032),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(2670),
                             ImageId = 2,
                             IsDeleted = false,
                             Title = "Article",
@@ -187,13 +187,28 @@ namespace ArticleBlog.DAL.Migrations
                             CategoryId = 3,
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                             CreatedBy = "Furkan Kahveci",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4035),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(2673),
                             ImageId = 3,
                             IsDeleted = false,
                             Title = "Article",
                             UserId = 3,
                             ViewCount = 26
                         });
+                });
+
+            modelBuilder.Entity("ArticleBlog.Entitiy.Entities.ArticleVisitor", b =>
+                {
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VisitorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArticleId", "VisitorId");
+
+                    b.HasIndex("VisitorId");
+
+                    b.ToTable("ArticleVisitors");
                 });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.Category", b =>
@@ -213,7 +228,7 @@ namespace ArticleBlog.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedBy")
@@ -241,7 +256,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 1,
                             CategoryName = "Category 1",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4857),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(4034),
                             IsDeleted = false
                         },
                         new
@@ -249,7 +264,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 2,
                             CategoryName = "Category 2",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4860),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(4036),
                             IsDeleted = false
                         },
                         new
@@ -257,7 +272,7 @@ namespace ArticleBlog.DAL.Migrations
                             ID = 3,
                             CategoryName = "Category 3",
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(4862),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(4038),
                             IsDeleted = false
                         });
                 });
@@ -274,7 +289,7 @@ namespace ArticleBlog.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedBy")
@@ -310,7 +325,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 1,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5359),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(4737),
                             FileName = "image1",
                             FileType = "jpg",
                             IsDeleted = false
@@ -319,7 +334,7 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 2,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5363),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(4740),
                             FileName = "image2",
                             FileType = "png",
                             IsDeleted = false
@@ -328,11 +343,35 @@ namespace ArticleBlog.DAL.Migrations
                         {
                             ID = 3,
                             CreatedBy = "Admin",
-                            CreatedDate = new DateTime(2023, 8, 29, 22, 37, 24, 625, DateTimeKind.Local).AddTicks(5372),
+                            CreatedDate = new DateTime(2023, 9, 1, 4, 18, 2, 965, DateTimeKind.Local).AddTicks(4742),
                             FileName = "image3",
                             FileType = "png",
                             IsDeleted = false
                         });
+                });
+
+            modelBuilder.Entity("ArticleBlog.Entitiy.Entities.Visitor", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserAgent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Visitors");
                 });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.AppUser", b =>
@@ -364,9 +403,33 @@ namespace ArticleBlog.DAL.Migrations
                     b.Navigation("Image");
                 });
 
+            modelBuilder.Entity("ArticleBlog.Entitiy.Entities.ArticleVisitor", b =>
+                {
+                    b.HasOne("ArticleBlog.Entitiy.Entities.Article", "Article")
+                        .WithMany("ArticleVisitors")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ArticleBlog.Entitiy.Entities.Visitor", "Visitor")
+                        .WithMany("ArticleVisitors")
+                        .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Visitor");
+                });
+
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.AppUser", b =>
                 {
                     b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("ArticleBlog.Entitiy.Entities.Article", b =>
+                {
+                    b.Navigation("ArticleVisitors");
                 });
 
             modelBuilder.Entity("ArticleBlog.Entitiy.Entities.Category", b =>
@@ -379,6 +442,11 @@ namespace ArticleBlog.DAL.Migrations
                     b.Navigation("Articles");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("ArticleBlog.Entitiy.Entities.Visitor", b =>
+                {
+                    b.Navigation("ArticleVisitors");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,5 +20,10 @@ namespace ArticleBlog.BLL.Services.Abstract
 
         Task SafeDeleteArticleAsync(int Id); //Tamamen silmeden Silmiş gibi işlem yaptırırız.
         Task UndoDeleteArticleAsync(int Id); //Silinmiş makaleleri geri getirir.
+
+        Task<ArticleListDTO> GetAllByPagingAsync(int? categoryId, int currentPage = 1, int pageSize = 3,
+             bool isAscending = false); //PAGINATION işlemi için kullanılıyor bu metot, burada açılan home-indexte kaç makale ekranda görünsün ve fazla makale varsa alttaki sayfa numaralarından atlatma işlemi için yaparız.
+        Task<ArticleListDTO> SearchAsync(string keyword, int currentPage = 1, int pageSize = 3,
+            bool isAscending = false); //Ana sayfada makaleler listelenirken keyword e göreSerach ile arama işlemi için bu metot yapıldı.
     }
 }
