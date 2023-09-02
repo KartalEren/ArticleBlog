@@ -1,0 +1,101 @@
+﻿@model ArticleAddDTO
+<h4 class="fw-bold py-3 mb-4">
+ Add New Article
+</h4>
+
+<<div class="container-xxl flex-grow-1 container-p-y">
+
+    <div style="height:100px;"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <form asp-controller="Home" asp-action="CreateArticle" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                           
+
+                            <a class="btn text-danger float-end" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                <i class='bx bxs-add-to-queue'></i> Add New Article
+                            </a>
+
+                            <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "ID","CategoryName"))"></select>
+                            @* CategoryVM'deki prop'lar ile isimleri aynı olmalı(Id, Name) *@
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Title" for="defaultFormControlInput" class="form-label mt-3">
+                                <i class='bx bxs-pencil'></i> Title
+                            </label>
+                            <input asp-for="Title" type="text" class="form-control mb-3" id="defaultFormControlInput"  aria-describedby="defaultFormControlHelp">
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Content" for="defaultFormControlInput" class="form-label">
+                                <i class='bx bxs-book-content'></i> Content
+                            </label>
+                            <textarea asp-for="Content" style="min-height:300px;" type="text" class="form-control mb-3" id="defaultFormControlInput"  aria-describedby="defaultFormControlHelp"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Photo" for="defaultFormControlInput" class="form-label">
+                                <i class='bx bxs-photo-album'></i> Photo
+                            </label>
+                            <input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp" />
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-dark btn-block"> Save </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Category Add</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="d-block form-label">Category Name</label>
+                        <input class="form-control" type="text" id="categoryName" /> @*  categoryName JS DOSYASINDAKİ REFERANS ID dir *@
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Save</button> @*  btnSave JS DOSYASINDAKİ REFERANS ID dir *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script src="~/js/categoryAdd.js"></script> @* JS Dosyasındaki KODLAR *@
+
+    <script>
+        var app = app || {};
+        app.Urls = app.Urls || {};
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))"; //controllerdan hangi action ve hangi controller ise yazarız.
+        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))"; /* tekrar article ekleme sayfasına döndürür */
+    </script>
+   }  <!--Kategori eklerken kullanacağımız JS kodunun referans yeridir.-->

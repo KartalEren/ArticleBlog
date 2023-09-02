@@ -1,8 +1,15 @@
-﻿using ArticleBlog.BLL.Services.Abstract;
+﻿using ArticleBlog.BLL.Extensions;
+using ArticleBlog.BLL.Services.Abstract;
 using ArticleBlog.BLL.Services.Concreate;
 using ArticleBlog.DAL.UnitOfWorks;
+using ArticleBlog.Entitiy.DTOs.Articles;
+using ArticleBlog.Entitiy.DTOs.Authors;
 using ArticleBlog.Entitiy.Entities;
+using ArticleBlog.Web.Consts;
 using ArticleBlog.Web.Models;
+using AutoMapper;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -13,15 +20,23 @@ namespace ArticleBlog.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IArticleService _articleService;
+        private readonly ICategoryService _categoryService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService; //autor detaylarına ulaşmak için bu servisteki metoda ulaşmak için oluşturduk bu field ı
+        private readonly IMapper _mapper;
+        private readonly IValidator<Article> _validator;
 
-        public HomeController(ILogger<HomeController> logger, IArticleService articleService, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger, IArticleService articleService,ICategoryService categoryService , IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService, IMapper mapper, IValidator<Article> validator)
         {
             _logger = logger;
             this._articleService = articleService;
+            this._categoryService = categoryService;
             this._httpContextAccessor = httpContextAccessor;
             this._unitOfWork = unitOfWork;
+            this._userService = userService;
+            this._mapper = mapper;
+            this._validator = validator;
         }
 
 
@@ -93,7 +108,52 @@ namespace ArticleBlog.Web.Controllers
 
 
         }
+        public  IActionResult About()
+        {
+            return View();
+        }
 
+
+        public async Task<IActionResult>  AuthorDetails(int id)
+        {
+            var author=await _userService.GetAppUserByIdAsync(id); //yazarı çektik id ye göre
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.ID == id); //bu id ye ait artice ları çektik.
+            var map=_mapper.Map<AuthorDetailDTO>(author); //article ı AuthorDetailDTO ya mapledik
+            map.Articles = articles; //bunu tabloya kaydettik
+
+            return View(map);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CreateArticle()
+        {
+            var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Kategorisi silinmemiş olan tüm article ları getir dedik.
+            return View(new ArticleAddDTO { Categories = categories });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateArticle(ArticleAddDTO articleAddDTO) //Post da ekleme yapacağımız yer kullanıcıya gösteriğimiz DTO olduğu için o parametreleri veririz.
+        {
+            //ArticleAddDTO dan Article a çevirelemeyeceği için mapper işlemi yaparız
+            var map = _mapper.Map<Article>(articleAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
+            var result = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
+
+
+            if (result.IsValid) //olumluysa işlemi yap
+            {
+                await _articleService.CreateArticleAsync(articleAddDTO);
+                return RedirectToAction("Index", "Home", new { Area = " " }); //işlem başarılıysa ana sayfaya gönderir.               
+            }
+            else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
+            {
+                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. Bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+
+            }
+            var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Kategorisi silinmemiş olan tüm article ları getir dedik.
+            return View(new ArticleAddDTO { Categories = categories });
+
+        }
 
 
     }

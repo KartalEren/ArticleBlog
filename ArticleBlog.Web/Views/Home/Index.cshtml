@@ -15,13 +15,13 @@
                                 <input type="hidden" id="keyword" value="@Model.CurrentPage" />
                                 <div class="blog-post">
                                     <div class="blog-thumb">
-                                        <img src="@* ~/images/@item.Image.FileName *@" alt=""> @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/  *@
+                                        <img src="~/stand-blog/assets/images/blog-post-01.jpg" alt=""> @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/  *@
 
                                     </div>
                                     <div class="down-content">
                                         <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.ID"><h4>@item.Title</h4></a> @* Başlığa basınca makale detayına yönlendiriyor *@
                                         <ul class="post-info">
-                                            <li>@item.CreatedBy</li>
+                                            <li><a asp-controller="Home" asp-action="AuthorDetails" asp-route-id="@item.UserId"> <i class='bx bxs-user-circle'></i> @item.CreatedBy </a></li>
                                             <li>@item.CreatedDate.ToString("dd/MM/yyyy")</li>
                                             <li><i class="fa-solid fa-eye"></i> @item.ViewCount</li>
                                         </ul>

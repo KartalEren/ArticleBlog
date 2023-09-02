@@ -37,7 +37,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, userLoginDTO.Password, userLoginDTO.RememberMe, false); //***Giriş için PasswordSignInAsync metodunu ve user, userdtodaki passwor, userdto daki rememberme proplarını attık, eğer bunların eşleşip başarılı bir şekilde return olursa giriş başarılı yapmamız lazım. False ise hata olursa geriye hata mesajı vermesi için yaptık. Metodun kendi yapısına göre uyarladık.
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home", new { Area = "Admin" }); //Eğer işlem başarılıysa return olarak Area daki Admin controllerın Home-Index ine yönlendirdik.
+                        return RedirectToAction("Index", "Home", new { Area = " " }); //Eğer işlem başarılıysa return olarak  controllerın Home-Index ine yönlendirdik.
                     }
                     else
                     {
