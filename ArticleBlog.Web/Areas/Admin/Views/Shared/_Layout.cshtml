@@ -1,8 +1,4 @@
 ﻿
-
-
-
-
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
 ==============================================================
@@ -38,9 +34,6 @@
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="~/sneat-1.0.0/assets/vendor/fonts/boxicons.css" />
-
-
-
     <!-- Core CSS -->
     <link rel="stylesheet" href="~/sneat-1.0.0/assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="~/sneat-1.0.0/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
@@ -80,17 +73,8 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
-
-
-
-
-
-
-
-            <!-- Menu -->
-            
+           
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-
 
                 <div class="app-brand demo ">
                     <a href="index.html" class="app-brand-link">
@@ -140,10 +124,7 @@
 
                 <div class="menu-inner-shadow"></div>
 
-
-
                 <ul class="menu-inner py-1">
-
                    
                     <!-- Dashboard --> @* ***İKONLAR boxicons.com SİTESİNDEN ALINDI*** *@
                     <li class="menu-item active">
@@ -151,9 +132,7 @@
                             <i class='menu-icon bx bx-home-smile'></i> @* menu-icon yazarsak yazı ile icon arası boşluk kalır *@
                             <div data-i18n="Analytics"> Dashboard</div>
                         </a>
-                    </li>
-
-                    <!-- Layouts -->
+                    </li>      
 
 
                     <li class="menu-header small text-uppercase">
@@ -171,15 +150,7 @@
                             <i class='menu-icon bx bx-category-alt'></i> @* menu-icon yazarsak yazı ile icon arası boşluk kalır *@
                             <div data-i18n="Analytics"> Category Management</div>
                         </a>
-                    </li>
-
-                   @*  <li class="menu-item">
-                        <a asp-area="Admin" asp-controller="SocialMedia" asp-action="Index" class="menu-link">
-                            <i class='menu-icon bx bx-cube-alt'></i> @* menu-icon yazarsak yazı ile icon arası boşluk kalır 
-                            <div data-i18n="Analytics">SocialMedia Management</div>
-                        </a>
-                    </li> *@
-
+                    </li>      
 
                     @* USER ve ROLE KISMINI SOL TARAFTAKİ MENUDE BURADA TANIMLADIK *@
 
@@ -191,40 +162,11 @@
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Basic"> Users</div>
                         </a>
-                    </li>
-
-
-                   @*  <li class="menu-item">
-                        <a asp-area="Admin" asp-controller="Role" asp-action="Index" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                            <div data-i18n="Basic"> Role</div>
-                        </a>
-                    </li> *@
-
-
-
-
-                    @* AYARLAR KISMINI SOL TARAFTAKİ MENUDE BURADA TANIMLADIK *@
-
-
-                 @*    <!-- Forms & Tables -->
-                    <li class="menu-header small text-uppercase"><span class="menu-header-text">SETTINGS</span></li>
-
-                    <!-- Tables -->
-                    <li class="menu-item">
-                        <a asp-area="Admin" asp-controller="Smtp" asp-action="Index" class="menu-link">
-                            <i class='menu-icon bx bx-cog'></i>
-                            <div data-i18n="Tables"> Smtp Settings</div>
-                        </a>
-                    </li>
- *@
-
+                    </li>                  
 
                     
                     @* SİLİNMİŞ ÖĞELER KISMINI SOL TARAFTAKİ MENUDE BURADA TANIMLADIK *@
-
-
-                    <!-- Misc -->
+                   
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">RECYCLE BIN </span></li>
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -253,29 +195,8 @@
 
             </aside>
             <!-- / Menu -->
-            <!-- Layout container -->
             <div class="layout-page">
-
-
-
-
-
-                <!-- Navbar -->
-
-
-
-
                 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-
-
-
-
-
-
-
-
-
-
 
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none ">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -285,10 +206,6 @@
 
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-
-
-
 
                         <!-- Search -->
                         <div class="navbar-nav align-items-center">
@@ -302,8 +219,6 @@
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
 
-
-
                             <!-- Place this tag where you want the button to render. -->
                           @*   <li class="nav-item lh-1 me-3">
                                 <a class="github-button" href="https://github.com/themeselection/sneat-html-admin-template-free" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
@@ -313,19 +228,10 @@
 
 
                             @* 1. önce metot oluşturuldu=>ınvokeasync metodunu WEB-ADMİN-VİEWCOMPONENT içindeki doyada oluşturduk burada giriş yapan kişiyi çektik ve
-                            2. olarak da buradaki kod buloğu partial view gibi gösterilmek için => WEB-Views-Shared-Component klasörü altına açtığımız dosyayı burada partial view gibi kullanmak için oluşturduk default dosyasının içindeki ilgili yerlere AppUser dan proplarınından kullanıcı adını vs. yazdırmış olduk.****** SAĞ ÜSTTEKİ USER KISMIDIR. *@
-                            <!-- User -->
-                          
-                            <!--/ User -->
-                                                  
-
-                        </ul>
-
-                       
+                            2. olarak da buradaki kod buloğu partial view gibi gösterilmek için => WEB-Views-Shared-Component klasörü altına açtığımız dosyayı burada partial view gibi kullanmak için oluşturduk default dosyasının içindeki ilgili yerlere AppUser dan proplarınından kullanıcı adını vs. yazdırmış olduk.****** SAĞ ÜSTTEKİ USER KISMIDIR. *@                        
+                                      
+                        </ul>                       
                     </div>
-
-
-
                 </nav>
 
 
@@ -334,24 +240,12 @@
                 <!-- Content wrapper -->
                 @RenderBody()
                 <!-- / Layout page -->
-            </div>
-
-
-
-            <!-- Overlay -->
+            </div>           
             <div class="layout-overlay layout-menu-toggle"></div>
-
-
         </div>
-        <!-- / Layout wrapper -->
+       
 
-
-
-
-        <div class="buy-now">
-            <a href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/" target="_blank" class="btn btn-danger btn-buy-now">Upgrade to Pro</a>
-        </div>
-
+      
 
         <!-- Core JS -->
         <!-- build:js assets/vendor/js/core.js -->

@@ -34,22 +34,13 @@
     <header class="">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><h2>Article Blog<em>.</em></h2></a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><h2>Article Blog<em>📜</em></h2></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" target="_blank" href="index.html">
-                                <i style="font-size:22px" class="fa-brands fa-linkedin-in"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">
-                                <i style="font-size:22px;" class="fa-brands fa-github"></i>
-                            </a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Panel</a>
                         </li>
@@ -89,13 +80,36 @@
     <footer>
         <div class="container">
             <div class="row">
+                <div class="col-lg-12">
+                    <ul class="social-icons">
+                        <li><a href="https://github.com/KartalEren"><i class="fa-brands fa-github"></i></a></li>
+                        <li><a href="https://tr.linkedin.com/in/eren-kartal-38424b271?trk=people-guest_people_search-card" style="color:#0e76a8"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="copyright-text">
+                        <p>
+                            designed by Eren Kartal 🦅
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
 
                 <div class="col-lg-12">
                     <div class="copyright-text">
                         <p>
                             Copyright 2023 Article Blog
-
-
                         </p>
                     </div>
                 </div>
