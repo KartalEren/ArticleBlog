@@ -33,48 +33,12 @@
                             <label asp-for="PhoneNumber" class="form-label"> <i class='bx bx-phone'></i> Phone Number</label>
                             <input asp-for="PhoneNumber" class="form-control" type="text" autofocus="" disabled>
                         </div>
-
-                        <div class="mb-3 col-md-6">
-                            <label asp-for="About" class="form-label"> <i class='bx bxs-id-card'></i> About</label>
-                            <textarea asp-for="About" class="form-control" type="text" autofocus="" disabled></textarea>
-                        </div>
+                        
                     </div>
                 </div>
-
-               @*  <div class="col-12">
-
-                    <h5 class="card-header"> <i class='bx bx-book'></i> @Model.Email Articles </h5>
-
-                    <table class="table table-bordered mt-3" id="articlesTable" width="100%" collspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Created Date</th>
-                                <th>Content</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-border-bottom-0">
-                            @foreach (var item in Model.Articles)
-                            {
-                                <tr name="@item.ID">
-                                    <td> @item.Title </td>
-                                    <td> @item.Category.CategoryName </td>
-                                    <td> @item.Content </td>
-                                    <td> @item.CreatedDate.ToShortDateString() </td>
-                                    <td>
-                                        <a class="btn btn-dark btn-sm" data-id="@item.ID" asp-controller="Home" asp-action="Detail" asp-route-id="@item.ID"> Read More </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                </div> *@
-
+              
                 <div class="mt-4">
-                    <a asp-controller="Home" asp-action="Index" type="submit" class="btn btn-dark me-2" > Back To HamePage </a>
+                    <a asp-controller="Home" asp-action="Index" type="submit" class="btn btn-dark me-2" > Back To HomePage </a>
                 </div>
 
             </div>

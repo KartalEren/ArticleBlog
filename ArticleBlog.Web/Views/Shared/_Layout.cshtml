@@ -19,26 +19,26 @@
     <link rel="stylesheet" href="~/stand-blog/assets/css/owl.css"> @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
 </head>
 <body>
- 
 
-        <!-- ***** Preloader Start ***** -->
-        <div id="preloader">
-            <div class="jumper">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-        <!-- ***** Preloader End ***** -->
-        <!-- Header -->
-        <header class="">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <a class="navbar-brand" asp-controller="Home" asp-action="Index"><h2>Article Blog<em>.</em></h2></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- Header -->
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><h2>Article Blog<em>.</em></h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
                             <a class="nav-link" target="_blank" href="index.html">
@@ -56,63 +56,76 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="CreateArticle">Write Article</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-user-circle'></i> My Profile
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area=" " asp-controller="User" asp-action="Profile"> <i class='bx bxs-user-detail'></i> Update Profile </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area=" " asp-controller="Home" asp-action="About"> <i class='bx bxs-user-x'></i> Log Out </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
-                    </div>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
 
-        <!-- Page Content -->
-        <!-- Banner Starts Here -->
-        
-        <!-- Banner Ends Here -->
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <!-- Banner Ends Here -->
 
 
-        <div style="height:100px;"></div>
+    <div style="height:100px;"></div>
 
     @RenderBody()
 
 
-        <footer>
-            <div class="container">
-                <div class="row">
-                   
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <p>
-                                Copyright 2023 Article Blog
+    <footer>
+        <div class="container">
+            <div class="row">
 
-                               
-                            </p>
-                        </div>
+                <div class="col-lg-12">
+                    <div class="copyright-text">
+                        <p>
+                            Copyright 2023 Article Blog
+
+
+                        </p>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="~/stand-blog/vendor/jquery/jquery.min.js"></script>                   @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
-        <script src="~/stand-blog/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>   @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/stand-blog/vendor/jquery/jquery.min.js"></script>                   @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <script src="~/stand-blog/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>   @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
 
-        <!-- Additional Scripts -->
-        <script src="~/stand-blog/assets/js/custom.js"></script>                @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
-        <script src="~/stand-blog/assets/js/owl.js"></script>                   @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
-        <script src="~/stand-blog/assets/js/slick.js"></script>                 @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
-        <script src="~/stand-blog/assets/js/isotope.js"></script>               @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
-        <script src="~/stand-blog/assets/js/accordions.js"></script>            @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <!-- Additional Scripts -->
+    <script src="~/stand-blog/assets/js/custom.js"></script>                @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <script src="~/stand-blog/assets/js/owl.js"></script>                   @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <script src="~/stand-blog/assets/js/slick.js"></script>                 @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <script src="~/stand-blog/assets/js/isotope.js"></script>               @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
+    <script src="~/stand-blog/assets/js/accordions.js"></script>            @* assets den çnce wwwroot daki dosya yolunu referans veririz. ~/stand-blog/ *@
 
-        <script language="text/Javascript">
-            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-            function clearField(t) {                   //declaring the array outside of the
-                if (!cleared[t.id]) {                      // function makes it static and global
-                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                    t.value = '';         // with more chance of typos
-                    t.style.color = '#fff';
-                }
+    <script language="text/Javascript">
+        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t) {                   //declaring the array outside of the
+            if (!cleared[t.id]) {                      // function makes it static and global
+                cleared[t.id] = 1;  // you could use true and false, but that's more typing
+                t.value = '';         // with more chance of typos
+                t.style.color = '#fff';
             }
-        </script>
+        }
+    </script>
 
-    
+
 
 
 
