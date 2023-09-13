@@ -12,17 +12,17 @@ namespace ArticleBlog.Entitiy.Entities
 
 
         public string CategoryName { get; set; }
-        public ICollection<Article> Articles { get; set; }//1 kategori 1 den fazla article içerebilir
+        public ICollection<Article> Articles { get; set; }
 
         public Category()
         {
             Articles = new HashSet<Article>();
         }
 
-        public Category(string categoryName, string createdBy)//kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
+        public Category(string categoryName, string createdBy)
         {
             CategoryName = categoryName;
-            CreatedBy = createdBy; //kimin işlem yaptığını controllerlarda belirtirken bu parameter gereklidir.
+            CreatedBy = createdBy; 
         }
     }
 }

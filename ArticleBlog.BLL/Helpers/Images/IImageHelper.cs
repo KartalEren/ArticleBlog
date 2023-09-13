@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.Helpers.Images
 {
-    public interface IImageHelper//hemen bu sınıflarıda ImageHelper, IImageHelper da bll-extension-servislayer katmanında mapleriz
+    public interface IImageHelper
     {
-        Task<ImageUploadedDTO> Upload(string name, IFormFile imageFile, ImageType imageType, string folderName = null); //resim yükleme metodudur.
+        Task<ImageUploadedDTO> Upload(string name, IFormFile imageFile, ImageType imageType, string folderName = null); 
 
-        void DeleteImage(string imageName);//resim silme metodudur.
+        void DeleteImage(string imageName);
 
     }
 }

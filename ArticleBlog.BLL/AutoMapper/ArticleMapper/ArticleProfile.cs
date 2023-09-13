@@ -11,21 +11,18 @@ namespace ArticleBlog.BLL.AutoMapper.ArticleMapper
 {
 
 
-    //****BURADA SONRADAN OLUŞTURDUĞUM DTO LAR İLE NORMAL ENTITIY CLASSLARINI MAPLİYORUM DEPENDENCY INJECTION İÇİN.
-
-
-    //NOT:******Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
-    public class ArticleProfile: Profile //Auto Mapper yapısı için bu katmanda AutoMapper ve AutoMapper DependencyInjection Nugetlarını indirip kurduk. Ve Profile den kalıtım verdik.
+   
+    public class ArticleProfile: Profile 
     {
         public ArticleProfile()
         {
-            CreateMap<ArticleDTO,Article>().ReverseMap(); //***Hem ArticleDTO dan Article a, hem de Article dan ArticleDTO ya map leme işlemi yapıldı. (ReverseMap() ters yönden map leme sağlar. Yani içerikleri birbirleri arasında aktarır. Data Transfer Object (DTO)).
+            CreateMap<ArticleDTO,Article>().ReverseMap(); 
 
 
-            CreateMap<ArticleUpdateDTO, Article>().ReverseMap();// Hem article ve articleupdatedto alışverişi olur.
-            CreateMap<ArticleUpdateDTO, ArticleDTO>().ReverseMap(); //***Hem de ArticleUpdateDTO ve ArticleDTO arasında alışveriş olur. Çünkü biz artık DTO lar üzerinden de işlemler yapıyoruz.
+            CreateMap<ArticleUpdateDTO, Article>().ReverseMap();
+            CreateMap<ArticleUpdateDTO, ArticleDTO>().ReverseMap(); 
 
-            CreateMap<ArticleAddDTO, Article>().ReverseMap(); //***Hem de ArticleAddDTO ve Article arasında alışveriş olur. Çünkü biz ArticleControlerda Add işlemi yapaken artık Article ve ArticleAddDTO üzerinden de işlemler yapıyoruz.
+            CreateMap<ArticleAddDTO, Article>().ReverseMap();
 
 
         }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.FluentValidations
 {
-    public class ArticleValidator : AbstractValidator<Article> //Article için Validation oluştururlur.Yani şartları belirtiriz.
+    public class ArticleValidator : AbstractValidator<Article> 
     {
-        public ArticleValidator()//Data annotaion tarzı gibi fakat bu ctor da belirtilen Validationdur.
+        public ArticleValidator()
         {
             RuleFor(x => x.Title)
                 .NotEmpty()

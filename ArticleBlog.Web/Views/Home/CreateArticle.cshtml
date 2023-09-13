@@ -23,7 +23,7 @@
 
 
                             <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "ID","CategoryName"))"></select>
-                            @* CategoryVM'deki prop'lar ile isimleri aynı olmalı(Id, Name) *@
+                          
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
 

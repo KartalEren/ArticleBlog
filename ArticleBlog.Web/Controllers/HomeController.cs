@@ -23,7 +23,7 @@ namespace ArticleBlog.Web.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserService _userService; //autor detaylarına ulaşmak için bu servisteki metoda ulaşmak için oluşturduk bu field ı
+        private readonly IUserService _userService; 
         private readonly IMapper _mapper;
         private readonly IValidator<Article> _validator;
 
@@ -45,13 +45,10 @@ namespace ArticleBlog.Web.Controllers
         {
 
 
-            var articles= await _articleService.GetAllByPagingAsync(categoryId,currentPage,pageSize);// _articleService içinde oluşturduğumuz ilk açılış sayfasında çıkacakları belirlediğimiz Pagination metodudur.
+            var articles= await _articleService.GetAllByPagingAsync(categoryId,currentPage,pageSize);
 
             return View(articles);
-
-
-            //var articles=await _articleService.GetAllArticlesWithCategoryNoneDeletedAsync(); //IArticleService içinde oluşturulan GetAllArticlesAsync ve Unit Of Work yapısı ile Repositorydeki GetAllAsync (tüm listeyi çağırmak için) metodunu bağladığımız için GetAllArticlesAsync metodu yeterlidir.
-            //return View(articles);
+            
         }
 
 
@@ -59,7 +56,7 @@ namespace ArticleBlog.Web.Controllers
         public async Task<IActionResult> Search(string keyword, int currentPage = 1, int pageSize = 3, bool isAscending = false)
         {
             var articles = await _articleService.SearchAsync(keyword, currentPage, pageSize, isAscending);
-            return View(articles); // SearchAsync() Ana sayfada makaleler listelenirken keyword e göreSerach ile arama işlemi için bu metot yapıldı.
+            return View(articles); 
         }
 
 
@@ -77,28 +74,28 @@ namespace ArticleBlog.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Detail(int id) //Read More yapınc makale detaylarını getirmek için oluşturuldu.
+        public async Task<IActionResult> Detail(int id) 
         {
 
-            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(); //View sayısını artırmak için yeni giriş yapan kullanıcının IP Adresini alırız.
-            var articeVisitors = await _unitOfWork.GetRepository<ArticleVisitor>().GetAllAsync(null, x => x.Visitor, y => y.Article); //burada çoka çok ilişki olan visitor ve aticle ile include derek bilgileri aldım.
-            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.ID == id); // _unitOfWork ile jenerik GetRepository<Article>() metodunu kullanarak IRepository de kullandığım GetAsync(x => x.ID == id); metodu ile id ler ile article çektim.
+            var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(); 
+            var articeVisitors = await _unitOfWork.GetRepository<ArticleVisitor>().GetAllAsync(null, x => x.Visitor, y => y.Article); 
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.ID == id);
 
 
-            var result = await _articleService.GetArticleWithCategoryNonDeletedAsync(id); //Tek bir değer Article kategorileriyle birlikte silinmemiş olanları ve id lere göre eşleyerek getirecek döndürecek.
+            var result = await _articleService.GetArticleWithCategoryNonDeletedAsync(id); 
 
-            var visitor = await _unitOfWork.GetRepository<Visitor>().GetAsync(x => x.IpAddress == ipAddress); // _unitOfWork teki GetRepository metodu ile Visitor sınıfıma ve IRepositorydeki GetAsync(x => x.IpAddress == ipAddress); metodumla IP Adresine göre eşleşenlen visitor ı çağırabiliyorum.
+            var visitor = await _unitOfWork.GetRepository<Visitor>().GetAsync(x => x.IpAddress == ipAddress); 
 
-            var addArticleVisitors = new ArticleVisitor(article.ID, visitor.ID); //hem article hem visitor ları ayrı ayrı id lere göre bulup ekleme işlemi yapacağım.
+            var addArticleVisitors = new ArticleVisitor(article.ID, visitor.ID); 
 
-            if (articeVisitors.Any(x => x.VisitorId == addArticleVisitors.VisitorId && x.ArticleId == addArticleVisitors.ArticleId))//articeVisitors'da hiç bu değerler eşleşiyor mu?(x => x.VisitorId == addArticleVisitors.VisitorId && x.ArticleId == addArticleVisitors.ArticleId) diye sorarız. Eğer aynıları var sa ekleme işlemi yapma retrun View(result); dön deriz.
+            if (articeVisitors.Any(x => x.VisitorId == addArticleVisitors.VisitorId && x.ArticleId == addArticleVisitors.ArticleId))
                 return View(result); 
-            else //aynıları yok ise
+            else 
             {
-                await _unitOfWork.GetRepository<ArticleVisitor>().AddAsync(addArticleVisitors); //önce article visitorumu eklemem gerek ArticleVisitor tabloma.
-                article.ViewCount += 1; //görüntümü bu şekilde yeni bir kullanıcı olduğu için 1 artır dedik.
-                await _unitOfWork.GetRepository<Article>().UpdateAsync(article); //ViewCount arttığı için bu işlemi Article daki ViewCount propbu için kaydetmem gerek.
-                await _unitOfWork.SaveAsync(); //son olarak da her şeyi tablolarıma update ederim.
+                await _unitOfWork.GetRepository<ArticleVisitor>().AddAsync(addArticleVisitors); 
+                article.ViewCount += 1; 
+                await _unitOfWork.GetRepository<Article>().UpdateAsync(article); 
+                await _unitOfWork.SaveAsync(); 
             }
 
             return View(result);
@@ -116,10 +113,10 @@ namespace ArticleBlog.Web.Controllers
 
         public async Task<IActionResult>  AuthorDetails(int id)
         {
-            var author=await _userService.GetAppUserByIdAsync(id); //yazarı çektik id ye göre
-            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.ID == id); //bu id ye ait artice ları çektik.
-            var map=_mapper.Map<AuthorDetailDTO>(author); //article ı AuthorDetailDTO ya mapledik
-            map.Articles = articles; //bunu tabloya kaydettik
+            var author=await _userService.GetAppUserByIdAsync(id); 
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.ID == id);
+            var map=_mapper.Map<AuthorDetailDTO>(author);
+            map.Articles = articles; 
 
             return View(map);
         }
@@ -128,29 +125,29 @@ namespace ArticleBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateArticle()
         {
-            var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Kategorisi silinmemiş olan tüm article ları getir dedik.
+            var categories = await _categoryService.GetAllCategoriesNonDeleted(); 
             return View(new ArticleAddDTO { Categories = categories });
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateArticle(ArticleAddDTO articleAddDTO) //Post da ekleme yapacağımız yer kullanıcıya gösteriğimiz DTO olduğu için o parametreleri veririz.
+        public async Task<IActionResult> CreateArticle(ArticleAddDTO articleAddDTO) 
         {
-            //ArticleAddDTO dan Article a çevirelemeyeceği için mapper işlemi yaparız
-            var map = _mapper.Map<Article>(articleAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
-            var result = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
+           
+            var map = _mapper.Map<Article>(articleAddDTO); 
+            var result = await _validator.ValidateAsync(map);
 
 
-            if (result.IsValid) //olumluysa işlemi yap
+            if (result.IsValid) 
             {
                 await _articleService.CreateArticleAsync(articleAddDTO);
-                return RedirectToAction("Index", "Home", new { Area = " " }); //işlem başarılıysa ana sayfaya gönderir.               
+                return RedirectToAction("Index", "Home", new { Area = " " });                
             }
-            else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
+            else
             {
-                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. Bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+                result.AddToModelState(this.ModelState);
 
             }
-            var categories = await _categoryService.GetAllCategoriesNonDeleted(); //Kategorisi silinmemiş olan tüm article ları getir dedik.
+            var categories = await _categoryService.GetAllCategoriesNonDeleted(); 
             return View(new ArticleAddDTO { Categories = categories });
 
         }

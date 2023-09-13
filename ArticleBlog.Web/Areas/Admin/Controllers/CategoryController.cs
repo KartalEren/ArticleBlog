@@ -14,9 +14,9 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryService _categoryService; //category metotlara ulaşabilmek için çağırdık
-        private readonly IValidator<Category> _validator; //fluent validation ları kullanabilmek için çağırdık.
-        private readonly IMapper _mapper;//mapping işlemi için çağırdık
+        private readonly ICategoryService _categoryService; 
+        private readonly IValidator<Category> _validator; 
+        private readonly IMapper _mapper;
 
         public CategoryController(ICategoryService categoryService, IValidator<Category> validator, IMapper mapper)
         {
@@ -26,20 +26,20 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin,User")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = "SuperAdmin,Admin,User")]
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryService.GetAllCategoriesNonDeleted(); //tüm listeleri geri getirir.
+            var categories = await _categoryService.GetAllCategoriesNonDeleted(); 
             return View(categories);
 
         }
 
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> DeletedCategory() //Silinmiş kategorileri listeler
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public async Task<IActionResult> DeletedCategory() 
         {
-            var categories = await _categoryService.GetAllCategoriesDeleted(); //tüm listeleri geri getirir.
+            var categories = await _categoryService.GetAllCategoriesDeleted(); 
             return View(categories);
 
         }
@@ -47,8 +47,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public IActionResult Add() //makale ekleme get kısmı
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public IActionResult Add() 
         {
             return View();
         }
@@ -56,21 +56,21 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Add(CategoryAddDTO categoryAddDTO) //makale ekleme get kısmı
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public async Task<IActionResult> Add(CategoryAddDTO categoryAddDTO) 
         {
-            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
+            var map = _mapper.Map<Category>(categoryAddDTO); 
 
-            var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
+            var result = await _validator.ValidateAsync(map); 
 
-            if (result.IsValid) //olumluysa işlemi yap
+            if (result.IsValid) 
             {
                 await _categoryService.CreateCategoryAsync(categoryAddDTO);
-                return RedirectToAction("Index", "Category", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir.               
+                return RedirectToAction("Index", "Category", new { Area = "Admin" });              
             }
-            else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
+            else
             {
-                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+                result.AddToModelState(this.ModelState); 
 
                 return View(categoryAddDTO);
             }
@@ -78,14 +78,14 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> AddWithAjax([FromBody] CategoryAddDTO categoryAddDTO)
         {
-            var map = _mapper.Map<Category>(categoryAddDTO); //önce tabloları maple.//***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
+            var map = _mapper.Map<Category>(categoryAddDTO);
 
-            var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
+            var result = await _validator.ValidateAsync(map);
 
-            if (result.IsValid) //olumluysa işlemi yap
+            if (result.IsValid) 
             {
                 await _categoryService.CreateCategoryAsync(categoryAddDTO);
 
@@ -95,7 +95,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
             }
             else
             {
-                return Json(result.Errors.First().ErrorMessage); //olumsuzsa
+                return Json(result.Errors.First().ErrorMessage); 
             }
         }
 
@@ -106,14 +106,14 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Update(int Id) //makale ekleme get kısmı
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public async Task<IActionResult> Update(int Id) 
         {
             var category=await _categoryService.GetCategoryById(Id);
 
-            var map=_mapper.Map<Category,CategoryUpdateDTO>(category); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı.***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
+            var map=_mapper.Map<Category,CategoryUpdateDTO>(category); 
 
-            return View(map); //kullanıcının girdiği değerleri eşler ve güncellenecek bilgileri update ekranına getirir
+            return View(map); 
         }
 
 
@@ -121,25 +121,25 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO) //makale ekleme get kısmı
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO) 
         {
             
 
-            var map = _mapper.Map<Category>(categoryUpdateDTO); //mapleyerek kullanıcıdan gelen bilgileri tablolar arasında aktarmış olduk yani Category new leyerek yeni bilgileri tek tek yazmaya gerek kalmadı.***Bu map işlemini görebilmesi için BLL-AutoMapper klasöründe kendi sınıfadıyla olan klasörün içinde de AutoMapper tanıtırız.
+            var map = _mapper.Map<Category>(categoryUpdateDTO); 
 
-            var result = await _validator.ValidateAsync(map); //sonra map sonucuna göre hata mesajı ver veya verme
+            var result = await _validator.ValidateAsync(map);
 
 
-            if (result.IsValid) //olumluysa işlemi yap
+            if (result.IsValid) 
             {
                 await _categoryService.UpdateCategoryAsync(categoryUpdateDTO);
-                return RedirectToAction("Index", "Category", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir.  
+                return RedirectToAction("Index", "Category", new { Area = "Admin" });  
 
             }
-            else//olumsuzsa FluentValidationdaki AddToModelState metodundaki hatayı dön
+            else
             {
-                result.AddToModelState(this.ModelState); //işlem başarısızsa gerçekleşecek durumdur. bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+                result.AddToModelState(this.ModelState);
 
                 return View();
             }
@@ -148,7 +148,7 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int Id)
         {
             await _categoryService.SafeDeleteCategoryAsync(Id);
@@ -157,8 +157,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> UndoDelete(int Id)//Silinmiş kategorileri geri yükler
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public async Task<IActionResult> UndoDelete(int Id)
         {
             await _categoryService.UndoDeleteCategoryAsync(Id);
             return RedirectToAction("Index", "Category", new { Area = "Admin" });

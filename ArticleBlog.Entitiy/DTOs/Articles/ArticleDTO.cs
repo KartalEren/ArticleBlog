@@ -11,11 +11,11 @@ namespace ArticleBlog.Entitiy.DTOs.Articles
     public class ArticleDTO
     {
         public virtual int ID { get; set; }
-        public virtual string CreatedBy { get; set; }//article kim tarafından yaratıldı?
+        public virtual string CreatedBy { get; set; }
         public string Content { get; set; }
-        public virtual DateTime CreatedDate { get; set; }  //article yaratma tarihi. Null geçilebilir (?) yaptık.
+        public virtual DateTime CreatedDate { get; set; }  
         public string Title { get; set; }
-        public CategoryDTO Category { get; set; } //kategori adına ulaşmak için bu DTO türünde prop açtık.       
+        public CategoryDTO Category { get; set; }        
         public int ViewCount { get; set; }
         public Image Image { get; set; }
         public AppUser User { get; set; }

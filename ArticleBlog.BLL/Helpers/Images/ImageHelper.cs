@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.Helpers.Images
 {
-    public class ImageHelper : IImageHelper //hemen bu sınıflarıda ImageHelper, IImageHelper da bll-extension-servislayer katmanında mapleriz
+    public class ImageHelper : IImageHelper 
     {
         private readonly IWebHostEnvironment _whe;
         private readonly string wwwroot;
-        private const string imgFolder = "images";//burada oluşturduğumuz resim klasörü adına eşitleriz ki, yarın bigün dosya adını değişirsek resim ekleme kodu o dasya adından etkilenmesin diye
-        private const string articleImagesFolder = "article-images"; //article resimleri farklı bir doyada tutulması için bu adı verdik.
+        private const string imgFolder = "images";
+        private const string articleImagesFolder = "article-images"; 
         private const string userImagesFolder = "user-images";
 
-        public ImageHelper(IWebHostEnvironment whe) //IWebHostEnvironment ile dosya yolunumu buluruz.
+        public ImageHelper(IWebHostEnvironment whe) 
         {
             this._whe = whe;
-            wwwroot = whe.WebRootPath;//bu şekilde yazınca wwwroot u çağırınca içine oluşturduğumuz image klasörünü bulur.
+            wwwroot = whe.WebRootPath;
         }
 
 

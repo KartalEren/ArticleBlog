@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentValidation.Results; //foreach deki result.Error  daki Error altı çizili hatasını alır.
+using FluentValidation.Results;
 
 namespace ArticleBlog.BLL.Extensions
 {
-    public static class ValidationExtensions //Her seferinde new lenmeyeceği için static calss yapılır.
+    public static class ValidationExtensions 
     {
 
-        //Başarısız işlemde verilecek mesajı içerir.
+       
         public static void AddToModelState(this ValidationResult result, ModelStateDictionary modelState)
         {
             foreach (var error in result.Errors)

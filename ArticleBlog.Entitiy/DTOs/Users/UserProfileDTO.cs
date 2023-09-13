@@ -14,8 +14,6 @@ namespace ArticleBlog.Entitiy.DTOs.Users
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string CurrentPassword { get; set; }
-        public string? NewPassword { get; set; } //kişiyi parola değiştimeye zorunlu tutumadık.
-       // public IFormFile? Photo { get; set; }
-       // public string ImageFileName { get; set; } //***UPDATEVIEW DA RESİM KAYDETME YERİNDE SRC YE YAZDIK
+        public string? NewPassword { get; set; } 
     }
 }

@@ -22,12 +22,12 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
-        private readonly IUserService _userService; // _userService imdeki metotlara ulaşmak için yapıldı.
+        private readonly IUserService _userService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly RoleManager<AppRole> _roleManager; //Rollere ulaşmak için kendiliğinden gelen RoleManager<AppRole> AppRole sınıfını ekledik.
-        private readonly IValidator<AppUser> _validator; //fluent validation ları kullanabilmek için çağırdık.
-        private readonly SignInManager<AppUser> _signInManager; //profile actionundaki şifres değişikliğinde kullancıyı tekrardan sistemden çıkarıp girş yapabilmesi adına bu class ı kullanıyoruz.
+        private readonly RoleManager<AppRole> _roleManager; 
+        private readonly IValidator<AppUser> _validator; 
+        private readonly SignInManager<AppUser> _signInManager;
        
        
 
@@ -42,70 +42,70 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
         }
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Index()//kullanıcıları rollerine göre gösteririz.
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public async Task<IActionResult> Index()
         {
-            var result=await _userService.GetAllUsersWithRoleAsync(); //Rolleriyle beraber Users ı Index te listelemek için yapıldı.
+            var result=await _userService.GetAllUsersWithRoleAsync(); 
 
             return View(result);
         }
 
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Add() //kullanıcıekleriz.
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public async Task<IActionResult> Add() 
         {
-            var roles = await _userService.GetAllRolesAsync();  //GetAllRolesAsync _userService de Tüm roller getirmek yapıldı.
+            var roles = await _userService.GetAllRolesAsync();  
 
-            return View(new UserAddDTO { Roles = roles });//kullanıcıdan gelen rolü dto daki Roles e atamış olduk. oluşturmuş olduk.
+            return View(new UserAddDTO { Roles = roles });
         }
 
 
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = "SuperAdmin,Admin")] 
         public async Task<IActionResult> Add(UserAddDTO userAddDTO)
         {
-            var map = _mapper.Map<AppUser>(userAddDTO); //mapleyerek userAddDTO yu AppUser a döndürdü
+            var map = _mapper.Map<AppUser>(userAddDTO); 
 
-            var validation = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
-            var roles = await _userService.GetAllRolesAsync(); // Tüm roller getirmek yapıldı.
+            var validation = await _validator.ValidateAsync(map);
+            var roles = await _userService.GetAllRolesAsync();
             if (ModelState.IsValid)
             {
 
-                var result = await _userService.CreateUserAsync(userAddDTO); //_userService GELEN BİR IDENTITYRESULT DÖNDÜRDÜK, EĞER BAŞARLIYSA ALTTAKİ İF E GİRER.
+                var result = await _userService.CreateUserAsync(userAddDTO);
 
-                if (result.Succeeded) //NOT: ******HATALARI BURADAKİ RESULT YAPISINDAN DİREKT ALIYORUZ. YANİ AYRI BİR HATA ALMADIK.
+                if (result.Succeeded) 
                 {
                    
-                    return RedirectToAction("Index", "User", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir. 
+                    return RedirectToAction("Index", "User", new { Area = "Admin" });
                 }
-                else//başarısız olursa _userServisten gelen CreateUserAsync metodunun olumsuz olmasıyla buraya girecektir.
+                else
                 {
                     
                     
-                        result.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
-                        validation.AddToModelState(this.ModelState); //bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
-                        return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın
+                        result.AddToIdentityModelState(this.ModelState); 
+                        validation.AddToModelState(this.ModelState); 
+                        return View(new UserAddDTO { Roles = roles });
                     
                 }
 
             }
-            return View(new UserAddDTO { Roles = roles });//tüm işlem başarısız olursa gene ekleme sayfasında kalsın
+            return View(new UserAddDTO { Roles = roles });
         }
 
 
 
 
         [HttpGet]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Update(int id)  //Kullanıcının bilgilerini ekrana GETirir
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public async Task<IActionResult> Update(int id)  
         {
-            var user = await _userService.GetAppUserByIdAsync(id); //_userServicedeki metotlardandır ID ye göre kullanıcı buluruz.
+            var user = await _userService.GetAppUserByIdAsync(id); 
 
-            var roles= await _userService.GetAllRolesAsync(); //GetAllRolesAsync _userService de Tüm roller getirmek yapıldı.
+            var roles= await _userService.GetAllRolesAsync();
 
-            var map=_mapper.Map<UserUpdateDTO>(user); //mapleyerek UserUpdateDTO yu AppUser a döndürdü
+            var map=_mapper.Map<UserUpdateDTO>(user); 
             map.Roles= roles;
 
             return View(map);
@@ -115,47 +115,44 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-        public async Task<IActionResult> Update(UserUpdateDTO userUpdateDTO)  //Kullanıcının bilgilerini ekrana GETirir
+        [Authorize(Roles = "SuperAdmin,Admin")] 
+        public async Task<IActionResult> Update(UserUpdateDTO userUpdateDTO) 
         {
-            var user = await _userService.GetAppUserByIdAsync(userUpdateDTO.Id); //_userServicedeki metotlardandır ID ye göre kullanıcı buluruz.
+            var user = await _userService.GetAppUserByIdAsync(userUpdateDTO.Id); 
 
 
-            if (user != null) //user boş değilse
+            if (user != null) 
             {
                 
-                var roles = await _userService.GetAllRolesAsync(); //GetAllRolesAsync _userService de Tüm roller getirmek yapıldı.
+                var roles = await _userService.GetAllRolesAsync(); 
 
-                if (ModelState.IsValid)//eğer işlem başarılı olursa _userManager ile getirdiğim User tabloma girilen yeni değerleri eşle dedik
+                if (ModelState.IsValid)
                 {
-                    var map=_mapper.Map(userUpdateDTO, user); //burada aşağıda yorum satırındaki işlerin aynısını mapper ile yapmış oluruz.
-                    //user.FirstName = userUpdateDTO.FirstName;
-                    //user.LastName = userUpdateDTO.LastName;
-                    //user.Email = userUpdateDTO.Email;
+                    var map=_mapper.Map(userUpdateDTO, user); 
 
-                     var validation = await _validator.ValidateAsync(map);//sonra map sonucuna göre hata mesajı ver veya verme
+                     var validation = await _validator.ValidateAsync(map);
 
                     if (validation.IsValid)
                     {
                         user.UserName = userUpdateDTO.Email;
-                        user.SecurityStamp = Guid.NewGuid().ToString(); //aynı anda girişlerde sıkıntı olmasın diye farklı id vermesi için
-                        var result = await _userService.UpdateUserAsync(userUpdateDTO);  //_userServicedeki metotlardandır Kullanıcı güncellemek için yapıldı.
+                        user.SecurityStamp = Guid.NewGuid().ToString(); 
+                        var result = await _userService.UpdateUserAsync(userUpdateDTO); 
 
                         if (result.Succeeded)
                         {
-                            return RedirectToAction("Index", "User", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir. 
+                            return RedirectToAction("Index", "User", new { Area = "Admin" }); 
                         }
-                        else//başarısız olursa
+                        else
                         {    
-                                result.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner
-                                return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın                            
+                                result.AddToIdentityModelState(this.ModelState);
+                                return View(new UserAddDTO { Roles = roles });                        
                         }
                     }
                     else
                     {
-                        validation.AddToModelState(this.ModelState); //bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner 
+                        validation.AddToModelState(this.ModelState);  
 
-                        return View(new UserAddDTO { Roles = roles });//ekleyemezse gene ekleme sayfasında kalsın
+                        return View(new UserAddDTO { Roles = roles });
                     }                   
                 }
             }
@@ -165,28 +162,28 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
 
-        [Authorize(Roles = "SuperAdmin,Admin")] //***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
+        [Authorize(Roles = "SuperAdmin,Admin")] 
         public async Task<IActionResult> Delete(int id)
         {          
-            var result = await _userService.DeleteUserAsync(id); // _userServicedeki metotlardandır Kullanıcı silmek için yapıldı.
+            var result = await _userService.DeleteUserAsync(id);
 
             if (result.identityResult.Succeeded)
             {
-                return RedirectToAction("Index", "User", new { Area = "Admin" }); //işlem başarılıysa ana sayfaya gönderir. 
+                return RedirectToAction("Index", "User", new { Area = "Admin" });
             }
-            else//başarısız olursa
+            else
             {
                
-                result.identityResult.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner
+                result.identityResult.AddToIdentityModelState(this.ModelState);
             }
             return NotFound();
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Profile() //Kullanıcı profilini GETirme action ı
+        public async Task<IActionResult> Profile()
         {
-            var profile = await _userService.GetUserProfileAsync(); //Kullanıcıyı içindeki metotlardan çeker buluruz.
+            var profile = await _userService.GetUserProfileAsync();
 
             return View(profile);
 
@@ -194,65 +191,8 @@ namespace ArticleBlog.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Profile(UserProfileDTO userProfileDTO) //Kullanıcıdan gelen bilgileri kayıt ederiz.
-        {
-            //var user = await _userManager.GetUserAsync(HttpContext.User);//giriş yapan kullanıcıyı çektik
-
-            //if (ModelState.IsValid)//modelstate varsa result isteyen bir yapı vardır. result.success gibi
-            //{
-            //    var isVerified = await _userManager.CheckPasswordAsync(user, userProfileDTO.CurrentPassword); //kullanıcı doğrulaması yaparız. CheckPasswordAsync metodu _userManager classından geliyor.
-
-            //    if (isVerified && userProfileDTO.NewPassword!=null)  //***Eğer opsiyonel olan yeni şifre oluşturmayı da girirsek bu if içinden devam edecek aksi halde else if den devam edecek parolada güncellemezsek.
-
-            //    {
-            //        var result = await _userManager.ChangePasswordAsync(user, userProfileDTO.CurrentPassword, userProfileDTO.NewPassword); //şifres değişikli sonucunu alırız. userProfileDTO.CurrentPassword eski şifreyi userProfileDTO.NewPassword yeni şifreyle _userManager classından gelen ChangePasswordAsync metotla değiştiririz.
-            //        if (result.Succeeded)
-            //        {
-            //            await _userManager.UpdateSecurityStampAsync(user);
-            //            await _signInManager.SignOutAsync();//şifre değişikliğinden sonra sistemden çıkardık.
-            //            await _signInManager.PasswordSignInAsync(user,userProfileDTO.NewPassword,true,false);//şifre değişikliğinden tekrardan şifreyle giriş yapması için yapıldı. true kişiyi hatırlama sorması için yapldı., false ise çok fazla yanlış giriş yapınca hesabı kitlenmemesi adına yapıldı. Bunların hepsi _signInManager classından gelen metodun istediği parametrelerdir.
-
-            //            //burada da değişiklikleri _userManager dan çektiğimiz appuser tablomuzdaki değerlere user bağlantısıyla atarız.
-            //            user.FirstName = userProfileDTO.FirstName;
-            //            user.LastName = userProfileDTO.LastName;
-            //            user.PhoneNumber = userProfileDTO.PhoneNumber;
-
-
-            //            await _userManager.UpdateAsync(user); //değişikliğide kaydetmiş olduk.
-
-
-            //            return View(nameof(Index));
-            //        }
-            //        else
-            //        {
-            //            result.AddToIdentityModelState(this.ModelState);//bizim BLL-Extension-FluentValidationExtensions de yaptığımız hatayı döner
-            //            return View();
-            //        }
-            //    }
-
-            //    else if (isVerified)//****doğrulama da doğruysa işlemi yap. Parola güncellemeden normal bilgileri sadece güncellemek istesek buraya girer.
-
-            //    {
-            //        await _userManager.UpdateSecurityStampAsync(user);
-            //        //burada da değişiklikleri _userManager dan çektiğimiz appuser tablomuzdaki değerlere user bağlantısıyla atarız.
-            //        user.FirstName = userProfileDTO.FirstName;
-            //        user.LastName = userProfileDTO.LastName;
-            //        user.PhoneNumber = userProfileDTO.PhoneNumber;                   
-
-
-            //        await _userManager.UpdateAsync(user); //değişikliğide kaydetmiş olduk.
-
-            //        return View(nameof(Index));
-            //    }
-            //    else
-            //    {
-            //        return View();
-            //    }
-            //}
-
-            //return View(nameof(Index));
-
-
+        public async Task<IActionResult> Profile(UserProfileDTO userProfileDTO) 
+        {           
             if (ModelState.IsValid)
             {
                 var result = await _userService.UserProfileUpdateAsync(userProfileDTO);

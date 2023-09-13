@@ -32,10 +32,7 @@ namespace ArticleBlog.DAL.Configuration
                         .HasForeignKey(x => x.ImageId)
                         .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.HasOne(x => x.User)
-            //       .WithMany(x => x.Articles)
-            //       .HasForeignKey(x => x.UserId)
-            //       .OnDelete(DeleteBehavior.NoAction);
+          
 
 
             builder.HasData(new Article

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.DAL.Context
 {
-    //***Çift database ayağa kaldırırken işlemler biraz farklıdır. 1. Database(BlogDBContext) tablolarımız için klasik bildiğimiz yöntemden gittik(tüm DBSetleri vs oluşturup ayağa kaldırdık, ve OnModelCreating içine Configurationları yazdık.) Ama Package Manager Console a yazdığımız ifade farklıdır kalsör içinde nasıl ne yazılacağı TXT Dosyasında mevcuttur kontrol edersin. 
+   
     public class BlogDBContext : DbContext
     {
         public BlogDBContext()

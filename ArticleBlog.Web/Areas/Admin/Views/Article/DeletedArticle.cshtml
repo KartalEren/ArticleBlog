@@ -13,7 +13,7 @@
           
 
             <table class="table table-bordered" id="articlesTable" width="100%" cellspacing="0">
-                @*  id="articleTables" wwwroot içindeki articleIndex dosyasındaki id ile aynı olmalıdır. JS dosyası ile tablonun içini doldurduk. *@
+               
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -40,12 +40,12 @@
                     {
                         <tr name="@article.ID">
                             <td>@article.Title</td>
-                            <td>@article.Category.CategoryName</td> @* kategorinin sadece adı lazım olduğu için ArticleDTO da açtığımız CategoryDTO probundan CategoryDTO daki Name probuna gideriz. *@
+                            <td>@article.Category.CategoryName</td>
                             <td>@article.CreatedDate.ToShortDateString()</td>
                             <td>@article.CreatedBy</td>
-                            <td>@(article.IsDeleted ? "None Active" : "Active")</td> @* true ise silinmiş false ise aktif demektir. *@
+                            <td>@(article.IsDeleted ? "None Active" : "Active")</td> 
                             <td>
-                                <a class="btn btn-warning btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="UndoDelete" asp-route-Id="@article.ID"><i class='bx bx-undo'></i></a>@* buradaki yönlendirme ye(asp-route-Id) update controllerdaki parametre adını yazmak gerekir.  @* Burası biz güncelleme butonuna basınca Article Controllerdaki Update actionresult ının cshtml (view) sayfasına atması gerekirki orada düzenleme yapalım *@
+                                <a class="btn btn-warning btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="UndoDelete" asp-route-Id="@article.ID"><i class='bx bx-undo'></i></a>
                               
                             </td>
                         </tr>
@@ -56,10 +56,9 @@
             </table>
         </div>
     </div>
-    <!--/ Basic Bootstrap Table -->
-
+   
 
 </div>
 @section Scripts{
     <script src="~/js/articleIndex.js" type="application/ecmascript"></script>
-}  @* ***Bu ifade wwwroot içindeki JS de eklenilen articleIndex dosyasının görmesini sağlar.  *@
+} 

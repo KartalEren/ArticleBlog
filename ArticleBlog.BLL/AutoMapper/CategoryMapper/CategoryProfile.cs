@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 namespace ArticleBlog.BLL.AutoMapper.CategoryMapper
 {
 
-    //****BURADA SONRADAN OLUŞTURDUĞUM DTO LAR İLE NORMAL ENTITIY CLASSLARINI MAPLİYORUM DEPENDENCY INJECTION İÇİN.
+   
 
 
     public class CategoryProfile:Profile
 
 
-    {       //NOT:******Controllerda var map=... gibi ifade yapabilmek için buraya auto map yaparız.
+    {      
         public CategoryProfile()
         {
-            CreateMap<CategoryDTO,Category>().ReverseMap(); //***Hem CategoryDTO dan Category a, hem de Category dan CategoryDTO ya map leme işlemi yapıldı. (ReverseMap() ters yönden map leme sağlar. Yani içerikleri birbirleri arasında aktarır. Data Transfer Object (DTO)).
-            CreateMap<CategoryAddDTO,Category>().ReverseMap(); //***Hem CategoryAddDTO dan Category a, hem de Category dan CategoryAddDTO ya map leme işlemi yapıldı. (ReverseMap() ters yönden map leme sağlar. Yani içerikleri birbirleri arasında aktarır. Data Transfer Object (DTO)).
-            CreateMap<CategoryUpdateDTO,Category>().ReverseMap(); //***Hem CategoryUpdateDTO dan Category a, hem de Category dan CategoryUpdateDTO ya map leme işlemi yapıldı. (ReverseMap() ters yönden map leme sağlar. Yani içerikleri birbirleri arasında aktarır. Data Transfer Object (DTO)).
+            CreateMap<CategoryDTO,Category>().ReverseMap(); 
+            CreateMap<CategoryAddDTO,Category>().ReverseMap(); 
+            CreateMap<CategoryUpdateDTO,Category>().ReverseMap(); 
         }
     }
 }

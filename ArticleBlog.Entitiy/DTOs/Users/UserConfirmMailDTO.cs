@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.Entitiy.DTOs.Users
 {
-    public class UserConfirmMailDTO //onay kodu için bu DTO oluşturuldu.
+    public class UserConfirmMailDTO
     {
         public string Email { get; set; }
         public int ConfirmCode { get; set; }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ArticleBlog.Web.Filters.ArticleVisitors
 {
-    public class ArticleVisitorFilter : IAsyncActionFilter //FİLTRELEME İŞLEMİ İÇİN YAPARIZ. SİTEYE İLK GİREN İNSANLARIN BİLGİLERİNİ KAYDEDECEĞİZ****
+    public class ArticleVisitorFilter : IAsyncActionFilter 
     {
         private readonly IUnitOfWork _unitOfWork;
         public ArticleVisitorFilter(IUnitOfWork unitOfWork)
@@ -18,23 +18,23 @@ namespace ArticleBlog.Web.Filters.ArticleVisitors
         {
 
 
-            List<Visitor> visitors = _unitOfWork.GetRepository<Visitor>().GetAllAsync().Result;//TÜM VİSİTORLERİ LİSTE OLARAK _unitOfWork YAPISIYLA ÇAĞIRDIK.
+            List<Visitor> visitors = _unitOfWork.GetRepository<Visitor>().GetAllAsync().Result;
 
 
-            string getIp = context.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();// MapToIPv4 de kullanıcının id kısmı olduğu için aldık ve stringe çevirdik
-            string getUserAgent = context.HttpContext.Request.Headers["User-Agent"]; //BU VE ÜSTTEKİ YAPILARLA ARTIK KULLANICININ SİSTEME NASIL BAĞLANDIĞI BİLGİLERİNİ BİLİYORUZ. 
+            string getIp = context.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            string getUserAgent = context.HttpContext.Request.Headers["User-Agent"]; 
 
-            Visitor visitor = new(getIp, getUserAgent); //BURADA SİTEYİ ZİYARET EDEN VE YUKARIDA BİLGİLERİNİ ÇEKTİĞİMİZ YENİ BİR ZİYARETÇİ OLUŞTURDUK YUKARIDAKİ BİLGİLERİ İÇEREN PARAMETRELERLE
+            Visitor visitor = new(getIp, getUserAgent); 
 
 
 
-            if (visitors.Any(x => x.IpAddress == visitor.IpAddress))// YUKARIDAKİ BİLGİLERE GÖRE SİTEYE BİRİ GİRİŞ YAPINCA NEW OLAN visitor BURADA KONTROL EDİLİR. EĞER BÖYLE x.IpAddress == visitor.IpAddress OLUP DAHA ÖNCEDEN HİÇ VAR MI BU KULLANICI DİYE IP ADRESİNDEN BAKARIZ
+            if (visitors.Any(x => x.IpAddress == visitor.IpAddress))
             {
-                return next(); //EĞER KULLANICI DAHA ÖNCEDEN VAR İSE KAYIT YAPMADAN DEVAM ET.
+                return next(); 
             }
 
 
-            else //EĞER BÖYLE BİR KULLANICI YOKSA _unitOfWork İLE GetRepository<Visitor>() METODU İLE YANİ VİSİTOR TABLOMA, AddAsync(visitor); METODU İLE VİSİTOR BİLGİLERİ KAYDET DERİZ.
+            else
             {
                 _unitOfWork.GetRepository<Visitor>().AddAsync(visitor);
                 _unitOfWork.Save();

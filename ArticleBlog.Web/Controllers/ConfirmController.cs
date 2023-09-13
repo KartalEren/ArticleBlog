@@ -16,11 +16,10 @@ namespace ArticleBlog.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Index() //***Bir önceki sayfadan yani Register sayfasından bu yeni kullanıcı Mail ini çekmeliyiz bunu da TEMPDATA YAPISIYLA YAPACAĞIZ. REGİSTER CONTROLLERININ İNDEX-POST UNDA EĞER BAŞARILIYSA BU SAYFAYA YÖNLENDİRİYORDUK VE ORADAKİ RETURUN ÜN ÜSTÜNDE TempData["Mail"] = userRegisterDTO.Email; şeklinde userRegisterDTO daki maili TemData["Mail"] ile buraya çekmiş olduk.
-                                           //TEMPDATA[""] YAPISI İLE CONTROLLER ARASI VERİLER TAŞINIR....
+        public IActionResult Index() 
         {
             var value = TempData["Mail"];
-            @ViewBag.userEmail = value; //Yukarıdaki Register Controller dan taşıdığımız mail adresinin bulunduğu değişkeni, bu actionun cshtml sayfasında taşımak için  @ViewBag.userEmail veri taşıma modeline attık.
+            @ViewBag.userEmail = value;
 
             return View();
         }
@@ -30,14 +29,14 @@ namespace ArticleBlog.Web.Controllers
         public async Task<IActionResult>  Index(UserConfirmMailDTO userConfirmMailDTO)
         {
 
-            var user = await _userManager.FindByEmailAsync(userConfirmMailDTO.Email);  //_userManager clasındaki kendinden gelen FindByEmailAsync metoduyla kullanıcının mailini almış olduk
+            var user = await _userManager.FindByEmailAsync(userConfirmMailDTO.Email);  
 
 
-            if (user.ConfirmCode==userConfirmMailDTO.ConfirmCode) //eğer bu kullanıcın girdiği ConfirmCode ile user daki confirm code ile eşleiyorsa
+            if (user.ConfirmCode==userConfirmMailDTO.ConfirmCode) 
             {
-                user.EmailConfirmed = true; //user değişkenine tanımladığımız _userManager daki kendinden gelen EmailConfirmed doğrula dedik
+                user.EmailConfirmed = true; 
                 await _userManager.UpdateAsync(user);
-                return RedirectToAction("Login","Authorize", new { Area = "Admin" }); //Sonra bizi işlem başarılı olursa Area da bulunan Authorize Controllerdaki Login actionuna döndür girş yapmak için dedik.
+                return RedirectToAction("Login","Authorize", new { Area = "Admin" });
             }
 
                 return View();

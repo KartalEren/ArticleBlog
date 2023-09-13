@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArticleBlog.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")]//***Bu sayfaya kimlerin erişebileceğini ayarladık. Bunu da WEB-Admin-Controllers-AuthorizeController içinde ayarladık buradaya Attribute ekledik. Ama önce bunu yapabilmek için DB kurma aşamasında ilk başlarken Program.cs de app.UseAuthentication(); ve  app.UseAuthorization(); altalta bu sırayla eklememiz gerekiyor.
-    [Area("Admin")] //Bunu yazarak diyoruz ki... Ben Area içindeki Home Controller olarak çalışacağım diyorum.
-    [Authorize]//Login için bunu bu controller da zorunlu tuttuk. Admine giriş için yapıldı aslında
+    [Authorize(Roles = $"{RoleConsts.SuperAdmin}, {RoleConsts.Admin}")]
+    [Area("Admin")] 
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IArticleService articleService;

@@ -12,9 +12,9 @@
 
             @{
 
-                if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                if (!User.IsInRole("User")) 
                 {
-                    <a a class="btn btn-success mb-3" asp-area="Admin" asp-controller="Article" asp-action="Add">Add New Article<i class="bx bx-plus"></i></a> @* Sayfaya GET işlemi yapacaktır *@
+                    <a a class="btn btn-success mb-3" asp-area="Admin" asp-controller="Article" asp-action="Add">Add New Article<i class="bx bx-plus"></i></a> 
                 }
 
             }
@@ -22,7 +22,7 @@
 
 
             <table class="table table-bordered" id="articlesTable" width="100%" cellspacing="0">
-                @*  id="articleTables" wwwroot içindeki articleIndex dosyasındaki id ile aynı olmalıdır. JS dosyası ile tablonun içini doldurduk. *@
+               
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -31,8 +31,7 @@
                         <th>Created By</th>
                         <th>Status</th>
                         @{
-                            if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
-                           
+                            if (!User.IsInRole("User"))
                             {
                                 <th>Actions</th>
                             }
@@ -48,7 +47,7 @@
                         <th>Status</th>                     
 
                         @{
-                            if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                            if (!User.IsInRole("User"))
                             {
                                 <th>Actions</th>
                             }
@@ -62,18 +61,18 @@
                     {
                         <tr name="@article.ID">
                             <td>@article.Title</td>
-                            <td>@article.Category.CategoryName</td> @* kategorinin sadece adı lazım olduğu için ArticleDTO da açtığımız CategoryDTO probundan CategoryDTO daki Name probuna gideriz. *@
+                            <td>@article.Category.CategoryName</td> 
                             <td>@article.CreatedDate.ToShortDateString()</td>
                             <td>@article.CreatedBy</td>
-                            <td>@(article.IsDeleted ? "None Active" : "Active")</td> @* true ise silinmiş false ise aktif demektir. *@
+                            <td>@(article.IsDeleted ? "None Active" : "Active")</td> 
                             <td>
 
                                 @{
-                                    if (!User.IsInRole("User")) @* userın rolü buysa değilse kısmı göster değilse gösterme demektir.   *@
+                                    if (!User.IsInRole("User")) 
                                     {
                                     <td>
-                                        <a class="btn btn-primary btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-Id="@article.ID">@* buradaki yönlendirme ye(asp-route-Id) update controllerdaki parametre adını yazmak gerekir. *@ <i class="bx bxs-edit"></i></a> @* Burası biz güncelleme butonuna basınca Article Controllerdaki Update actionresult ının cshtml (view) sayfasına atması gerekirki orada düzenleme yapalım *@
-                                        <a class="btn btn-danger btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@article.ID">@* buradaki yönlendirme ye(asp-route-Id) Delete controllerdaki parametre adını yazmak gerekir. *@ <i class="bx bx-minus-circle"></i></a> @* Burası biz sil butonuna basınca Article Controllerdaki Delete actionresult ının cshtml (view) sayfasına atması gerekirki orada silme yapalım *@
+                                        <a class="btn btn-primary btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Update" asp-route-Id="@article.ID"> <i class="bx bxs-edit"></i></a> 
+                                        <a class="btn btn-danger btn-sm" data-id="@article.ID" asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@article.ID"> <i class="bx bx-minus-circle"></i></a>
                                     </td>
                                     }
                                 }
@@ -89,10 +88,10 @@
             </table>
         </div>
     </div>
-    <!--/ Basic Bootstrap Table -->
+   
 
 
 </div>
 @section Scripts{
     <script src="~/js/articleIndex.js" type="application/ecmascript"></script>
-}  @* ***Bu ifade wwwroot içindeki JS de eklenilen articleIndex dosyasının görmesini sağlar.  *@
+} 

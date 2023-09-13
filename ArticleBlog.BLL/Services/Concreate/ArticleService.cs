@@ -17,16 +17,14 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.BLL.Services.Concreate
 {
-    //Burada aslında Interface ve Normal abstract sınıfında bu metotları yapınca Dependency Injection yapmış oluyoruz birnevi.
-
-    //Not: Repository lere direkt ulaşmamak için Unit Of Work yapısı oluşturmuştuk, o yapı üzerinde jeneri olarak  IRepository<T> IUnitOfWork.GetRepository<T>() metoduyla repository lere ulaşabilecektirk. Burada da aynı şekilde direkt Repositorylere ulaşmamak için Unit Of Work den ctor da eşleme yaparız.
+    
     public class ArticleService : IArticleService
     {
-        private readonly IUnitOfWork _unitOfWork; //Repolara ulaşmak için burada new leriz.
-        private readonly IMapper mapper; //Liste türünde metotlarda Mapleme yapmak için burada new leriz.
-        private readonly IImageHelper _imageHelper; //resim ekleme için article a buradan imageHelper içindeki metotlara ulaşırız hem eklemek hem silmek için
-        private readonly IHttpContextAccessor _httpContextAccessor; //BLL-Extension-LoggedInUserExtensions deki ifadeleri görmesi için buraya servis ekledik. HttpContextAccessor ile kullanıcıyı bulmamızı sağlayan yapıdır.
-        private readonly ClaimsPrincipal _user;//Login olan kullanıcııları bulan bir yapıdır.Bir üstteki _httpContextAccessor tanımlamak yerine kısa metotlarda olması adına _user şeklinde yapar ctor içine atarız ve _user ı kullanırız artık
+        private readonly IUnitOfWork _unitOfWork; 
+        private readonly IMapper mapper; 
+        private readonly IImageHelper _imageHelper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ClaimsPrincipal _user;
 
         public ArticleService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor,IImageHelper imageHelper)
         {
@@ -35,21 +33,21 @@ namespace ArticleBlog.BLL.Services.Concreate
             this._imageHelper = imageHelper;
 
             this._httpContextAccessor = httpContextAccessor;
-            _user = httpContextAccessor.HttpContext.User;//burada eşleme işlemi aşağılarda uzun uzun olmaması adına _user a işlem yapan yapıyı eşitledik. //artık BLL-Extension-LoggedInUserExtensiondan login logout olan kullanıcıyı bulabiliriz.
+            _user = httpContextAccessor.HttpContext.User;
         }
 
-        public async Task<ArticleListDTO> GetAllByPagingAsync(int? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false) //burada açılan home-indexte kaç makale ekranda görünsün ve fazla makale varsa alttaki sayfa numaralarından atlatma işlemi için yaparız.
+        public async Task<ArticleListDTO> GetAllByPagingAsync(int? categoryId, int currentPage = 1, int pageSize = 3, bool isAscending = false) 
         {
-            pageSize = pageSize > 20 ? 20 : pageSize; //sayfa boyunu buluruz
+            pageSize = pageSize > 20 ? 20 : pageSize; 
             var articles = categoryId == 0
-                ? await _unitOfWork.GetRepository<Article>().GetAllAsync(a => !a.IsDeleted, a => a.Category, i => i.Image)// kategori null ise article ları bu şekilde getir
+                ? await _unitOfWork.GetRepository<Article>().GetAllAsync(a => !a.IsDeleted, a => a.Category, i => i.Image)
                 : await _unitOfWork.GetRepository<Article>().GetAllAsync(a => a.CategoryId == categoryId && !a.IsDeleted,
-                    a => a.Category, i => i.Image); // kategori null değilse article ları bu şekilde getir
+                    a => a.Category, i => i.Image); 
 
             var sortedArticles = isAscending
                 ? articles.OrderBy(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
                 : articles.OrderByDescending(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-            return new ArticleListDTO //burada da manuel mapleme yaptık
+            return new ArticleListDTO 
             {
                 Articles = sortedArticles,
                 CategoryId = categoryId == null ? null : categoryId.Value,
@@ -68,13 +66,13 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-        public async Task<ArticleListDTO> SearchAsync(string keyword, int currentPage = 1, int pageSize = 3, bool isAscending = false) //Ana sayfada makaleler listelenirken keyword e göreSerach ile arama işlemi için bu metot yapıldı.
+        public async Task<ArticleListDTO> SearchAsync(string keyword, int currentPage = 1, int pageSize = 3, bool isAscending = false) 
         {
 
-            pageSize = pageSize > 20 ? 20 : pageSize; //sayfa boyunu buluruz
+            pageSize = pageSize > 20 ? 20 : pageSize; 
             var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(
                 a => !a.IsDeleted && (a.Title.Contains(keyword) || a.Content.Contains(keyword) || a.Category.CategoryName.Contains(keyword)),
-            a => a.Category, i => i.Image); // isdeleted false ise Title veya Content veya Category.CategoryName keywordüne göre içeriyorsa article ları bu şekilde getir
+            a => a.Category, i => i.Image); 
 
 
 
@@ -82,7 +80,7 @@ namespace ArticleBlog.BLL.Services.Concreate
             var sortedArticles = isAscending
                 ? articles.OrderBy(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
                 : articles.OrderByDescending(a => a.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-            return new ArticleListDTO //burada da manuel mapleme yaptık
+            return new ArticleListDTO 
             {
                 Articles = sortedArticles,
                 CurrentPage = currentPage,
@@ -103,18 +101,17 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-        public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) //Yeni bir article eklemek için kullanıcıya gösterdiğimiz DTO lar ile kullanıcılardan alınan bilgilere göre yeni makale ekler.
+        public async Task CreateArticleAsync(ArticleAddDTO articleAddDTO) 
         {
-            var userId = _user.GetLoggedInUserId();//artık loginlerde user ıd yi otomatik buluruz girişlerde.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
-            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin yarattığını Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir CreatedBy kısmına. BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            var userId = _user.GetLoggedInUserId();
+            var userEmail = _user.GetLoggedInEmail();
 
 
-            //önce resim ekleme işlemi yapılır db ye 
-            //sonra article eklenir.
+           
             var imageUpload = await _imageHelper.Upload(articleAddDTO.Title, articleAddDTO.Photo, ImageType.Post);
-            Image image = new(imageUpload.FullName, articleAddDTO.Photo.ContentType, userEmail); //imagenn ctor unda istenilenleri ekledik.
-            await _unitOfWork.GetRepository<Image>().AddAsync(image);//Burada da unitofWork sayesinde REPOSITPRY E EKLEMİŞ OLURUZ.
-            await _unitOfWork.SaveAsync(); // Burada da SaveChanges() mantığı gibi kayıt işlemi yapmış olduk.
+            Image image = new(imageUpload.FullName, articleAddDTO.Photo.ContentType, userEmail);
+            await _unitOfWork.GetRepository<Image>().AddAsync(image);
+            await _unitOfWork.SaveAsync();
 
 
 
@@ -123,22 +120,15 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-            //var imageId = 1;
-            var article = new Article(articleAddDTO.Title, articleAddDTO.Content, userId, userEmail, articleAddDTO.CategoryId, image.ID); //Aşağıdaki gibi tek tek yazacağımı, Entity calsslarında oluşturduğum parametreli ctor ilede eşleme işlemi yapabilirim. Yukarıdaki imagenin ID sini çeceriz.
+           
+            var article = new Article(articleAddDTO.Title, articleAddDTO.Content, userId, userEmail, articleAddDTO.CategoryId, image.ID); 
 
 
-            //var article = new Article
-            //{
-            //    Title = articleAddDTO.Title,
-            //    Content = articleAddDTO.Content,
-            //    CategoryId = articleAddDTO.CategoryId,
-            //    UserId= userId
-
-            //}; //****Burada DTO dan alınan verileri asıl tablomuz olan burada yeni oluşturduğumuz Article ın içine ekleriz ve kaydetmiş oluruz.****
+           
 
 
-            await _unitOfWork.GetRepository<Article>().AddAsync(article);//Burada da unitofWork sayesinde REPOSITPRY E EKLEMİŞ OLURUZ.
-            await _unitOfWork.SaveAsync(); // Burada da SaveChanges() mantığı gibi kayıt işlemi yapmış olduk.
+            await _unitOfWork.GetRepository<Article>().AddAsync(article);
+            await _unitOfWork.SaveAsync(); 
         }
 
 
@@ -150,14 +140,14 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync() //Liste türünde Article ları kategorileriyle birlikte silinmemiş olanları döndürecek.
+        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryNoneDeletedAsync() 
         {
 
-            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.IsDeleted == false, x => x.Category);//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. Ayrıca kategor,ye göre silinmemiş olanları GetAllAsync(x=>x.IsDeleted==false,x=>x.Category) metoduyla getirir articleları İşin kolaylığı burada....
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.IsDeleted == false, x => x.Category);
 
-            var map = mapper.Map<List<ArticleDTO>>(articles); //Burada DTO oluşturduğumuz ArticleDTO classının maplemek için yaparız ve deriz ki; buradaki dto da oluşturulan proplara göre listeleri getir demek isteriz. Yani göstermek istediğimiz propları index te veya herhangi cshtml de biz seçeriz böylece tüm propları kişilere güvenlik açısından açmamış oluruz. List türünde olmalıdır çünkü metot bir liste döndürür. Article Listesi döner.
+            var map = mapper.Map<List<ArticleDTO>>(articles); 
 
-            return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
+            return map;
         }
 
 
@@ -169,16 +159,15 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-        public async Task<ArticleDTO> GetArticleWithCategoryNonDeletedAsync(int Id) //Tek bir değer Article kategorileriyle birlikte silinmemiş olanları ve id lere göre eşleyerek getirecek döndürecek.
+        public async Task<ArticleDTO> GetArticleWithCategoryNonDeletedAsync(int Id)
         {
 
             var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == Id, x => x.Category, i => i.Image);
-            //***Kategoriye göre hem silinmemiş hemde buradaki id si ile kendindeki ID yi bul eşleştir getir dedik.
-            //Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. Ayrıca kategor,ye göre silinmemiş olanları GetAllAsync(x=>x.IsDeleted==false,x=>x.Category) metoduyla getirir articleları İşin kolaylığı burada....
+           
 
-            var map = mapper.Map<ArticleDTO>(article); //Burada DTO oluşturduğumuz ArticleDTO classının maplemek için yaparız ve deriz ki; buradaki dto da oluşturulan proplara göre listeleri getir demek isteriz. Yani göstermek istediğimiz propları index te veya herhangi cshtml de biz seçeriz böylece tüm propları kişilere güvenlik açısından açmamış oluruz. 
+            var map = mapper.Map<ArticleDTO>(article); 
 
-            return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
+            return map;
         }
 
 
@@ -192,42 +181,37 @@ namespace ArticleBlog.BLL.Services.Concreate
 
         public async Task<string> UpdateArticleAsync(ArticleUpdateDTO articleUpdateDTO)
         {
-            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin güncellediiğni Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir ModifiedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
-            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == articleUpdateDTO.ID, x => x.Category, i => i.Image); //Yukarıdaki metoda benzerdir.
+            var userEmail = _user.GetLoggedInEmail();
+            var article = await _unitOfWork.GetRepository<Article>().GetAsync(x => x.IsDeleted == false && x.ID == articleUpdateDTO.ID, x => x.Category, i => i.Image); 
 
-            //önce eskiyi resim varsa silme işlemi yapar kaydederiz
+          
            
 
             if (articleUpdateDTO.Photo != null)
             {
-                _imageHelper.DeleteImage(article.Image.FileName);// Article sınıfının içinde Image türünde Image probuyla Image entitisinden bağlantı alırız ve oradaki FileName i çekebiliriz Article içinden. Burada eğer resim varsa önce sil dedik
+                _imageHelper.DeleteImage(article.Image.FileName);
 
                 var imageUpload = await _imageHelper.Upload(articleUpdateDTO.Title, articleUpdateDTO.Photo, ImageType.Post);
                 Image image = new(imageUpload.FullName, articleUpdateDTO.Photo.ContentType, userEmail);
 
-                articleUpdateDTO.ImageFileName = image.FileName; //***********İNCELE ***UPDATEVIEW DA RESİM KAYDETME YERİNDE SRC YE YAZDIK
+                articleUpdateDTO.ImageFileName = image.FileName; 
 
-                await _unitOfWork.GetRepository<Image>().AddAsync(image); //burada da update yapılır.
+                await _unitOfWork.GetRepository<Image>().AddAsync(image); 
                 await _unitOfWork.SaveAsync();
 
-                article.ImageId = image.ID; //burada da yeni seçilen resmi eşitlemiş olduk 
+                article.ImageId = image.ID; 
 
             }
 
 
            /*---------------------------------------------------------------------------------------*/
 
-            //aşağıda da yeni değerli kaydederiz.
-
-            //Buralarda manuel mapper yapmak zorunda kaldık bu da bir yoldur. tek tek updatedto daki değerleri Article entitisimize eşleriz Database ye kullanıcıdan gelen değişiklikleri ataması için.
-            mapper.Map(articleUpdateDTO, article); //mapper ile girilen bilgileri eşitledik.
-            //article.Title = articleUpdateDTO.Title;
-            //article.Content = articleUpdateDTO.Content;
-            //article.CategoryId = articleUpdateDTO.CategoryId;
+           
+            mapper.Map(articleUpdateDTO, article); 
             article.ModifiedDate = DateTime.Now;
-            article.ModifiedBy = userEmail; //ModifiedBy kısmında giriş yapanın Emil adresi yazacaktır.       
+            article.ModifiedBy = userEmail;       
 
-            await _unitOfWork.GetRepository<Article>().UpdateAsync(article); //burada da update yapılır.
+            await _unitOfWork.GetRepository<Article>().UpdateAsync(article); 
 
             await _unitOfWork.SaveAsync();
             return article.Title;
@@ -243,17 +227,17 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-        public async Task SafeDeleteArticleAsync(int Id) //Tamamen silmeden Silmiş gibi işlem yaptırırız.
+        public async Task SafeDeleteArticleAsync(int Id)
         {
-            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin sildiğini Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir DeletedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            var userEmail = _user.GetLoggedInEmail();
 
 
 
-            var article = await _unitOfWork.GetRepository<Article>().GetByIdAsync(Id); //sadece repositorydeki GetByIdAsync metoduyla silme işlemi yapabiliriz.
+            var article = await _unitOfWork.GetRepository<Article>().GetByIdAsync(Id);
 
-            article.IsDeleted = true; //IsDeleted true olduğu için biz article çağırdığımızda yukarılarda yaptığımız metotlarda !isDeleted ları almıştık dolayısıyla onlar gelmeyecek. BaseEntity de isDeletd=false tanımlıdır normalde.
+            article.IsDeleted = true;
             article.DeletedDate = DateTime.Now;
-            article.DeletedBy=userEmail; //DeletedBy kısmında giriş yapanın Emil adresi yazacaktır. 
+            article.DeletedBy=userEmail;
 
 
             await _unitOfWork.GetRepository<Article>().UpdateAsync(article);
@@ -272,24 +256,23 @@ namespace ArticleBlog.BLL.Services.Concreate
 
 
 
-        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryDeleted() //Silinmiş makaleleri listeler.
+        public async Task<List<ArticleDTO>> GetAllArticlesWithCategoryDeleted()
         {
-            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.IsDeleted, x => x.Category);//***Burada IUnitOfWork ü ctor da eşleyerek, IUnitOfWork da oluşturduğumuz GetRepository<> metoduyla jenerik olarak yaptığımız için Article yazarak ArticleDTO sınıfı için tüm repository metodlarına return await _unitOfWork.GetRepository<Article>(). yaptıktan sonra ulaşmış oluyoruz. Ayrıca kategor,ye göre silinmemiş olanları GetAllAsync(x=>x.IsDeleted,x=>x.Category) metoduyla getirir articleları İşin kolaylığı burada....
+            var articles = await _unitOfWork.GetRepository<Article>().GetAllAsync(x => x.IsDeleted, x => x.Category);
 
-            var map = mapper.Map<List<ArticleDTO>>(articles); //Burada DTO oluşturduğumuz ArticleDTO classının maplemek için yaparız ve deriz ki; buradaki dto da oluşturulan proplara göre listeleri getir demek isteriz. Yani göstermek istediğimiz propları index te veya herhangi cshtml de biz seçeriz böylece tüm propları kişilere güvenlik açısından açmamış oluruz. List türünde olmalıdır çünkü metot bir liste döndürür. Article Listesi döner.
+            var map = mapper.Map<List<ArticleDTO>>(articles); 
 
-            return map; //burada da Map leme işlemi yaptığımız map değişkenini döndürürüz ve böylece liste dönmüş olur.
+            return map; 
         }
 
-        public async Task UndoDeleteArticleAsync(int Id)//Silinmiş makaleleri geri getirir.
+        public async Task UndoDeleteArticleAsync(int Id)
         {
-            var userEmail = _user.GetLoggedInEmail();//artık makaleleri kimin sildiğini Email le giriş yapıldığı için direkt düzenleyenin Emaili gelir DeletedBy kısmına.BLL-Extension-LoggedInUserExtensions deki ifadelerden gelir burası.
+            var userEmail = _user.GetLoggedInEmail();
 
 
+            var article = await _unitOfWork.GetRepository<Article>().GetByIdAsync(Id);
 
-            var article = await _unitOfWork.GetRepository<Article>().GetByIdAsync(Id); //sadece repositorydeki GetByIdAsync metoduyla silme işlemi yapabiliriz.
-
-            article.IsDeleted = false; //IsDeleted false olduğu için biz article çağırdığımızda yukarılarda yaptığımız metotlarda isDeleted=true ları almıştık dolayısıyla onlar gelmeyecek. BaseEntity de isDeletd=true tanımlıdır normalde.
+            article.IsDeleted = false; 
             article.DeletedDate = null;
             article.DeletedBy = null;
 

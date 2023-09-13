@@ -12,7 +12,7 @@ namespace ArticleBlog.Web.ViewComponents
             this._categoryService = categoryService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync() //Burada view component oluştrduk _Layoutta bunu yazabilmek için temiz görünsün diye Partial View mantığı gibi
+        public async Task<IViewComponentResult> InvokeAsync() 
         {
             var categories =await _categoryService.GetAllCategoriesNonDeletedTake24();
             return View(categories);

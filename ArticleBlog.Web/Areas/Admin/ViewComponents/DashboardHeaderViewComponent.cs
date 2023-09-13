@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArticleBlog.Web.Areas.Admin.ViewComponents
 {
-    public class DashboardHeaderViewComponent:ViewComponent //Aktif kullanıcı adını sayfada belirtmek için yaparız.
+    public class DashboardHeaderViewComponent:ViewComponent 
     {
-        private readonly UserManager<AppUser> _userManager; //Giriş yapan kullanıcı adına erişmek için kullanırız.
-        private readonly IMapper _mapper; //Giriş yapanın rolünü bulmak için kullanırız.
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper; 
 
         public DashboardHeaderViewComponent(UserManager<AppUser> userManager,IMapper mapper )
         {
@@ -19,16 +19,16 @@ namespace ArticleBlog.Web.Areas.Admin.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var loggedInUser = await _userManager.GetUserAsync(HttpContext.User);
-            var map = _mapper.Map<UserDTO>(loggedInUser); //loggedInUser ı UserDTO ya gönderdi.
+            var map = _mapper.Map<UserDTO>(loggedInUser); 
 
 
-            var role = string.Join("", await _userManager.GetRolesAsync(loggedInUser)); //GetRolesAsync çoğunluk olduğu için sıkıntı olur ama biz burada bunu manipule edeceğiz string.Join("", ) metodu ile ve aşağıdaki eşitleme yaptımız role (sağ taraftaki) türü liste olduğu için artık bizden liste istemeyecek string değer olmuş olacak çünkü soldaki Role strin bir propdur UserDTO da.
-            map.Role = role; //map ile userDTO ya değeri taşımış olduk. çünkü yukarıda map işleminde loggedInUser ı UserDTO ya gönderdi.
+            var role = string.Join("", await _userManager.GetRolesAsync(loggedInUser)); 
+            map.Role = role; 
 
 
 
 
-            return View(map); //giriş yapan kullanıcıyı id den çektik.
+            return View(map); 
             
         }
     }

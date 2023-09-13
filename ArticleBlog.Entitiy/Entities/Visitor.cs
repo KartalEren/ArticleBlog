@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.Entitiy.Entities
 {
-    public class Visitor:IEntityBase //ziyaret yapan kullanıcı bulunur.
+    public class Visitor:IEntityBase 
     {
         public Visitor()
         {
-            //1 adet boş parametreli ctor tanımlarız
+            
 
             ArticleVisitors=new HashSet<ArticleVisitor>();
 
@@ -19,7 +19,7 @@ namespace ArticleBlog.Entitiy.Entities
 
         public Visitor(string ipAddress, string userAgent)
         {
-            //burada da parametreli ctor tanımlarız ki bu sınıf newlenince 2 şekli olsun hem boş hem parametreli oluşabilir diye......
+           
 
             IpAddress=ipAddress;
             UserAgent=userAgent;
@@ -33,7 +33,7 @@ namespace ArticleBlog.Entitiy.Entities
         public DateTime CreatedDate { get; set; }=DateTime.Now;
 
 
-        public ICollection<ArticleVisitor> ArticleVisitors { get; set; } //Bir Visitor ün 1 den fazla ziyaretçisi olabilir.
+        public ICollection<ArticleVisitor> ArticleVisitors { get; set; } 
 
 
 

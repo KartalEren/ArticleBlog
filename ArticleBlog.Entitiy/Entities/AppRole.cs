@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArticleBlog.Entitiy.Entities
 {
-    public class AppRole : IdentityRole<int> //id leri int almak için yaptık
+    public class AppRole : IdentityRole<int> 
     {
     }
 }

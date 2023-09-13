@@ -12,8 +12,8 @@ namespace ArticleBlog.Entitiy.Entities
     {
         public string FileName { get; set; }
         public string FileType { get; set; }
-        public ICollection<Article> Articles { get; set; }//1 resim 1 den fazla article içerebilir
-        public ICollection<AppUser> Users { get; set; }//1 resim 1 den fazla article içerebilir
+        public ICollection<Article> Articles { get; set; }
+        public ICollection<AppUser> Users { get; set; }
 
 
         public Image()
@@ -23,7 +23,7 @@ namespace ArticleBlog.Entitiy.Entities
         }
 
 
-        public Image(string fileName, string fileType, string createdBy)//kod okunabilirliği açısından parametreli ctor yarattık. Yukarıda da boş ctor yarattık.
+        public Image(string fileName, string fileType, string createdBy)
         {
             FileName = fileName;
             FileType = fileType;

@@ -8,7 +8,7 @@
         <div class="card mb-4">
             <h5 class="card-header"></h5>
             <form asp-controller="Article" asp-action="Add" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly"></div> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                <div asp-validation-summary="ModelOnly"></div> 
                 <div class="card-body">
                     <div class="form-group">
 
@@ -18,24 +18,24 @@
                         </a>
 
                         <select id="categoryList" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"ID","CategoryName"))"></select>
-                        @* ArticleUpdateDTO da Category türünde kategori olduğu için biz bunun adına ArticleUpdateDTO dan ulaşmak için böyle yaparız.  ıd ye ait isimdir. *@
-                        <span asp-validation-for="CategoryId" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                       
+                        <span asp-validation-for="CategoryId" class="text-danger"></span> 
 
                     </div>
                     <div class="form-group">
                         <label asp-for="Title" id="defaultFormControlInput" class="form-label">Title</label>
                         <input asp-for="Title" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="Please Input Article Title" aria-describedby="defaultFormControlHelp">
-                        <span asp-validation-for="Title" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                        <span asp-validation-for="Title" class="text-danger"></span> 
                     </div>
                     <div class="form-group">
                         <label asp-for="Content" for="defaultFormControlInput" class="form-label">Content</label>
                         <textarea asp-for="Content" type="text" class="form-control mb-3" id="defaultFormControlInput" style="min-height:300px;" placeholder="Content" aria-describedby="defaultFormControlHelp"></textarea>
-                        <span asp-validation-for="Content" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                        <span asp-validation-for="Content" class="text-danger"></span> 
                     </div>
                     <div class="form-group">
-                        <label asp-for="Photo" for="defaultFormControlInput" class="form-label">Upload Picture</label> @* RESİM SEÇME BÖLÜMÜDÜR. *@
+                        <label asp-for="Photo" for="defaultFormControlInput" class="form-label">Upload Picture</label> 
                         <input asp-for="Photo" type="file" accept="image/*" class="form-control mb-3" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
-                        <span asp-validation-for="Photo" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                        <span asp-validation-for="Photo" class="text-danger"></span>
                     </div>
 
 
@@ -62,13 +62,13 @@
                 <form>
                     <div class="form-group">
                         <label class="d-block form-label">Category Name</label>
-                        <input class="form-control" type="text" id="categoryName" /> @*  categoryName JS DOSYASINDAKİ REFERANS ID dir *@
+                        <input class="form-control" type="text" id="categoryName" /> 
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Save</button> @*  btnSave JS DOSYASINDAKİ REFERANS ID dir *@
+                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Save</button>
             </div>
         </div>
     </div>
@@ -76,14 +76,14 @@
 
 @section Scripts
     {
-    <script src="~/js/categoryAdd.js"></script> @* JS Dosyasındaki KODLAR *@
+    <script src="~/js/categoryAdd.js"></script> 
 
     <script>
         var app = app || {};
         app.Urls = app.Urls || {};
 
         app.Urls.baseUrl = '@Url.Content("~")';
-        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))"; //controllerdan hangi action ve hangi controller ise yazarız.
-        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))"; /* tekrar article ekleme sayfasına döndürür */
+        app.Urls.categoryAddUrl = "@(Url.Action("AddWithAjax", "Category"))"; 
+        app.Urls.articleAddUrl = "@(Url.Action("Add", "Article"))"; 
     </script>
-   }  <!--Kategori eklerken kullanacağımız JS kodunun referans yeridir.-->
+   } 

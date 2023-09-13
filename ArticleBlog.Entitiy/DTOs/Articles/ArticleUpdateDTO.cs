@@ -17,7 +17,7 @@ namespace ArticleBlog.Entitiy.DTOs.Articles
         public int CategoryId { get; set; }
         public ICollection<CategoryDTO> Categories { get; set; }
         public Image Image { get; set; }
-        public string ImageFileName { get; set; } //***UPDATEVIEW DA RESİM KAYDETME YERİNDE SRC YE YAZDIK
+        public string ImageFileName { get; set; } 
         public IFormFile? Photo  { get; set; }
 
         public ArticleUpdateDTO()

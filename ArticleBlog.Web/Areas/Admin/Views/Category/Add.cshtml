@@ -8,13 +8,13 @@
         <div class="card mb-4">
             <h5 class="card-header"></h5>
             <form asp-controller="Category" asp-action="Add" method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly"></div> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                <div asp-validation-summary="ModelOnly"></div> 
                 <div class="card-body">
                    
                     <div class="form-group">
                         <label asp-for="@Model.CategoryName" id="defaultFormControlInput" class="form-label">Category</label>
                         <input asp-for="@Model.CategoryName" type="text" class="form-control mb-3" id="defaultFormControlInput" placeholder="Please Input Category Title" aria-describedby="defaultFormControlHelp">
-                        <span asp-validation-for="@Model.CategoryName" class="text-danger"></span> @* FluentValidation ile oluşturduğumuz hata mesajını görmek için bunu ekledik *@
+                        <span asp-validation-for="@Model.CategoryName" class="text-danger"></span> 
                     </div>                  
 
 
